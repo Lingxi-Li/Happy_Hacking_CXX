@@ -12,8 +12,6 @@ Handy trinkets that make C++ programming happier~
 [`to_xstring()`](#to_xstring)
 
 <a name="to_xstring"></a>
-#### `to_xstring()`
-
 ~~~C++
 template <typename CharT, typename T>
 auto to_xstring(const T& x);
