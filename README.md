@@ -17,9 +17,9 @@ Handy trinkets that make C++ programming happier~
 ## File Structure
 
 ~~~
-cppu/......library header directory
-test/......unit tests directory
-doc.md.....reference manual
+cppu/.........library header directory
+test/.........unit tests directory
+doc.md........reference manual
 README.md
 LICENSE
 ~~~
