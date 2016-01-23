@@ -20,8 +20,9 @@ Handy trinkets that make C++ programming happier~
 /..............root directory
     cppu/......library header directory
     test/......unit tests directory
-    LICENSE
+    doc.md.....reference manual
     README.md
+    LICENSE
 ~~~
 
 <a name="build"></a>
