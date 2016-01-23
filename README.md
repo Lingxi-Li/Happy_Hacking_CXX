@@ -17,12 +17,11 @@ Handy trinkets that make C++ programming happier~
 ## File Structure
 
 ~~~
-/..............root directory
-    cppu/......library header directory
-    test/......unit tests directory
-    doc.md.....reference manual
-    README.md
-    LICENSE
+cppu/......library header directory
+test/......unit tests directory
+doc.md.....reference manual
+README.md
+LICENSE
 ~~~
 
 <a name="build"></a>
