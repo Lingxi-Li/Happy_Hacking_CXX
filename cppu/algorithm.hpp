@@ -6,6 +6,7 @@
 #define CPPU_ALGORITHM_HPP_
 
 #include <algorithm>
+#include <array>
 #include <utility>
 
 namespace cppu_detail_swap {
@@ -51,9 +52,20 @@ void swap(T& x, T& y) {
 /// Introspective swap for arrays. For each pair of elements `x[i]` and `y[i]`,
 /// performs `x[i].swap(y[i])` if possible. Otherwise, performs
 /// `swap(x[i], y[i])` and lookups in both namespace `std` and that of `T`
-/// (by ADL).
+/// (by ADL). Introspective swap is invoked recursively when necessary.
 template <typename T, std::size_t n>
 void swap(T (&x)[n], T (&y)[n]) {
+  for (std::size_t i = 0; i < n; ++i) {
+    swap(x[i], y[i]);
+  }
+}
+
+/// Introspective swap for `std::array`. For each pair of elements `x[i]` and
+/// `y[i]`, performs `x[i].swap(y[i])` if possible. Otherwise, performs
+/// `swap(x[i], y[i])` and lookups in both namespace `std` and that of `T`
+/// (by ADL). Introspective swap is invoked recursively when necessary.
+template <typename T, std::size_t n>
+void swap(std::array<T, n>& x, std::array<T, n>& y) {
   for (std::size_t i = 0; i < n; ++i) {
     swap(x[i], y[i]);
   }

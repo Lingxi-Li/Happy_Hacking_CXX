@@ -24,8 +24,9 @@ void swap(T& x, T& y);
 
 Introspective swap. Performs `x.swap(y)` if possible. Otherwise, performs
 `swap(x, y)` and lookups in both namespace `std` and that of `T` (by ADL).
-If `T` is an array type, applies the above operation to each pair of elements
-`x[i]` and `y[i]`.
+If `T` is an array or `std::array` type, applies the above operation to each
+pair of elements `x[i]` and `y[i]`. Introspective swap is invoked recursively
+when necessary.
 
 ----------------------------------------
 

@@ -97,4 +97,142 @@ TEST(swap, free_std_swap_array) {
   }
 }
 
+TEST(swap, member_swap_array_recursive) {
+  using cppu::swap;
+  using obj_t = swap_test_ns::member_swap_t;
+  obj_t x[2][2] = { { {0}, {0} },
+                    { {0}, {0} } };
+  obj_t y[2][2] = { { {1}, {1} },
+                    { {1}, {1} } };
+  swap(x, y);
+  for (int i = 0; i < 2; ++i) {
+    for (int j = 0; j < 2; ++j) {
+      EXPECT_EQ(2, x[i][j].v);
+      EXPECT_EQ(1, y[i][j].v);
+    }
+  }
+}
+
+TEST(swap, free_adl_swap_array_recursive) {
+  using cppu::swap;
+  using obj_t = swap_test_ns::free_adl_swap_t;
+  obj_t x[2][2] = { { {0}, {0} },
+                    { {0}, {0} } };
+  obj_t y[2][2] = { { {1}, {1} },
+                    { {1}, {1} } };
+  swap(x, y);
+  for (int i = 0; i < 2; ++i) {
+    for (int j = 0; j < 2; ++j) {
+      EXPECT_EQ(2, x[i][j].v);
+      EXPECT_EQ(1, y[i][j].v);
+    }
+  }
+}
+
+TEST(swap, free_std_swap_array_recursive) {
+  using cppu::swap;
+  // ADL doesn't apply to primitive types
+  int x[2][2] = { { 0, 0 },
+                  { 0, 0 } };
+  int y[2][2] = { { 1, 1 },
+                  { 1, 1 } };
+  swap(x, y);
+  for (int i = 0; i < 2; ++i) {
+    for (int j = 0; j < 2; ++j) {
+      EXPECT_EQ(1, x[i][j]);
+      EXPECT_EQ(0, y[i][j]);
+    }
+  }
+}
+
+TEST(swap, member_swap_std_array) {
+  using cppu::swap;
+  using obj_t = swap_test_ns::member_swap_t;
+  using array_t = std::array<obj_t, 2>;
+  array_t x = {{ {0}, {0} }};
+  array_t y = {{ {1}, {1} }};
+  swap(x, y);
+  for (int i = 0; i < 2; ++i) {
+    EXPECT_EQ(2, x[i].v);
+    EXPECT_EQ(1, y[i].v);
+  }
+}
+
+TEST(swap, free_adl_swap_std_array) {
+  using cppu::swap;
+  using obj_t = swap_test_ns::free_adl_swap_t;
+  using array_t = std::array<obj_t, 2>;
+  array_t x = {{ {0}, {0} }};
+  array_t y = {{ {1}, {1} }};
+  swap(x, y);
+  for (int i = 0; i < 2; ++i) {
+    EXPECT_EQ(2, x[i].v);
+    EXPECT_EQ(1, y[i].v);
+  }
+}
+
+TEST(swap, free_std_swap_std_array) {
+  using cppu::swap;
+  // ADL doesn't apply to primitive types
+  using array_t = std::array<int, 2>;
+  array_t x = {{ 0, 0 }};
+  array_t y = {{ 1, 1 }};
+  swap(x, y);
+  for (int i = 0; i < 2; ++i) {
+    EXPECT_EQ(1, x[i]);
+    EXPECT_EQ(0, y[i]);
+  }
+}
+
+TEST(swap, member_swap_std_array_recursive) {
+  using cppu::swap;
+  using obj_t = swap_test_ns::member_swap_t;
+  using array_t = std::array<std::array<obj_t, 2>, 2>;
+  array_t x = {{ {{ {0}, {0} }},
+                 {{ {0}, {0} }} }};
+  array_t y = {{ {{ {1}, {1} }},
+                 {{ {1}, {1} }} }};
+  swap(x, y);
+  for (int i = 0; i < 2; ++i) {
+    for (int j = 0; j < 2; ++j) {
+      EXPECT_EQ(2, x[i][j].v);
+      EXPECT_EQ(1, y[i][j].v);
+    }
+  }
+}
+
+TEST(swap, free_adl_swap_std_array_recursive) {
+  using cppu::swap;
+  using obj_t = swap_test_ns::free_adl_swap_t;
+  using array_t = std::array<std::array<obj_t, 2>, 2>;
+  array_t x = {{ {{ {0}, {0} }},
+                 {{ {0}, {0} }} }};
+  array_t y = {{ {{ {1}, {1} }},
+                 {{ {1}, {1} }} }};
+  swap(x, y);
+  for (int i = 0; i < 2; ++i) {
+    for (int j = 0; j < 2; ++j) {
+      EXPECT_EQ(2, x[i][j].v);
+      EXPECT_EQ(1, y[i][j].v);
+    }
+  }
+}
+
+TEST(swap, free_std_swap_std_array_recursive) {
+  using cppu::swap;
+  // ADL doesn't apply to primitive types
+  using array_t = std::array<std::array<int, 2>, 2>;
+  array_t x = {{ {{ 0, 0 }},
+                 {{ 0, 0 }} }};
+  array_t y = {{ {{ 1, 1 }},
+                 {{ 1, 1 }} }};
+  swap(x, y);
+  for (int i = 0; i < 2; ++i) {
+    for (int j = 0; j < 2; ++j) {
+      EXPECT_EQ(1, x[i][j]);
+      EXPECT_EQ(0, y[i][j]);
+    }
+  }
+}
+
 ////////////////////////////////////////
