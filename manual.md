@@ -23,8 +23,9 @@ void swap(T& x, T& y);
 ~~~
 
 Introspective swap. Performs `x.swap(y)` if possible. Otherwise, performs
-`swap(x, y)` and lookups in both namespace `std` and that of `T`. If `T` is
-array type, applies the above operation to each pair of elements.
+`swap(x, y)` and lookups in both namespace `std` and that of `T` (by ADL).
+If `T` is an array type, applies the above operation to each pair of elements
+`x[i]` and `y[i]`.
 
 ----------------------------------------
 
@@ -41,7 +42,7 @@ template <typename CharT, typename T>
 auto to_xstring(const T& x);
 ~~~
 
-Calls either `to_string(x)` or `to_wstring(x)` based on `CharT`. Lookups in
+Calls either `to_string(x)` or `to_wstring(x)` based on `CharT`. Lookups in both
 namespace `std` and that of `T` (by ADL). By providing a uniform name, this
 function template facilitates writing generic code.
 

@@ -19,7 +19,7 @@ Handy trinkets that make C++ programming happier~
 ~~~
 cppu/.........library header directory
 test/.........unit tests directory
-doc.md........reference manual
+manual.md.....reference manual
 README.md
 LICENSE
 ~~~
