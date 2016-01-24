@@ -5,6 +5,7 @@ Handy trinkets that make C++ programming happier~
 ## Headers
 
 [`algorithm.hpp`](#algorithm_hpp)
+[`functional.hpp`](#functional_hpp)
 [`string.hpp`](#string_hpp)
 
 ----------------------------------------
@@ -27,6 +28,25 @@ performs `swap(x, y)`, looking up in both namespace `std` and that of `T`
 (by ADL). If `T` is an array or `std::array` type, applies the above operation
 to each pair of elements `x[i]` and `y[i]`. Introspective swap is invoked
 recursively when necessary.
+
+----------------------------------------
+
+<a name="functional_hpp"></a>
+### `functional.hpp`
+
+[`function`](#function)
+
+----------------------------------------
+
+<a name="function"></a>
+~~~C++
+template <typename R, typename... Args>
+class function<R(Args...)>;
+~~~
+
+Extended `std::function` capable of disambiguating overloaded function.
+Constructing and assigning from overloaded functions no longer require
+help from the user.
 
 ----------------------------------------
 
