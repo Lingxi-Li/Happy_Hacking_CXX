@@ -1,6 +1,6 @@
 # [CPPU](https://github.com/Lingxi-Li/CPP_Utility) Reference Manual
 
-Handy trinkets that make C++ programming happier~
+Trinkets and extensions that make C++ prettier :)
 
 ## Headers
 
