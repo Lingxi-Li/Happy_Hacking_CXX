@@ -12,21 +12,21 @@ Handy trinkets that make C++ programming happier~
 <a name="algorithm_hpp"></a>
 ### `algorithm.hpp`
 
-[`swap()`](#swap)
+[`iswap()`](#iswap)
 
 ----------------------------------------
 
-<a name="swap"></a>
+<a name="iswap"></a>
 ~~~C++
 template <typename T>
-void swap(T& x, T& y);
+void iswap(T& x, T& y);
 ~~~
 
-Introspective swap. Performs `x.swap(y)` if possible. Otherwise, performs
-`swap(x, y)` and lookups in both namespace `std` and that of `T` (by ADL).
-If `T` is an array or `std::array` type, applies the above operation to each
-pair of elements `x[i]` and `y[i]`. Introspective swap is invoked recursively
-when necessary.
+**I**ntrospective **swap**. Performs `x.swap(y)` if possible. Otherwise,
+performs `swap(x, y)`, looking up in both namespace `std` and that of `T`
+(by ADL). If `T` is an array or `std::array` type, applies the above operation
+to each pair of elements `x[i]` and `y[i]`. Introspective swap is invoked
+recursively when necessary.
 
 ----------------------------------------
 
