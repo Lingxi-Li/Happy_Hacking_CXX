@@ -3,6 +3,7 @@
 // CPP Utility Library (https://github.com/Lingxi-Li/CPP_Utility)
 
 #include <cppu/string.hpp>
+#include <cppu/string.hpp>
 
 #include <cstddef>
 

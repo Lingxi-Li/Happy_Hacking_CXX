@@ -3,6 +3,7 @@
 // CPP Utility Library (https://github.com/Lingxi-Li/CPP_Utility)
 
 #include <cppu/algorithm.hpp>
+#include <cppu/algorithm.hpp>
 
 #include <gtest/gtest.h>
 
