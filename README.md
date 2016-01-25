@@ -1,6 +1,6 @@
 # CPP Utility Library (CPPU)
 
-Trinkets and extensions that make C++ prettier :)
+Trinkets and extensions to modern C++
 
 - [Dependencies](#depend)
 - [File Structure](#struct)
