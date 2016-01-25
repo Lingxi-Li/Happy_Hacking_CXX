@@ -4,10 +4,52 @@ Trinkets and extensions to modern C++
 
 ## Headers
 
+[`aggregate_wrapper.hpp`](#aggregate_wrapper_hpp)
 [`algorithm.hpp`](#algorithm_hpp)
 [`functional.hpp`](#functional_hpp)
 [`meta.hpp`](#meta_hpp)
 [`string.hpp`](#string_hpp)
+
+----------------------------------------
+
+<a name="aggregate_wrapper_hpp"></a>
+### `aggregate_wrapper.hpp`
+
+[`aggregate_wrapper`](#aggregate_wrapper)
+
+----------------------------------------
+
+<a name="aggregate_wrapper"></a>
+~~~C++
+template <typename T>
+class aggregate_wrapper {
+public:
+  using aggregate_type = T;
+
+  template <typename... Ts>
+  aggregate_wrapper(Ts&&... xs);
+};
+
+template <typename T, std::size_t n>
+class aggregate_wrapper<T[n]> {
+public:
+  using aggregate_type = T[n];
+
+  template <typename... Ts>
+  aggregate_wrapper(Ts&&... xs);
+  aggregate_wrapper(const aggregate_type& arr);
+  aggregate_wrapper(aggregate_type&& arr);
+
+  operator T* ();
+  operator const T* () const;
+};
+
+template <typename T>
+auto wrap_aggregate(T&& x);
+~~~
+
+Wraps aggregates and provides a variadic forwarding constructor. Enables
+in-place construction. Value initializes the aggregate when default constructed.
 
 ----------------------------------------
 
