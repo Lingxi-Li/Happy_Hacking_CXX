@@ -64,6 +64,26 @@ void iswap(std::array<T, n>& x, std::array<T, n>& y) {
   }
 }
 
+template <typename T>
+const T& min(const T& x, const T& y) {
+  return x < y ? x : y;
+}
+
+template <typename T, typename... Ts>
+const T& min(const T& x, const T& y, const Ts&... zs) {
+  return min(min(x, y), zs...);
+}
+
+template <typename T>
+const T& max(const T& x, const T& y) {
+  return x < y ? y : x;
+}
+
+template <typename T, typename... Ts>
+const T& max(const T& x, const T& y, const Ts&... zs) {
+  return max(max(x, y), zs...);
+}
+
 } // namespace cppu
 
 #endif // CPPU_ALGORITHM_HPP_

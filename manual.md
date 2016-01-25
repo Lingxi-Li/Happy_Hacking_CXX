@@ -15,6 +15,8 @@ Trinkets and extensions to modern C++
 ### `algorithm.hpp`
 
 [`iswap()`](#iswap)
+[`max()`](#max)
+[`min()`](#min)
 
 ----------------------------------------
 
@@ -29,6 +31,26 @@ performs `swap(x, y)`, looking up in both namespace `std` and that of `T`
 (by ADL). If `T` is an array or `std::array` type, applies the above operation
 to each pair of elements `x[i]` and `y[i]`. Introspective swap is invoked
 recursively when necessary.
+
+----------------------------------------
+
+<a name="max"></a>
+~~~C++
+template <typename T, typename... Ts>
+const T& max(const T& x, const T& y, const Ts&... zs);
+~~~
+
+Returns the maximum of `x`, `y`, and `zs...`.
+
+----------------------------------------
+
+<a name="min"></a>
+~~~C++
+template <typename T, typename... Ts>
+const T& min(const T& x, const T& y, const Ts&... zs);
+~~~
+
+Returns the minimum of `x`, `y`, and `zs...`.
 
 ----------------------------------------
 
