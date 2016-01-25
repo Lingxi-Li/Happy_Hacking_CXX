@@ -297,6 +297,7 @@ TEST(swap, free_std_swap_std_array_recursive) {
 ////////////////////////////////////////
 
 TEST(min, basic) {
+  EXPECT_EQ(0, cppu::min(0));
   EXPECT_EQ(-1, cppu::min(-1, 0, 1));
   EXPECT_EQ(0, cppu::min(0, 1));
 }
@@ -311,6 +312,7 @@ TEST(min, extended) {
 }
 
 TEST(max, basic) {
+  EXPECT_EQ(0, cppu::max(0));
   EXPECT_EQ(1, cppu::max(-1, 0, 1));
   EXPECT_EQ(1, cppu::max(0, 1));
 }
