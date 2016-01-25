@@ -5,6 +5,7 @@
 #include <cppu/functional.hpp>
 #include <cppu/functional.hpp>
 
+#include <string>
 #include <type_traits>
 
 #include <gtest/gtest.h>
@@ -16,6 +17,20 @@ int func(int x) {
 }
 
 char func(char);
+
+bool func(std::string) {
+  return true;
+}
+
+bool func(cppu::function<void()>) {
+  return false;
+}
+
+struct null_t {
+  operator std::nullptr_t () const {
+    return nullptr;
+  }
+};
 
 } // namespace function_test_ns
 
@@ -84,6 +99,21 @@ TEST(function, assignment) {
   f1 = nullptr;
   f1 = std_f2;
   EXPECT_EQ(0, f1(0));
+}
+
+TEST(function, overload_resolution) {
+  using func_t = cppu::function<int(int)>;
+  auto lambda = [](int x) { return x; };
+  // despite implicit conversion from `const char*` to `std::string`,
+  // should resolve to `func(std::string)` instead of
+  // `func(cppu::function<void()>)` and compile
+  EXPECT_TRUE(function_test_ns::func("test"));
+  func_t f = lambda;
+  // despite implicit conversion from `null_t` to `std::nullptr_t`,
+  // should resolve to `operator =(std::nullptr_t)` instead of `operator =(F&&)`
+  // and compile
+  f = function_test_ns::null_t{};
+  EXPECT_FALSE(f);
 }
 
 TEST(function, other) {

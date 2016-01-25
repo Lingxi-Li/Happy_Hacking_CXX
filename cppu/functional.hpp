@@ -8,6 +8,7 @@
 #include <cstddef>
 
 #include <functional>
+#include <type_traits>
 #include <utility>
 
 namespace cppu {
@@ -20,16 +21,35 @@ class function;
 /// help from the user.
 template <typename R, typename... Args>
 class function<R(Args...)> : public std::function<R(Args...)> {
+private:
+  template <typename F_, typename F = std::decay_t<F_>>
+  using enable_if_fn_t = std::enable_if_t<
+                           std::is_same<R, std::result_of_t<F(Args...)>>
+                           ::value>;
+
 public:
   using base = std::function<R(Args...)>;
 
   function(R(*ptr)(Args...)) : base{ptr} {}
   // inheriting constructors does not work with some standard library
   // implementations; see http://stackoverflow.com/q/34973369/1348273
-  template <typename... Ts>
-  function(Ts... xs) : base{std::forward<Ts>(xs)...} {}
-  // the above doesn't cover these two; then why do we need them?
-  // see http://stackoverflow.com/a/34977207/1348273;
+  // a variadic forwarding constructor won't work either;
+  // see http://stackoverflow.com/q/34978160/1348273
+  function() = default;
+  function(std::nullptr_t) : base{nullptr} {}
+  template <typename F, typename = enable_if_fn_t<F>>
+  function(F f) : base{std::move(f)} {}
+  template <typename Alloc>
+  function(std::allocator_arg_t tag, const Alloc& alloc)
+      : base{tag, alloc} {}
+  template <typename Alloc>
+  function(std::allocator_arg_t tag, const Alloc& alloc, std::nullptr_t)
+      : base{tag, alloc, nullptr} {}
+  template <typename F, typename Alloc, typename = enable_if_fn_t<F>>
+  function(std::allocator_arg_t tag, const Alloc& alloc, F f)
+      : base{tag, alloc, std::move(f)} {}
+  // why do we need the following two, provided that we already have the one
+  // above? see http://stackoverflow.com/a/34977207/1348273;
   // explicit cast to base is necessary, or overload resolution will select
   // a wrong constructor
   template <typename Alloc>
@@ -43,10 +63,21 @@ public:
     base::operator =(ptr);
     return *this;
   }
-  // makes sure not to return `base&`
-  template <typename T>
-  function& operator =(T&& x) {
-    base::operator =(std::forward<T>(x));
+  // makes sure not to return `base&`; so overriding assignment operators in
+  // base; besides, a forwarding assignment operator won't work here;
+  // see http://stackoverflow.com/q/34978160/1348273
+  function& operator =(std::nullptr_t) {
+    base::operator =(nullptr);
+    return *this;
+  }
+  template <typename F, typename = enable_if_fn_t<F>>
+  function& operator =(F&& f) {
+    base::operator =(std::forward<F>(f));
+    return *this;
+  }
+  template <typename F, typename = enable_if_fn_t<F>>
+  function& operator =(std::reference_wrapper<F> f) {
+    base::operator =(f);
     return *this;
   }
 };
