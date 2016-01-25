@@ -6,6 +6,7 @@ Trinkets and extensions to modern C++
 
 [`algorithm.hpp`](#algorithm_hpp)
 [`functional.hpp`](#functional_hpp)
+[`meta.hpp`](#meta_hpp)
 [`string.hpp`](#string_hpp)
 
 ----------------------------------------
@@ -47,6 +48,24 @@ class function<R(Args...)>;
 Extended `std::function` capable of disambiguating overloaded function.
 Constructing and assigning from overloaded functions no longer require
 help from the user.
+
+----------------------------------------
+
+<a name="meta_hpp"></a>
+### `meta.hpp`
+
+[`enable_if_well_formed_t`](#enable_if_well_formed_t)
+
+----------------------------------------
+
+<a name="enable_if_well_formed_t"></a>
+~~~C++
+template <typename, typename T = void>
+using enable_if_well_formed_t = T;
+~~~
+
+Given `enable_if_well_formed_t<decltype(expr), T>`, gets `T` if `expr` is
+well-formed.
 
 ----------------------------------------
 
