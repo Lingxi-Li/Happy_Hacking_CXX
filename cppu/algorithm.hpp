@@ -7,6 +7,7 @@
 
 #include <algorithm>
 #include <array>
+#include <functional>
 #include <utility>
 
 namespace cppu {
@@ -64,24 +65,16 @@ void iswap(std::array<T, n>& x, std::array<T, n>& y) {
   }
 }
 
-template <typename T>
-const T& min(const T& x, const T& y) {
-  return x < y ? x : y;
+template <template <typename> class Pred = std::less,
+          typename T, typename... Ts>
+const T& min(const T& x, const Ts&... ys) {
+  return std::min({std::ref(x), std::ref(ys)...}, Pred<T>{});
 }
 
-template <typename T, typename... Ts>
-const T& min(const T& x, const T& y, const Ts&... zs) {
-  return min(min(x, y), zs...);
-}
-
-template <typename T>
-const T& max(const T& x, const T& y) {
-  return x < y ? y : x;
-}
-
-template <typename T, typename... Ts>
-const T& max(const T& x, const T& y, const Ts&... zs) {
-  return max(max(x, y), zs...);
+template <template <typename> class Pred = std::less,
+          typename T, typename... Ts>
+const T& max(const T& x, const Ts&... ys) {
+  return std::max({std::ref(x), std::ref(ys)...}, Pred<T>{});
 }
 
 } // namespace cppu

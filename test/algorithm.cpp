@@ -5,6 +5,8 @@
 #include <cppu/algorithm.hpp>
 #include <cppu/algorithm.hpp>
 
+#include <vector>
+
 #include <gtest/gtest.h>
 
 namespace swap_test_ns {
@@ -299,7 +301,25 @@ TEST(min, basic) {
   EXPECT_EQ(0, cppu::min(0, 1));
 }
 
+TEST(min, extended) {
+  using vec_t = std::vector<int>;
+  vec_t a{0};
+  vec_t b{1};
+  vec_t c{2};
+  EXPECT_EQ(&a, &cppu::min(a, b, c));
+  EXPECT_EQ(&a, &cppu::min(a, b));
+}
+
 TEST(max, basic) {
   EXPECT_EQ(1, cppu::max(-1, 0, 1));
   EXPECT_EQ(1, cppu::max(0, 1));
+}
+
+TEST(max, extended) {
+  using vec_t = std::vector<int>;
+  vec_t a{0};
+  vec_t b{1};
+  vec_t c{2};
+  EXPECT_EQ(&c, &cppu::max(a, b, c));
+  EXPECT_EQ(&b, &cppu::max(a, b));
 }

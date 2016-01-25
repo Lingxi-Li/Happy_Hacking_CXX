@@ -36,21 +36,23 @@ recursively when necessary.
 
 <a name="max"></a>
 ~~~C++
-template <typename T, typename... Ts>
-const T& max(const T& x, const T& y, const Ts&... zs);
+template <template <typename> class Pred = std::less,
+          typename T, typename... Ts>
+const T& max(const T& x, const Ts&... ys);
 ~~~
 
-Returns the maximum of `x`, `y`, and `zs...`.
+Returns the maximum of `x`, `ys...` using `Pred<T>{}`.
 
 ----------------------------------------
 
 <a name="min"></a>
 ~~~C++
-template <typename T, typename... Ts>
-const T& min(const T& x, const T& y, const Ts&... zs);
+template <template <typename> class Pred = std::less,
+          typename T, typename... Ts>
+const T& min(const T& x, const Ts&... ys);
 ~~~
 
-Returns the minimum of `x`, `y`, and `zs...`.
+Returns the minimum of `x`, `ys...` using `Pred<T>{}`.
 
 ----------------------------------------
 
