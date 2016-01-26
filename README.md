@@ -25,7 +25,7 @@ you can simply
 cppu::for_each(obj_3d, f);
 ~~~
 
-Truth is `cppu::for_each()` works for objects of any dimensions, even scalars!
+Truth is it works for objects of any dimensions, even scalars!
 Credit goes to @Arcoth (you rock!).
 
 **B. Why should I use `cppu::iswap(x, y)` to swap `x` and `y`?**
