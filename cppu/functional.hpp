@@ -30,34 +30,34 @@ private:
 public:
   using base = std::function<R(Args...)>;
 
-  function(R(*ptr)(Args...)) : base{ptr} {}
+  function(R(*ptr)(Args...)) : base(ptr) {}
   // inheriting constructors does not work with some standard library
   // implementations; see http://stackoverflow.com/q/34973369/1348273
   // a variadic forwarding constructor won't work either;
   // see http://stackoverflow.com/q/34978160/1348273
   function() = default;
-  function(std::nullptr_t) : base{nullptr} {}
+  function(std::nullptr_t) : base(nullptr) {}
   template <typename F, typename = enable_if_fn_t<F>>
-  function(F f) : base{std::move(f)} {}
+  function(F f) : base(std::move(f)) {}
   template <typename Alloc>
   function(std::allocator_arg_t tag, const Alloc& alloc)
-      : base{tag, alloc} {}
+      : base(tag, alloc) {}
   template <typename Alloc>
   function(std::allocator_arg_t tag, const Alloc& alloc, std::nullptr_t)
-      : base{tag, alloc, nullptr} {}
+      : base(tag, alloc, nullptr) {}
   template <typename F, typename Alloc, typename = enable_if_fn_t<F>>
   function(std::allocator_arg_t tag, const Alloc& alloc, F f)
-      : base{tag, alloc, std::move(f)} {}
+      : base(tag, alloc, std::move(f)) {}
   // why do we need the following two, provided that we already have the one
   // above? see http://stackoverflow.com/a/34977207/1348273;
   // explicit cast to base is necessary, or overload resolution will select
   // a wrong constructor
   template <typename Alloc>
   function(std::allocator_arg_t tag, const Alloc& alloc, const function& other)
-      : base{tag, alloc, static_cast<const base&>(other)} {}
+      : base(tag, alloc, static_cast<const base&>(other)) {}
   template <typename Alloc>
   function(std::allocator_arg_t tag, const Alloc& alloc, function&& other)
-      : base{tag, alloc, std::move(static_cast<base&>(other))} {}
+      : base(tag, alloc, std::move(static_cast<base&>(other))) {}
 
   function& operator =(R(*ptr)(Args...)) {
     base::operator =(ptr);
