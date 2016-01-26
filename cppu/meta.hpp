@@ -25,11 +25,28 @@ struct multi_array<T, n> {
   using type = std::array<T, n>;
 };
 
-/// Eases the syntax for specifying multi-dimensional `std::array`.
+/// Provides easy syntax for specifying multi-dimensional `std::array`.
 /// `multi_array_t<int, 1, 1>` is equivalent to `std::array<std::array<int, 1>, 1>`
 /// and so on.
 template <typename T, std::size_t... ns>
 using multi_array_t = typename multi_array<T, ns...>::type;
+
+template <template <typename...> class T, typename Base, std::size_t n>
+struct multi {
+  static_assert(n > 0, "");
+  using type = T<typename multi<T, Base, n - 1>::type>;
+};
+
+template <template <typename...> class T, typename Base>
+struct multi<T, Base, 1> {
+  using type = T<Base>;
+};
+
+/// Provides easy syntax for specifying multi-dimensional types.
+/// For example, `multi_t<std::vector, int, 2>` is equivalent to
+/// `std::vector<std::vector<int>>`.
+template <template <typename...> class T, typename Base, std::size_t n>
+using multi_t = typename multi<T, Base, n>::type;
 
 } // namespace cppu
 

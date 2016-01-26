@@ -5,6 +5,8 @@
 #include <cppu/meta.hpp>
 #include <cppu/meta.hpp>
 
+#include <vector>
+
 #include <gtest/gtest.h>
 
 TEST(enable_if_well_formed, basic) {
@@ -21,4 +23,14 @@ TEST(multi_array, basic) {
   static_assert(std::is_same<array1d, multi_array_t<int, 1>>{}, "");
   static_assert(std::is_same<array2d, multi_array_t<int, 1, 1>>{}, "");
   static_assert(std::is_same<array3d, multi_array_t<int, 1, 1, 1>>{}, "");
+}
+
+TEST(multi_t, basic) {
+  using cppu::multi_t;
+  using vec1d = std::vector<int>;
+  using vec2d = std::vector<vec1d>;
+  using vec3d = std::vector<vec2d>;
+  static_assert(std::is_same<vec1d, multi_t<std::vector, int, 1>>{}, "");
+  static_assert(std::is_same<vec2d, multi_t<std::vector, int, 2>>{}, "");
+  static_assert(std::is_same<vec3d, multi_t<std::vector, int, 3>>{}, "");
 }

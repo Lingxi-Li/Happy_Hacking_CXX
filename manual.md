@@ -123,6 +123,7 @@ help from the user.
 ### `meta.hpp`
 
 [`enable_if_well_formed_t`](#enable_if_well_formed_t)
+[`multi_t`](#multi_t)
 [`multi_array_t`](#multi_array_t)
 
 ----------------------------------------
@@ -135,6 +136,17 @@ using enable_if_well_formed_t = T;
 
 Given `enable_if_well_formed_t<decltype(expr), T>`, gets `T` if `expr` is
 well-formed.
+
+----------------------------------------
+
+<a name="multi_t"></a>
+~~~C++
+template <template <typename...> class T, typename Base, std::size_t n>
+using multi_t = ...;
+~~~
+
+Provides easy syntax for specifying multi-dimensional types. For example,
+`multi_t<std::vector, int, 2>` is equivalent to `std::vector<std::vector<int>>`.
 
 ----------------------------------------
 
