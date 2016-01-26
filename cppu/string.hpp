@@ -17,7 +17,7 @@ namespace cppu {
 /// both namespace `std` and that of `T` (by ADL). By providing a uniform name,
 /// this function template facilitates writing generic code.
 template <typename CharT, typename T,
-          typename = std::enable_if_t<std::is_same<CharT, char>::value>>
+          typename = std::enable_if_t<std::is_same<CharT, char>{}>>
 std::string to_xstring(const T& x) {
   // fallbacks to `std::to_string()` if ADL failed
   using std::to_string;
@@ -28,7 +28,7 @@ std::string to_xstring(const T& x) {
 /// both namespace `std` and that of `T` (by ADL). By providing a uniform name,
 /// this function template facilitates writing generic code.
 template <typename CharT, typename T,
-          typename = std::enable_if_t<std::is_same<CharT, wchar_t>::value>>
+          typename = std::enable_if_t<std::is_same<CharT, wchar_t>{}>>
 std::wstring to_xstring(const T& x) {
   // fallbacks to `std::to_wstring()` if ADL failed
   using std::to_wstring;
