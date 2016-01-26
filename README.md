@@ -28,7 +28,7 @@ Feel interested and want to see what CPPU has to offer? There is a reference
 prepared just for you. So check it out.
 
 Got some shiny trinkets yourself? Please do share it with us. We welcome you to
-join the party and play together~
+join the party and play together~ :tada:
 
 - [Dependencies](#depend)
 - [File Structure](#struct)
