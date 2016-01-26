@@ -4,16 +4,16 @@ Trinkets and extensions to modern C++
 
 The following two examples should give you a general idea of what CPPU is all about.
 
-### Why should I use `cppu::iswap(x, y)`?
+**A. Why should I use `cppu::iswap(x, y)`?**
 
 `cppu::iswap(x, y)` first tries to perform `x.swap(y)`. If the expression turns
 out to be ill-formed, then tries to perform `swap(x, y)` with
-[argument dependent lookup](http://en.cppreference.com/w/cpp/language/adl) (ADL)
+[Argument Dependent Lookup](http://en.cppreference.com/w/cpp/language/adl) (ADL)
 enabled. If ADL failed, then as a last resort, performs `std::swap(x, y)`. So,
 stay with [`cppu::iswap()`](https://github.com/Lingxi-Li/CPP_Utility/blob/master/manual.md#iswap)
-and be happy ever since ;)
+and be happy ever since :smile_cat:
 
-### What does `cppu::make_multi<std::vector>(7, 3, 3, 3)` do?
+**B. What does `cppu::make_multi<std::vector>(7, 3, 3, 3)` do?**
 
 Want to create a 3x3x3 multi-dimensional object of type
 `std::vector<std::vector<std::vector<int>>>` and initialize each element to 7?
@@ -25,7 +25,7 @@ for `std::array`. Check out [`cppu::multi_array_t`](https://github.com/Lingxi-Li
 
 Feel interested and want to see what CPPU has to offer? There is a reference
 [manual](https://github.com/Lingxi-Li/CPP_Utility/blob/master/manual.md)
-prepared just for you. So check it out ;)
+prepared just for you. So check it out.
 
 Got some shiny trinkets yourself? Please do share it with us. We welcome you to
 join the party and play together~
