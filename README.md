@@ -4,7 +4,31 @@ Trinkets and extensions to modern C++
 
 The following two examples should give you a general idea of what CPPU is all about.
 
-**A. Why should I use `cppu::iswap(x, y)` to swap `x` and `y`?**
+**A. Universal `for_each()`**
+
+Guess you already know about [`std::for_each()`](http://en.cppreference.com/w/cpp/algorithm/for_each).
+It doesn't help when things get high(-dimensional). Following is the best you
+can do about a 3-dimensional object using `std::for_each()`
+
+~~~C++
+for (auto& slice : obj_3d) {
+  for (auto& row : slice) {
+    std::for_each(std::begin(row), std::end(row), f);
+  }
+}
+~~~
+
+With [`cppu::for_each()`](https://github.com/Lingxi-Li/CPP_Utility/blob/master/manual.md#for_each),
+you can simply 
+
+~~~C++
+cppu::for_each(obj_3d, f);
+~~~
+
+Truth is `cppu::for_each()` works for objects of any dimensions, even scalars!
+Credit goes to @Arcoth (you rock!).
+
+**B. Why should I use `cppu::iswap(x, y)` to swap `x` and `y`?**
 
 `cppu::iswap(x, y)` first tries to perform `x.swap(y)`. If the expression turns
 out to be ill-formed, then tries to perform `swap(x, y)` with
@@ -12,16 +36,6 @@ out to be ill-formed, then tries to perform `swap(x, y)` with
 enabled. If ADL failed, then as a last resort, performs `std::swap(x, y)`. So,
 stay with [`cppu::iswap()`](https://github.com/Lingxi-Li/CPP_Utility/blob/master/manual.md#iswap)
 and be happy ever since :smile_cat:
-
-**B. What does `cppu::make_multi<std::vector>(7, 3, 3, 3)` do?**
-
-Want to create a 3x3x3 multi-dimensional object of type
-`std::vector<std::vector<std::vector<int>>>` and initialize each element to 7?
-Well, this simple expression does it for you. BTW, you really don't want to
-write things like `std::vector<std::vector<std::vector<int>>>`. Do you? So, stay
-with [`cppu::multi_t`](https://github.com/Lingxi-Li/CPP_Utility/blob/master/manual.md#multi_t)
-and write `cppu::multi_t<std::vector, int, 3>`. CPPU also has a similar thing
-for `std::array`. Check out [`cppu::multi_array_t`](https://github.com/Lingxi-Li/CPP_Utility/blob/master/manual.md#multi_array_t).
 
 Feel interested and want to see what else CPPU has to offer? There is a reference
 [manual](https://github.com/Lingxi-Li/CPP_Utility/blob/master/manual.md)
