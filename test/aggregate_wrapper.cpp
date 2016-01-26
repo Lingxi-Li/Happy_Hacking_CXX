@@ -58,6 +58,7 @@ TEST(aggregate_wrapper, construction) {
   // array
   {
     cppu::aggregate_wrapper<int[3]> x;
+    EXPECT_EQ(3, x.size());
     EXPECT_EQ(0, x[0]);
     EXPECT_EQ(0, x[1]);
     EXPECT_EQ(0, x[2]);
@@ -95,6 +96,7 @@ TEST(aggregate_wrapper, construction) {
     EXPECT_FALSE(a[0]);
     EXPECT_FALSE(a[1]);
     EXPECT_FALSE(a[2]);
+    EXPECT_EQ(3, a.size());
     wrapper b(make(1));
     EXPECT_EQ(1, *b[0]);
     EXPECT_FALSE(b[1]);

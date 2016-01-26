@@ -42,6 +42,8 @@ public:
 
   operator T* ();
   operator const T* () const;
+  
+  std::size_t size() const;
 };
 
 template <typename T>

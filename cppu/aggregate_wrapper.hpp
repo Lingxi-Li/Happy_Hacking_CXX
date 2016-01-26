@@ -60,6 +60,10 @@ public:
     return arr_;
   }
 
+  std::size_t size() const {
+    return n;
+  }
+
 private:
   array arr_;
 };
