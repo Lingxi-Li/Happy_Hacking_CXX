@@ -4,7 +4,7 @@ Trinkets and extensions to modern C++
 
 The following two examples should give you a general idea of what CPPU is all about.
 
-**A. Why should I use `cppu::iswap(x, y)`?**
+**A. Why should I use `cppu::iswap(x, y)` to swap `x` and `y`?**
 
 `cppu::iswap(x, y)` first tries to perform `x.swap(y)`. If the expression turns
 out to be ill-formed, then tries to perform `swap(x, y)` with
