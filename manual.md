@@ -60,9 +60,21 @@ in-place construction. Value initializes the aggregate when default constructed.
 <a name="algorithm_hpp"></a>
 ### `algorithm.hpp`
 
+[`for_each()`](#for_each)
 [`iswap()`](#iswap)
 [`max()`](#max)
 [`min()`](#min)
+
+----------------------------------------
+
+<a name="for_each"></a>
+~~~C++
+template <typename T, typename F>
+void for_each(T& obj, F f);
+~~~
+
+Applies `f` to each element of `obj`. `obj` may be a scalar, a linear
+one-dimensional object, or a multi-dimensional object.
 
 ----------------------------------------
 

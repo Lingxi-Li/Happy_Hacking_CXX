@@ -10,6 +10,8 @@
 #include <functional>
 #include <utility>
 
+#include "meta.hpp"
+
 namespace cppu {
 
 namespace detail {
@@ -27,6 +29,19 @@ void iswap(T& x, T& y, int) {
 template <typename T>
 auto iswap(T& x, T& y, char) -> decltype(x.swap(y)) {
   return x.swap(y);
+}
+
+template <typename T, typename F>
+auto for_each(T& obj, F& f, char)
+-> decltype(static_cast<void>(f(obj))) {
+  f(obj);
+}
+
+template <typename T, typename F>
+void for_each(T& obj, F& f, int) {
+  for (auto& sub : obj) {
+    for_each(sub, f, ' ');
+  }
 }
 
 } // namespace detail
@@ -75,6 +90,13 @@ template <template <typename> class Pred = std::less,
           typename T, typename... Ts>
 const T& max(const T& x, const Ts&... ys) {
   return std::max({std::ref(x), std::ref(ys)...}, Pred<T>{});
+}
+
+/// Applies `f` to each element of `obj`. `obj` may be a scalar, a linear
+/// one-dimensional object, or a multi-dimensional object.
+template <typename T, typename F>
+void for_each(T& obj, F f) {
+  detail::for_each(obj, f, ' ');
 }
 
 } // namespace cppu

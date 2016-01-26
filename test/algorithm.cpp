@@ -5,6 +5,7 @@
 #include <cppu/algorithm.hpp>
 #include <cppu/algorithm.hpp>
 
+#include <array>
 #include <vector>
 
 #include <gtest/gtest.h>
@@ -325,3 +326,55 @@ TEST(max, extended) {
   EXPECT_EQ(&c, &cppu::max(a, b, c));
   EXPECT_EQ(&b, &cppu::max(a, b));
 }
+
+////////////////////////////////////////
+
+TEST(for_each, trivial) {
+  using cppu::for_each;
+  auto f = [](int& x) { x = 2; };
+  int v = 0;
+  for_each(v, f);
+  EXPECT_EQ(v, 2);
+  int arr[3] = {};
+  for_each(arr, f);
+  for (auto item : arr) {
+    EXPECT_EQ(2, item);
+  }
+  std::array<int, 3> std_arr{{}};
+  for_each(std_arr, f);
+  for (auto item : std_arr) {
+    EXPECT_EQ(2, item);
+  }
+  std::vector<int> vec(3);
+  for_each(vec, f);
+  for (auto item : vec) {
+    EXPECT_EQ(2, item);
+  }
+}
+
+TEST(for_each, multi) {
+  using cppu::for_each;
+  int a[3][3] = {};
+  auto f = [](int& x) { x = 2; };
+  for_each(a, f);
+  for (auto& row : a) {
+    for (auto& val : row) {
+      EXPECT_EQ(2, val);
+    }
+  }
+  std::array<std::array<int, 3>, 3> arr{};
+  for_each(arr, f);
+  for (auto& row : arr) {
+    for (auto& val : row) {
+      EXPECT_EQ(2, val);
+    }
+  }
+  std::vector<std::vector<int>> vec(3, std::vector<int>(3));
+  for_each(vec, f);
+  for (auto& row : vec) {
+    for (auto& val : row) {
+      EXPECT_EQ(2, val);
+    }
+  }
+}
+
