@@ -126,6 +126,8 @@ help from the user.
 [`multi_t`](#multi_t)
 [`multi_array_t`](#multi_array_t)
 
+[`make_multi()`](#make_multi)
+
 ----------------------------------------
 
 <a name="enable_if_well_formed_t"></a>
@@ -159,6 +161,18 @@ using multi_array_t = ...;
 Eases the syntax for specifying multi-dimensional `std::array`.
 `multi_array_t<int, 1, 1>` is equivalent to `std::array<std::array<int, 1>, 1>`
 and so on.
+
+----------------------------------------
+
+<a name="make_multi"></a>
+~~~C++
+template <template <typename...> class T, typename Base, typename... Ts>
+auto make_multi(const Base& init_val, Ts... ns);
+~~~
+
+Provides easy syntax for creating multi-dimensional objects. For example,
+`make_multi<std::vector>(7, 2, 3)` creates a 2x3 object of type
+`std::vector<std::vector<int>>` with each element being initialized to 7.
 
 ----------------------------------------
 

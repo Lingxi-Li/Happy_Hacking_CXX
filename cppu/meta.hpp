@@ -7,6 +7,7 @@
 
 #include <array>
 #include <type_traits>
+#include <utility>
 
 namespace cppu {
 
@@ -47,6 +48,21 @@ struct multi<T, Base, 1> {
 /// `std::vector<std::vector<int>>`.
 template <template <typename...> class T, typename Base, std::size_t n>
 using multi_t = typename multi<T, Base, n>::type;
+
+template <template <typename...> class T, typename Base, typename N>
+auto make_multi(const Base& init_val, N n) {
+  return T<Base>(n, init_val);
+}
+
+/// Provides easy syntax for creating multi-dimensional objects. For example,
+/// `make_multi<std::vector>(7, 2, 3)` creates a 2x3 object of type
+/// `std::vector<std::vector<int>>` with each element being initialized to 7.
+template <template <typename...> class T, typename Base,
+          typename N, typename... Ts>
+auto make_multi(const Base& init_val, N n, Ts... ns) {
+  return multi_t<T, Base, 1 + sizeof...(ns)>(
+           n, make_multi<T>(init_val, ns...));
+}
 
 } // namespace cppu
 
