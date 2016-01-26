@@ -25,8 +25,9 @@ public:
   using aggregate_type = T;
 
   // no `explicit`; aggregate initialization can be done implicitly;
-  // be consistent with that
-  template <typename... Ts>
+  // be consistent with that; as to the SFINAE disabler, see
+  // http://stackoverflow.com/a/35012938/1348273
+  template <typename... Ts, typename = decltype(base{std::declval<Ts>()...})>
   aggregate_wrapper(Ts&&... xs)
       : base{std::forward<Ts>(xs)...} {
     // nop
@@ -41,7 +42,7 @@ private:
 public:
   using aggregate_type = T[n];
 
-  template <typename... Ts>
+  template <typename... Ts, typename = decltype(array{std::declval<Ts>()...})>
   aggregate_wrapper(Ts&&... xs)
       : arr_{std::forward<Ts>(xs)...} {
     // nop

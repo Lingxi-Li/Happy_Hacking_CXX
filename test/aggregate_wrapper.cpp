@@ -32,7 +32,8 @@ TEST(aggregate_wrapper, construction) {
   {
     using foo_t = aggregate_wrapper_test_ns::foo_t;
     using wrapper = cppu::aggregate_wrapper<foo_t>;
-    static_assert(std::is_same<foo_t, wrapper::aggregate_type>::value, "");
+    static_assert(std::is_same<foo_t, wrapper::aggregate_type>{}, "");
+    static_assert(! std::is_constructible<wrapper, int, int, int>{}, "");
     wrapper a;
     EXPECT_EQ(0, a.v0);
     EXPECT_EQ(0, a.v1);
@@ -58,13 +59,16 @@ TEST(aggregate_wrapper, construction) {
   // array
   {
     cppu::aggregate_wrapper<int[3]> x;
-    EXPECT_EQ(3, x.size());
+    EXPECT_EQ(3u, x.size());
     EXPECT_EQ(0, x[0]);
     EXPECT_EQ(0, x[1]);
     EXPECT_EQ(0, x[2]);
     using foo_t = std::unique_ptr<int>[3];
     using wrapper = cppu::aggregate_wrapper<foo_t>;
+    using ptr_t = std::unique_ptr<int>;
     static_assert(std::is_same<foo_t, wrapper::aggregate_type>::value, "");
+    static_assert(std::is_constructible<wrapper, ptr_t&&, ptr_t&&, ptr_t&&>{}, "");
+    static_assert(! std::is_constructible<wrapper, ptr_t&&, ptr_t&&, ptr_t&&, ptr_t&&>{}, "");
     wrapper a;
     EXPECT_FALSE(a[0]);
     EXPECT_FALSE(a[1]);
@@ -92,11 +96,14 @@ TEST(aggregate_wrapper, construction) {
     using foo_t = std::array<std::unique_ptr<int>, 3>;
     using wrapper = cppu::aggregate_wrapper<foo_t>;
     static_assert(std::is_same<foo_t, wrapper::aggregate_type>::value, "");
+    using ptr_t = std::unique_ptr<int>;
+    static_assert(std::is_constructible<wrapper, ptr_t&&, ptr_t&&, ptr_t&&>{}, "");
+    static_assert(! std::is_constructible<wrapper, ptr_t&&, ptr_t&&, ptr_t&&, ptr_t&&>{}, "");
     wrapper a;
     EXPECT_FALSE(a[0]);
     EXPECT_FALSE(a[1]);
     EXPECT_FALSE(a[2]);
-    EXPECT_EQ(3, a.size());
+    EXPECT_EQ(3u, a.size());
     wrapper b(make(1));
     EXPECT_EQ(1, *b[0]);
     EXPECT_FALSE(b[1]);
@@ -105,7 +112,7 @@ TEST(aggregate_wrapper, construction) {
     EXPECT_EQ(1, *c[0]);
     EXPECT_EQ(2, *c[1]);
     EXPECT_EQ(3, *c[2]);
-    foo_t base { make(1), make(2), make(3) };
+    foo_t base{ make(1), make(2), make(3) };
     wrapper d(std::move(base));
     EXPECT_EQ(1, *d[0]);
     EXPECT_EQ(2, *d[1]);
