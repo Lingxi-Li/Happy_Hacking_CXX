@@ -46,13 +46,13 @@ TEST(make_multi, basic) {
   static_assert(std::is_same<vec1d, decltype(a)>{}, "");
   static_assert(std::is_same<vec2d, decltype(b)>{}, "");
   static_assert(std::is_same<vec3d, decltype(c)>{}, "");
-  EXPECT_EQ(1, a.size());
+  EXPECT_EQ(1u, a.size());
   EXPECT_EQ(2, a[0]);
-  EXPECT_EQ(1, b.size());
-  EXPECT_EQ(2, b[0].size());
+  EXPECT_EQ(1u, b.size());
+  EXPECT_EQ(2u, b[0].size());
   EXPECT_EQ(2, b[0][0]);
-  EXPECT_EQ(1, c.size());
-  EXPECT_EQ(2, c[0].size());
-  EXPECT_EQ(3, c[0][0].size());
+  EXPECT_EQ(1u, c.size());
+  EXPECT_EQ(2u, c[0].size());
+  EXPECT_EQ(3u, c[0][0].size());
   EXPECT_EQ(2, c[0][0][0]);
 }
