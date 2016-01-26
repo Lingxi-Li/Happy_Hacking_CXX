@@ -23,11 +23,11 @@ with [`cppu::multi_t`](https://github.com/Lingxi-Li/CPP_Utility/blob/master/manu
 and write `cppu::multi_t<std::vector, int, 3>`. CPPU also has a similar thing
 for `std::array`. Check out [`cppu::multi_array_t`](https://github.com/Lingxi-Li/CPP_Utility/blob/master/manual.md#multi_array_t).
 
-Feel interested and want to see what CPPU has to offer? There is a reference
+Feel interested and want to see what else CPPU has to offer? There is a reference
 [manual](https://github.com/Lingxi-Li/CPP_Utility/blob/master/manual.md)
 prepared just for you. So check it out.
 
-Got some shiny trinkets yourself? Please do share it with us. We welcome you to
+Got some shiny trinkets yourself? Please do share them with us. We invite you to
 join the party and play together~ :tada:
 
 - [Dependencies](#depend)
