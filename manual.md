@@ -26,7 +26,7 @@ class aggregate_wrapper {
 public:
   using aggregate_type = T;
 
-  // only enabled when when `T` is constructible from `xs...`
+  // only enabled when `T` is constructible from `xs...`
   template <typename... Ts>
   aggregate_wrapper(Ts&&... xs);
 };
@@ -36,7 +36,7 @@ class aggregate_wrapper<T[n]> {
 public:
   using aggregate_type = T[n];
 
-  // only enabled when when `T[n]` is constructible from `xs...`
+  // only enabled when `T[n]` is constructible from `xs...`
   template <typename... Ts>
   aggregate_wrapper(Ts&&... xs);
   aggregate_wrapper(const aggregate_type& arr);
