@@ -123,6 +123,7 @@ help from the user.
 ### `meta.hpp`
 
 [`enable_if_well_formed_t`](#enable_if_well_formed_t)
+[`multi_array_t`](#multi_array_t)
 
 ----------------------------------------
 
@@ -134,6 +135,18 @@ using enable_if_well_formed_t = T;
 
 Given `enable_if_well_formed_t<decltype(expr), T>`, gets `T` if `expr` is
 well-formed.
+
+----------------------------------------
+
+<a name="multi_array_t"></a>
+~~~C++
+template <typename T, std::size_t... ns>
+using multi_array_t = ...;
+~~~
+
+Eases the syntax for specifying multi-dimensional `std::array`.
+`multi_array_t<int, 1, 1>` is equivalent to `std::array<std::array<int, 1>, 1>`
+and so on.
 
 ----------------------------------------
 
