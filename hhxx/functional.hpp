@@ -16,9 +16,9 @@ namespace hhxx {
 template <typename>
 class function;
 
-/// Extended `std::function` that is capable of disambiguating overloaded
-/// function. Constructing and assigning from overloaded functions no longer
-/// require help from the user.
+/// Extended `std::function`, capable of disambiguating overloaded function
+/// according to the specified signature `R(Args...)`. Constructing and
+/// assigning from overloaded functions no longer require help from the user.
 template <typename R, typename... Args>
 class function<R(Args...)> : public std::function<R(Args...)> {
 private:
@@ -30,10 +30,12 @@ public:
   using base = std::function<R(Args...)>;
 
   function(R(*ptr)(Args...)) : base(ptr) {}
+
   // inheriting constructors does not work with some standard library
   // implementations; see http://stackoverflow.com/q/34973369/1348273
-  // a variadic forwarding constructor won't work either;
+  // a variadic forwarding constructor doesn't work either;
   // see http://stackoverflow.com/q/34978160/1348273
+
   function() = default;
   function(std::nullptr_t) : base(nullptr) {}
   template <typename F, typename = enable_if_fn_t<F>>
@@ -47,10 +49,12 @@ public:
   template <typename F, typename Alloc, typename = enable_if_fn_t<F>>
   function(std::allocator_arg_t tag, const Alloc& alloc, F f)
       : base(tag, alloc, std::move(f)) {}
+
   // why do we need the following two, provided that we already have the one
   // above? see http://stackoverflow.com/a/34977207/1348273;
   // explicit cast to base is necessary, or overload resolution will select
   // a wrong constructor
+
   template <typename Alloc>
   function(std::allocator_arg_t tag, const Alloc& alloc, const function& other)
       : base(tag, alloc, static_cast<const base&>(other)) {}
@@ -62,9 +66,11 @@ public:
     base::operator =(ptr);
     return *this;
   }
+
   // makes sure not to return `base&`; so overriding assignment operators in
-  // base; besides, a forwarding assignment operator won't work here;
+  // base; besides, a forwarding assignment operator doesn't work here;
   // see http://stackoverflow.com/q/34978160/1348273
+
   function& operator =(std::nullptr_t) {
     base::operator =(nullptr);
     return *this;

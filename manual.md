@@ -67,8 +67,9 @@ auto wrap_aggregate(T&& x);
 ~~~
 
 Since aggregates do not support initialization using the `()` syntax, they
-cannot be in-place constructed with the `emplace*()` methods. Wrap them to
+cannot be in-place constructed with the `emplace*` methods. Wrap them to
 support the `()` initialization syntax and enable in-place construction.
+
 While a default initialized aggregate may have an indeterminate value, this
 wrapper class ensures that the wrapped aggregate always has a determinate value.
 
@@ -91,8 +92,7 @@ void for_each(T& obj, F f);
 ~~~
 
 Applies `f` to each element of `obj`. `obj` may be a scalar, a linear
-one-dimensional object, or a multi-dimensional object. `T` may be an array
-or standard container type. As an example, the code
+one-dimensional object, or a multi-dimensional object. As an example, the code
 
 ~~~C++
 int arr[5][5][5] = ...
@@ -111,14 +111,24 @@ could be rewritten as
 hhxx::for_each(arr, f);
 ~~~
 
-**Advanced uses:** `f` may accept a multi-dimensional object. In that case,
-instead of going all the way down to scalar level, `for_each()` stops at the
-right dimension and applies `f` there. For example, you could write something like
+**Advanced Use:** `f` may accept a multi-dimensional object. In that case,
+instead of going all the way down to scalar (element) level, `for_each()` stops
+at the right dimension and applies `f` there. For example,
 
 ~~~C++
 int arr[5][5][5] = ...
 auto f = [](int (&row)[5]) { ... };
 hhxx::for_each(arr, f);
+~~~
+
+is equivalent to
+
+~~~C++
+for (auto& slice : arr) {
+  for (auto& row : slice) {
+    f(row);
+  }
+}
 ~~~
 
 ----------------------------------------
@@ -129,11 +139,11 @@ template <typename T>
 void iswap(T& x, T& y);
 ~~~
 
-**I**ntrospective **swap**. Basically swaps `x` and `y`. It performs `x.swap(y)`
-if possible. Otherwise, performs `swap(x, y)`, looking up `swap()` in both
-namespace `std` and that of `T` (by ADL). If `T` is an array or `std::array` type,
-applies the above operation to each pair of elements `x[i]` and `y[i]`.
-Introspective swap is invoked recursively when necessary.
+**I**ntrospective **swap**. Swaps `x` and `y` in the most specialized way possible.
+It performs `x.swap(y)` if possible. Otherwise, performs `swap(x, y)`, looking
+up `swap()` in both namespace `std` and that of `T` (by ADL). If `T` is an array
+or `std::array` type, applies the above operation to each pair of elements `x[i]`
+and `y[i]`, and invokes introspective swap recursively when necessary.
 
 ----------------------------------------
 
@@ -144,7 +154,7 @@ template <template <typename> class Pred = std::less,
 const T& max(const T& x, const Ts&... ys);
 ~~~
 
-Returns the maximum of `x`, `ys...` using `Pred<T>{}` as the less-than predicate.
+Returns the maximum of `x`, `ys...`, using `Pred<T>{}` as the less-than predicate.
 
 ----------------------------------------
 
@@ -155,7 +165,7 @@ template <template <typename> class Pred = std::less,
 const T& min(const T& x, const Ts&... ys);
 ~~~
 
-Returns the minimum of `x`, `ys...` using `Pred<T>{}` as the less-than predicate.
+Returns the minimum of `x`, `ys...`, using `Pred<T>{}` as the less-than predicate.
 
 ----------------------------------------
 
@@ -172,9 +182,10 @@ template <typename R, typename... Args>
 class function<R(Args...)>;
 ~~~
 
-Extended `std::function` that is capable of disambiguating overloaded function.
-Constructing and assigning from overloaded functions no longer require help from
-the user. For example, the following code does not compile
+Extended `std::function`, capable of disambiguating overloaded function according
+to the specified signature `R(Args...)`. Constructing and assigning from overloaded
+functions no longer require help from the user. For example, the following code
+does not compile
 
 ~~~C++
 void func(char);
@@ -185,7 +196,7 @@ std::function<void(char)> f = func;
 f = gunc;
 ~~~
 
-It does compile after replacing `std::function` with `hhxx::function`.
+It does compile, however, after replacing `std::function` with `hhxx::function`.
 
 ----------------------------------------
 
@@ -220,7 +231,7 @@ using multi_t = ...;
 ~~~
 
 Provides easy syntax for specifying multi-dimensional types. `T` specifies the
-container class template. `Base` specifies the element type. `n` specifies the
+container template. `Base` specifies the element type. `n` specifies the
 number of dimensions. So, it's like `T<Base>` raised to `n`-dimensions. For example,
 `multi_t<std::vector, int, 2>` is equivalent to `std::vector<std::vector<int>>`.
 
@@ -245,13 +256,13 @@ template <template <typename...> class T, typename Base, typename... Ts>
 auto make_multi(const Base& init_val, Ts... ns);
 ~~~
 
-Provides easy syntax for creating dynamic multi-dimensional objects. `T`
-specifies the container class template. `Base` specifies the element type and
-can be automatically deduced from `init_val`. Each element of the constructed
-multi-dimensional object will be initialized to `init_val`. `ns...` specifies
-the extend of each dimension. So, `sizeof...(ns)` is the number of dimensions.
-For example, `make_multi<std::vector>(7, 2, 3)` creates a 2x3 multi-dimensional
-object of type `std::vector<std::vector<int>>` with each element initialized to 7.
+Creates a dynamic multi-dimensional object. `T` specifies the container template.
+`Base` specifies the element type and can be automatically deduced from `init_val`.
+Each element of the constructed multi-dimensional object is initialized to
+`init_val`. `ns...` specifies the extend of each dimension. So, `sizeof...(ns)`
+is the number of dimensions. For example, `make_multi<std::vector>(7, 2, 3)`
+creates a 2x3 multi-dimensional object of type `std::vector<std::vector<int>>`
+with each element initialized to 7.
 
 ----------------------------------------
 
@@ -269,7 +280,7 @@ auto to_xstring(const T& x);
 ~~~
 
 Calls either `to_string(x)` or `to_wstring(x)` based on `CharT`. Looking up
-`to_string()`/`to_xstring()` in both namespace `std` and that of `T` (by ADL).
+`to_string()`/`to_wstring()` in both namespace `std` and that of `T` (by ADL).
 By providing a uniform name, this function template facilitates writing generic code.
 
 ----------------------------------------

@@ -30,7 +30,8 @@ Credit goes to @Arcoth (you rock!).
 
 **B. Why should I use `hhxx::iswap(x, y)` to swap `x` and `y`?**
 
-`hhxx::iswap(x, y)` first tries to perform `x.swap(y)`. If the expression turns
+Simply speaking, `hhxx::iswap(x, y)` swaps `x` and `y` in the most specialized
+way possible. It first tries to perform `x.swap(y)`. If the expression turns
 out to be ill-formed, then tries to perform `swap(x, y)` with
 [Argument Dependent Lookup](http://en.cppreference.com/w/cpp/language/adl) (ADL)
 enabled. If ADL failed, then as a last resort, performs `std::swap(x, y)`. So,

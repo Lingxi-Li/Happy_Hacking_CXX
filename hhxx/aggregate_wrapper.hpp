@@ -14,7 +14,7 @@
 namespace hhxx {
 
 /// Since aggregates do not support initialization using the `()` syntax, they
-/// cannot be in-place constructed with the `emplace*()` methods. Wrap them to
+/// cannot be in-place constructed with the `emplace*` methods. Wrap them to
 /// support the `()` initialization syntax and enable in-place construction.
 /// While a default initialized aggregate may have an indeterminate value, this
 /// wrapper class ensures that the wrapped aggregate always has a determinate value.
