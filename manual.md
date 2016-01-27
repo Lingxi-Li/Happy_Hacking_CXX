@@ -111,9 +111,9 @@ could be rewritten as
 cppu::for_each(arr, f);
 ~~~
 
-Advanced uses: `f` may accept a multi-dimensional object. In that case, instead
-of going all the way down to scalar level, `for_each()` stops at the right
-dimension and applies `f` there. For example, you could write something like
+**Advanced uses:** `f` may accept a multi-dimensional object. In that case,
+instead of going all the way down to scalar level, `for_each()` stops at the
+right dimension and applies `f` there. For example, you could write something like
 
 ~~~C++
 int arr[5][5][5] = ...
