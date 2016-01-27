@@ -1,9 +1,9 @@
 // Copyright (c) 2016, Lingxi Li <lilingxi.cs@gmail.com>
 // All rights reserved.
-// CPP Utility Library (https://github.com/Lingxi-Li/CPP_Utility)
+// Happy Hacking CXX Library (https://github.com/Lingxi-Li/Happy_Hacking_CXX)
 
-#ifndef CPPU_AGGREGATE_WRAPPER_HPP_
-#define CPPU_AGGREGATE_WRAPPER_HPP_
+#ifndef HHXX_AGGREGATE_WRAPPER_HPP_
+#define HHXX_AGGREGATE_WRAPPER_HPP_
 
 #include <cstddef>
 
@@ -11,7 +11,7 @@
 #include <type_traits>
 #include <utility>
 
-namespace cppu {
+namespace hhxx {
 
 /// Since aggregates do not support initialization using the `()` syntax, they
 /// cannot be in-place constructed with the `emplace*()` methods. Wrap them to
@@ -96,6 +96,6 @@ wrap_aggregate(T&& x) {
   return std::forward<T>(x);
 }
 
-} // namespace cppu
+} // namespace hhxx
 
-#endif // CPPU_AGGREGATE_WRAPPER_HPP_
+#endif // HHXX_AGGREGATE_WRAPPER_HPP_

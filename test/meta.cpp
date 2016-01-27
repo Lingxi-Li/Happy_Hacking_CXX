@@ -1,22 +1,22 @@
 // Copyright (c) 2016, Lingxi Li <lilingxi.cs@gmail.com>
 // All rights reserved.
-// CPP Utility Library (https://github.com/Lingxi-Li/CPP_Utility)
+// Happy Hacking CXX Library (https://github.com/Lingxi-Li/Happy_Hacking_CXX)
 
-#include <cppu/meta.hpp>
-#include <cppu/meta.hpp>
+#include <hhxx/meta.hpp>
+#include <hhxx/meta.hpp>
 
 #include <vector>
 
 #include <gtest/gtest.h>
 
 TEST(enable_if_well_formed, basic) {
-  using cppu::enable_if_well_formed_t;
+  using hhxx::enable_if_well_formed_t;
   static_assert(std::is_same<void, enable_if_well_formed_t<decltype(0)>>::value, "");
   static_assert(std::is_same<int, enable_if_well_formed_t<decltype(0), int>>::value, "");
 }
 
 TEST(multi_array, basic) {
-  using cppu::multi_array_t;
+  using hhxx::multi_array_t;
   using array1d = std::array<int, 1>;
   using array2d = std::array<array1d, 1>;
   using array3d = std::array<array2d, 1>;
@@ -26,7 +26,7 @@ TEST(multi_array, basic) {
 }
 
 TEST(multi_t, basic) {
-  using cppu::multi_t;
+  using hhxx::multi_t;
   using vec1d = std::vector<int>;
   using vec2d = std::vector<vec1d>;
   using vec3d = std::vector<vec2d>;
@@ -36,7 +36,7 @@ TEST(multi_t, basic) {
 }
 
 TEST(make_multi, basic) {
-  using cppu::make_multi;
+  using hhxx::make_multi;
   using vec1d = std::vector<int>;
   using vec2d = std::vector<vec1d>;
   using vec3d = std::vector<vec2d>;

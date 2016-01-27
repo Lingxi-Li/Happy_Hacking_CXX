@@ -1,9 +1,9 @@
 // Copyright (c) 2016, Lingxi Li <lilingxi.cs@gmail.com>
 // All rights reserved.
-// CPP Utility Library (https://github.com/Lingxi-Li/CPP_Utility)
+// Happy Hacking CXX Library (https://github.com/Lingxi-Li/Happy_Hacking_CXX)
 
-#ifndef CPPU_ALGORITHM_HPP_
-#define CPPU_ALGORITHM_HPP_
+#ifndef HHXX_ALGORITHM_HPP_
+#define HHXX_ALGORITHM_HPP_
 
 #include <algorithm>
 #include <array>
@@ -12,7 +12,7 @@
 
 #include "meta.hpp"
 
-namespace cppu {
+namespace hhxx {
 
 namespace detail {
 
@@ -103,6 +103,6 @@ void for_each(T& obj, F f) {
   detail::for_each(obj, f, ' ');
 }
 
-} // namespace cppu
+} // namespace hhxx
 
-#endif // CPPU_ALGORITHM_HPP_
+#endif // HHXX_ALGORITHM_HPP_

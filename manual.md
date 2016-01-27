@@ -1,6 +1,6 @@
-# [CPPU](https://github.com/Lingxi-Li/CPP_Utility) Reference Manual
+# [HHXX](https://github.com/Lingxi-Li/Happy_Hacking_CXX) Reference Manual
 
-Trinkets and extensions to modern C++
+*Hackish trinkets and extensions to modern C++*
 
 ## Headers
 
@@ -108,7 +108,7 @@ for (auto& slice : arr) {
 could be rewritten as
 
 ~~~C++
-cppu::for_each(arr, f);
+hhxx::for_each(arr, f);
 ~~~
 
 **Advanced uses:** `f` may accept a multi-dimensional object. In that case,
@@ -118,7 +118,7 @@ right dimension and applies `f` there. For example, you could write something li
 ~~~C++
 int arr[5][5][5] = ...
 auto f = [](int (&row)[5]) { ... };
-cppu::for_each(arr, f);
+hhxx::for_each(arr, f);
 ~~~
 
 ----------------------------------------
@@ -185,7 +185,7 @@ std::function<void(char)> f = func;
 f = gunc;
 ~~~
 
-It does compile after replacing `std::function` with `cppu::function`.
+It does compile after replacing `std::function` with `hhxx::function`.
 
 ----------------------------------------
 

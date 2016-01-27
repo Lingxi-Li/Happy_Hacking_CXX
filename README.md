@@ -1,8 +1,8 @@
-# CPP Utility Library (CPPU)
+# Happy Hacking CXX Library (HHXX) CXX
 
-Trinkets and extensions to modern C++
+*Hackish trinkets and extensions to modern C++*
 
-The following two examples should give you a general idea of what CPPU is all about.
+The following two examples should give you a general idea of what HHXX is all about.
 
 **A. Universal `for_each()`**
 
@@ -18,31 +18,31 @@ for (auto& slice : obj_3d) {
 }
 ~~~
 
-With [`cppu::for_each()`](https://github.com/Lingxi-Li/CPP_Utility/blob/master/manual.md#for_each),
+With [`hhxx::for_each()`](https://github.com/Lingxi-Li/Happy_Hacking_CXX/blob/master/manual.md#for_each),
 you can simply 
 
 ~~~C++
-cppu::for_each(obj_3d, f);
+hhxx::for_each(obj_3d, f);
 ~~~
 
 Truth is it works for objects of any dimensions, even scalars!
 Credit goes to @Arcoth (you rock!).
 
-**B. Why should I use `cppu::iswap(x, y)` to swap `x` and `y`?**
+**B. Why should I use `hhxx::iswap(x, y)` to swap `x` and `y`?**
 
-`cppu::iswap(x, y)` first tries to perform `x.swap(y)`. If the expression turns
+`hhxx::iswap(x, y)` first tries to perform `x.swap(y)`. If the expression turns
 out to be ill-formed, then tries to perform `swap(x, y)` with
 [Argument Dependent Lookup](http://en.cppreference.com/w/cpp/language/adl) (ADL)
 enabled. If ADL failed, then as a last resort, performs `std::swap(x, y)`. So,
-stay with [`cppu::iswap()`](https://github.com/Lingxi-Li/CPP_Utility/blob/master/manual.md#iswap)
+stay with [`hhxx::iswap()`](https://github.com/Lingxi-Li/Happy_Hacking_CXX/blob/master/manual.md#iswap)
 and be happy ever since :smile_cat:
 
-Feel interested and want to see what else CPPU has to offer? There is a reference
-[manual](https://github.com/Lingxi-Li/CPP_Utility/blob/master/manual.md)
+Feel interested and want to see what else HHXX has to offer? There is a reference
+[manual](https://github.com/Lingxi-Li/Happy_Hacking_CXX/blob/master/manual.md)
 prepared just for you. So check it out.
 
-Got some shiny trinkets yourself? Please do share them with us. We invite you to
-join the party and play together~ :tada:
+Got some nice hackish trinkets yourself? Please do share them with us. We invite
+you to join the party and play together~ :tada:
 
 - [Dependencies](#depend)
 - [File Structure](#struct)
@@ -59,7 +59,7 @@ join the party and play together~ :tada:
 ## File Structure
 
 ~~~
-cppu/.........library header directory
+hhxx/.........library header directory
 test/.........unit tests directory
 manual.md.....reference manual
 README.md
@@ -69,9 +69,9 @@ LICENSE
 <a name="build"></a>
 ## Build Instructions
 
-Currently, CPPU is header-only. Add the directory containing `cppu` to include
-path and you are ready to go. To build the unit tests, you need to link with
-gtest (`gtest` and `gtest_main`).
+Currently, HHXX is header-only. Add the directory containing `hhxx` to your
+include path and you are ready to go. To build the unit tests, you need to link
+with gtest (`gtest` and [`gtest_main`](https://github.com/google/googletest/blob/master/googletest/docs/Primer.md#writing-the-main-function)).
 
 <a name="license"></a>
 ## License

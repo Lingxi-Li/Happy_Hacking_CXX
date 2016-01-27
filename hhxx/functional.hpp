@@ -1,9 +1,9 @@
 // Copyright (c) 2016, Lingxi Li <lilingxi.cs@gmail.com>
 // All rights reserved.
-// CPP Utility Library (https://github.com/Lingxi-Li/CPP_Utility)
+// Happy Hacking CXX Library (https://github.com/Lingxi-Li/Happy_Hacking_CXX)
 
-#ifndef CPPU_FUNCTIONAL_HPP_
-#define CPPU_FUNCTIONAL_HPP_
+#ifndef HHXX_FUNCTIONAL_HPP_
+#define HHXX_FUNCTIONAL_HPP_
 
 #include <cstddef>
 
@@ -11,7 +11,7 @@
 #include <type_traits>
 #include <utility>
 
-namespace cppu {
+namespace hhxx {
 
 template <typename>
 class function;
@@ -84,10 +84,10 @@ public:
 } namespace std {
 
 template <typename R, typename... Args, typename Alloc>
-struct uses_allocator<cppu::function<R(Args...)>, Alloc> : true_type {};
+struct uses_allocator<hhxx::function<R(Args...)>, Alloc> : true_type {};
 
-} namespace cppu {
+} namespace hhxx {
 
-} // namespace cppu
+} // namespace hhxx
 
-#endif // CPPU_FUNCTIONAL_HPP_
+#endif // HHXX_FUNCTIONAL_HPP_

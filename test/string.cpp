@@ -1,9 +1,9 @@
 // Copyright (c) 2016, Lingxi Li <lilingxi.cs@gmail.com>
 // All rights reserved.
-// CPP Utility Library (https://github.com/Lingxi-Li/CPP_Utility)
+// Happy Hacking CXX Library (https://github.com/Lingxi-Li/Happy_Hacking_CXX)
 
-#include <cppu/string.hpp>
-#include <cppu/string.hpp>
+#include <hhxx/string.hpp>
+#include <hhxx/string.hpp>
 
 #include <cstddef>
 
@@ -39,7 +39,7 @@ struct to_xstring_test : testing::Test {
 
   template <typename T>
   static auto to_xstring(const T& x) {
-    return cppu::to_xstring<chr_t>(x);
+    return hhxx::to_xstring<chr_t>(x);
   }
 
   static void basic() {

@@ -1,9 +1,9 @@
 // Copyright (c) 2016, Lingxi Li <lilingxi.cs@gmail.com>
 // All rights reserved.
-// CPP Utility Library (https://github.com/Lingxi-Li/CPP_Utility)
+// Happy Hacking CXX Library (https://github.com/Lingxi-Li/Happy_Hacking_CXX)
 
-#ifndef CPPU_STRING_HPP_
-#define CPPU_STRING_HPP_
+#ifndef HHXX_STRING_HPP_
+#define HHXX_STRING_HPP_
 
 #include <cctype>
 #include <cstring>
@@ -11,7 +11,7 @@
 #include <string>
 #include <type_traits>
 
-namespace cppu {
+namespace hhxx {
 
 /// Calls either `to_string(x)` or `to_wstring(x)` based on `CharT`. Looking up
 /// `to_string()`/`to_xstring()` in both namespace `std` and that of `T` (by ADL).
@@ -33,6 +33,6 @@ std::wstring to_xstring(const T& x) {
   return to_wstring(x);
 }
 
-} // namespace cppu
+} // namespace hhxx
 
-#endif // CPPU_STRING_HPP_
+#endif // HHXX_STRING_HPP_

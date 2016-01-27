@@ -1,9 +1,9 @@
 // Copyright (c) 2016, Lingxi Li <lilingxi.cs@gmail.com>
 // All rights reserved.
-// CPP Utility Library (https://github.com/Lingxi-Li/CPP_Utility)
+// Happy Hacking CXX Library (https://github.com/Lingxi-Li/Happy_Hacking_CXX)
 
-#include <cppu/aggregate_wrapper.hpp>
-#include <cppu/aggregate_wrapper.hpp>
+#include <hhxx/aggregate_wrapper.hpp>
+#include <hhxx/aggregate_wrapper.hpp>
 
 #include <array>
 #include <memory>
@@ -31,7 +31,7 @@ TEST(aggregate_wrapper, construction) {
   // basic
   {
     using foo_t = aggregate_wrapper_test_ns::foo_t;
-    using wrapper = cppu::aggregate_wrapper<foo_t>;
+    using wrapper = hhxx::aggregate_wrapper<foo_t>;
     static_assert(std::is_same<foo_t, wrapper::aggregate_type>{}, "");
     static_assert(! std::is_constructible<wrapper, int, int, int>{}, "");
     wrapper a;
@@ -58,13 +58,13 @@ TEST(aggregate_wrapper, construction) {
   }
   // array
   {
-    cppu::aggregate_wrapper<int[3]> x;
+    hhxx::aggregate_wrapper<int[3]> x;
     EXPECT_EQ(3u, x.size());
     EXPECT_EQ(0, x[0]);
     EXPECT_EQ(0, x[1]);
     EXPECT_EQ(0, x[2]);
     using foo_t = std::unique_ptr<int>[3];
-    using wrapper = cppu::aggregate_wrapper<foo_t>;
+    using wrapper = hhxx::aggregate_wrapper<foo_t>;
     using ptr_t = std::unique_ptr<int>;
     static_assert(std::is_same<foo_t, wrapper::aggregate_type>::value, "");
     static_assert(std::is_constructible<wrapper, ptr_t&&, ptr_t&&, ptr_t&&>{}, "");
@@ -94,7 +94,7 @@ TEST(aggregate_wrapper, construction) {
   // std::array
   {
     using foo_t = std::array<std::unique_ptr<int>, 3>;
-    using wrapper = cppu::aggregate_wrapper<foo_t>;
+    using wrapper = hhxx::aggregate_wrapper<foo_t>;
     static_assert(std::is_same<foo_t, wrapper::aggregate_type>::value, "");
     using ptr_t = std::unique_ptr<int>;
     static_assert(std::is_constructible<wrapper, ptr_t&&, ptr_t&&, ptr_t&&>{}, "");
@@ -129,7 +129,7 @@ TEST(aggregate_wrapper, assignment) {
   // basic
   {
     using foo_t = aggregate_wrapper_test_ns::foo_t;
-    using wrapper = cppu::aggregate_wrapper<foo_t>;
+    using wrapper = hhxx::aggregate_wrapper<foo_t>;
     wrapper a;
     wrapper b(1, 2);
     static_assert(std::is_same<wrapper&, decltype(a = std::move(b))>::value, "");
@@ -145,7 +145,7 @@ TEST(aggregate_wrapper, assignment) {
   // array
   {
     using foo_t = std::unique_ptr<int>[3];
-    using wrapper = cppu::aggregate_wrapper<foo_t>;
+    using wrapper = hhxx::aggregate_wrapper<foo_t>;
     wrapper a;
     wrapper b(make(1), make(2));
     static_assert(std::is_same<wrapper&, decltype(a = std::move(b))>::value, "");
@@ -161,7 +161,7 @@ TEST(aggregate_wrapper, assignment) {
   // std::array
   {
     using foo_t = std::array<std::unique_ptr<int>, 3>;
-    using wrapper = cppu::aggregate_wrapper<foo_t>;
+    using wrapper = hhxx::aggregate_wrapper<foo_t>;
     wrapper a;
     wrapper b(make(1), make(2));
     static_assert(std::is_same<wrapper&, decltype(a = std::move(b))>::value, "");
@@ -181,30 +181,30 @@ TEST(aggregate_wrapper, wrap_aggregate) {
   // basic
   {
     using foo_t = aggregate_wrapper_test_ns::foo_t;
-    using wrapper = cppu::aggregate_wrapper<foo_t>;
+    using wrapper = hhxx::aggregate_wrapper<foo_t>;
     foo_t base{ 1, 2 };
-    static_assert(std::is_same<wrapper, decltype(cppu::wrap_aggregate(std::move(base)))>::value, "");
-    auto a = cppu::wrap_aggregate(std::move(base));
+    static_assert(std::is_same<wrapper, decltype(hhxx::wrap_aggregate(std::move(base)))>::value, "");
+    auto a = hhxx::wrap_aggregate(std::move(base));
     EXPECT_EQ(1, a.v0);
     EXPECT_EQ(2, a.v1);
   }
   // array
   {
     using foo_t = std::unique_ptr<int>[3];
-    using wrapper = cppu::aggregate_wrapper<foo_t>;
+    using wrapper = hhxx::aggregate_wrapper<foo_t>;
     foo_t base{ make(1), make(2) };
-    static_assert(std::is_same<wrapper, decltype(cppu::wrap_aggregate(std::move(base)))>::value, "");
-    auto a = cppu::wrap_aggregate(std::move(base));
+    static_assert(std::is_same<wrapper, decltype(hhxx::wrap_aggregate(std::move(base)))>::value, "");
+    auto a = hhxx::wrap_aggregate(std::move(base));
     EXPECT_EQ(1, *a[0]);
     EXPECT_EQ(2, *a[1]);
   }
   // std::array
   {
     using foo_t = std::array<std::unique_ptr<int>, 3>;
-    using wrapper = cppu::aggregate_wrapper<foo_t>;
+    using wrapper = hhxx::aggregate_wrapper<foo_t>;
     foo_t base{ make(1), make(2) };
-    static_assert(std::is_same<wrapper, decltype(cppu::wrap_aggregate(std::move(base)))>::value, "");
-    auto a = cppu::wrap_aggregate(std::move(base));
+    static_assert(std::is_same<wrapper, decltype(hhxx::wrap_aggregate(std::move(base)))>::value, "");
+    auto a = hhxx::wrap_aggregate(std::move(base));
     EXPECT_EQ(1, *a[0]);
     EXPECT_EQ(2, *a[1]);
   }

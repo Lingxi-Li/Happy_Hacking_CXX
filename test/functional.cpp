@@ -1,9 +1,9 @@
 // Copyright (c) 2016, Lingxi Li <lilingxi.cs@gmail.com>
 // All rights reserved.
-// CPP Utility Library (https://github.com/Lingxi-Li/CPP_Utility)
+// Happy Hacking CXX Library (https://github.com/Lingxi-Li/Happy_Hacking_CXX)
 
-#include <cppu/functional.hpp>
-#include <cppu/functional.hpp>
+#include <hhxx/functional.hpp>
+#include <hhxx/functional.hpp>
 
 #include <string>
 #include <type_traits>
@@ -22,7 +22,7 @@ bool func(std::string) {
   return true;
 }
 
-bool func(cppu::function<void()>) {
+bool func(hhxx::function<void()>) {
   return false;
 }
 
@@ -35,7 +35,7 @@ struct null_t {
 } // namespace function_test_ns
 
 TEST(function, construction) {
-  using func_t = cppu::function<int(int)>;
+  using func_t = hhxx::function<int(int)>;
   using std_func_t = std::function<int(int)>;
   std::allocator<char> alloc;
   auto lambda = [](int x) { return x; };
@@ -63,7 +63,7 @@ TEST(function, construction) {
 }
 
 TEST(function, assignment) {
-  using func_t = cppu::function<int(int)>;
+  using func_t = hhxx::function<int(int)>;
   using std_func_t = std::function<int(int)>;
   std::allocator<char> alloc;
   auto lambda = [](int x) { return x; };
@@ -102,11 +102,11 @@ TEST(function, assignment) {
 }
 
 TEST(function, overload_resolution) {
-  using func_t = cppu::function<int(int)>;
+  using func_t = hhxx::function<int(int)>;
   auto lambda = [](int x) { return x; };
   // despite implicit conversion from `const char*` to `std::string`,
   // should resolve to `func(std::string)` instead of
-  // `func(cppu::function<void()>)` and compile
+  // `func(hhxx::function<void()>)` and compile
   EXPECT_TRUE(function_test_ns::func("test"));
   func_t f = lambda;
   // despite implicit conversion from `null_t` to `std::nullptr_t`,
@@ -117,7 +117,7 @@ TEST(function, overload_resolution) {
 }
 
 TEST(function, other) {
-  using func_t = cppu::function<int(int)>;
+  using func_t = hhxx::function<int(int)>;
   auto lambda = [](int x) { return x; };
   // swap
   func_t f1;

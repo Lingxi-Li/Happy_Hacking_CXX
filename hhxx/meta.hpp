@@ -1,15 +1,15 @@
 // Copyright (c) 2016, Lingxi Li <lilingxi.cs@gmail.com>
 // All rights reserved.
-// CPP Utility Library (https://github.com/Lingxi-Li/CPP_Utility)
+// Happy Hacking CXX Library (https://github.com/Lingxi-Li/Happy_Hacking_CXX)
 
-#ifndef CPPU_META_HPP_
-#define CPPU_META_HPP_
+#ifndef HHXX_META_HPP_
+#define HHXX_META_HPP_
 
 #include <array>
 #include <type_traits>
 #include <utility>
 
-namespace cppu {
+namespace hhxx {
 
 /// Counterpart to `std::enable_if_t`. Instead of checking a value be true,
 /// this one checks an expression be well-formed. Specifically,
@@ -75,6 +75,6 @@ auto make_multi(const Base& init_val, N n, Ts... ns) {
            n, make_multi<T>(init_val, ns...));
 }
 
-} // namespace cppu
+} // namespace hhxx
 
-#endif // CPPU_META_HPP_
+#endif // HHXX_META_HPP_

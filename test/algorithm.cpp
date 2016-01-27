@@ -1,9 +1,9 @@
 // Copyright (c) 2016, Lingxi Li <lilingxi.cs@gmail.com>
 // All rights reserved.
-// CPP Utility Library (https://github.com/Lingxi-Li/CPP_Utility)
+// Happy Hacking CXX Library (https://github.com/Lingxi-Li/Happy_Hacking_CXX)
 
-#include <cppu/algorithm.hpp>
-#include <cppu/algorithm.hpp>
+#include <hhxx/algorithm.hpp>
+#include <hhxx/algorithm.hpp>
 
 #include <array>
 #include <vector>
@@ -39,7 +39,7 @@ void swap(free_adl_swap_t& x, free_adl_swap_t& y) {
 
 } // namespace swap_test_ns
 
-namespace cppu {
+namespace hhxx {
 
 struct swap_test_no_swap_t {
   int v;
@@ -66,22 +66,22 @@ void swap(swap_test_free_adl_swap_t& x, swap_test_free_adl_swap_t& y) {
   ++y.v;
 }
 
-} // namespace cppu
+} // namespace hhxx
 
 TEST(swap, member_swap) {
   {
     using obj_t = swap_test_ns::member_swap_t;
     obj_t x{0};
     obj_t y{1};
-    cppu::iswap(x, y);
+    hhxx::iswap(x, y);
     EXPECT_EQ(2, x.v);
     EXPECT_EQ(1, y.v);
   }
   {
-    using obj_t = cppu::swap_test_member_swap_t;
+    using obj_t = hhxx::swap_test_member_swap_t;
     obj_t x{0};
     obj_t y{1};
-    cppu::iswap(x, y);
+    hhxx::iswap(x, y);
     EXPECT_EQ(2, x.v);
     EXPECT_EQ(1, y.v);
   }
@@ -92,15 +92,15 @@ TEST(swap, free_adl_swap) {
     using obj_t = swap_test_ns::free_adl_swap_t;
     obj_t x{0};
     obj_t y{1};
-    cppu::iswap(x, y);
+    hhxx::iswap(x, y);
     EXPECT_EQ(2, x.v);
     EXPECT_EQ(1, y.v);
   }
   {
-    using obj_t = cppu::swap_test_free_adl_swap_t;
+    using obj_t = hhxx::swap_test_free_adl_swap_t;
     obj_t x{0};
     obj_t y{1};
-    cppu::iswap(x, y);
+    hhxx::iswap(x, y);
     EXPECT_EQ(2, x.v);
     EXPECT_EQ(1, y.v);
   }
@@ -111,7 +111,7 @@ TEST(swap, free_std_swap) {
     // ADL doesn't apply to primitive types
     int x = 0;
     int y = 1;
-    cppu::iswap(x, y);
+    hhxx::iswap(x, y);
     EXPECT_EQ(1, x);
     EXPECT_EQ(0, y);
   }
@@ -119,15 +119,15 @@ TEST(swap, free_std_swap) {
     using obj_t = swap_test_ns::no_swap_t;
     obj_t x = {0};
     obj_t y = {1};
-    cppu::iswap(x, y);
+    hhxx::iswap(x, y);
     EXPECT_EQ(1, x.v);
     EXPECT_EQ(0, y.v);
   }
   {
-    using obj_t = cppu::swap_test_no_swap_t;
+    using obj_t = hhxx::swap_test_no_swap_t;
     obj_t x = {0};
     obj_t y = {1};
-    cppu::iswap(x, y);
+    hhxx::iswap(x, y);
     EXPECT_EQ(1, x.v);
     EXPECT_EQ(0, y.v);
   }
@@ -137,7 +137,7 @@ TEST(swap, member_swap_array) {
   using obj_t = swap_test_ns::member_swap_t;
   obj_t x[] = { {0}, {0} };
   obj_t y[] = { {1}, {1} };
-  cppu::iswap(x, y);
+  hhxx::iswap(x, y);
   for (int i = 0; i < 2; ++i) {
     EXPECT_EQ(2, x[i].v);
     EXPECT_EQ(1, y[i].v);
@@ -148,7 +148,7 @@ TEST(swap, free_adl_swap_array) {
   using obj_t = swap_test_ns::free_adl_swap_t;
   obj_t x[] = { {0}, {0} };
   obj_t y[] = { {1}, {1} };
-  cppu::iswap(x, y);
+  hhxx::iswap(x, y);
   for (int i = 0; i < 2; ++i) {
     EXPECT_EQ(2, x[i].v);
     EXPECT_EQ(1, y[i].v);
@@ -159,7 +159,7 @@ TEST(swap, free_std_swap_array) {
   // ADL doesn't apply to primitive types
   int x[] = { 0, 0 };
   int y[] = { 1, 1 };
-  cppu::iswap(x, y);
+  hhxx::iswap(x, y);
   for (int i = 0; i < 2; ++i) {
     EXPECT_EQ(1, x[i]);
     EXPECT_EQ(0, y[i]);
@@ -172,7 +172,7 @@ TEST(swap, member_swap_array_recursive) {
                     { {0}, {0} } };
   obj_t y[2][2] = { { {1}, {1} },
                     { {1}, {1} } };
-  cppu::iswap(x, y);
+  hhxx::iswap(x, y);
   for (int i = 0; i < 2; ++i) {
     for (int j = 0; j < 2; ++j) {
       EXPECT_EQ(2, x[i][j].v);
@@ -187,7 +187,7 @@ TEST(swap, free_adl_swap_array_recursive) {
                     { {0}, {0} } };
   obj_t y[2][2] = { { {1}, {1} },
                     { {1}, {1} } };
-  cppu::iswap(x, y);
+  hhxx::iswap(x, y);
   for (int i = 0; i < 2; ++i) {
     for (int j = 0; j < 2; ++j) {
       EXPECT_EQ(2, x[i][j].v);
@@ -202,7 +202,7 @@ TEST(swap, free_std_swap_array_recursive) {
                   { 0, 0 } };
   int y[2][2] = { { 1, 1 },
                   { 1, 1 } };
-  cppu::iswap(x, y);
+  hhxx::iswap(x, y);
   for (int i = 0; i < 2; ++i) {
     for (int j = 0; j < 2; ++j) {
       EXPECT_EQ(1, x[i][j]);
@@ -216,7 +216,7 @@ TEST(swap, member_swap_std_array) {
   using array_t = std::array<obj_t, 2>;
   array_t x = {{ {0}, {0} }};
   array_t y = {{ {1}, {1} }};
-  cppu::iswap(x, y);
+  hhxx::iswap(x, y);
   for (int i = 0; i < 2; ++i) {
     EXPECT_EQ(2, x[i].v);
     EXPECT_EQ(1, y[i].v);
@@ -228,7 +228,7 @@ TEST(swap, free_adl_swap_std_array) {
   using array_t = std::array<obj_t, 2>;
   array_t x = {{ {0}, {0} }};
   array_t y = {{ {1}, {1} }};
-  cppu::iswap(x, y);
+  hhxx::iswap(x, y);
   for (int i = 0; i < 2; ++i) {
     EXPECT_EQ(2, x[i].v);
     EXPECT_EQ(1, y[i].v);
@@ -240,7 +240,7 @@ TEST(swap, free_std_swap_std_array) {
   using array_t = std::array<int, 2>;
   array_t x = {{ 0, 0 }};
   array_t y = {{ 1, 1 }};
-  cppu::iswap(x, y);
+  hhxx::iswap(x, y);
   for (int i = 0; i < 2; ++i) {
     EXPECT_EQ(1, x[i]);
     EXPECT_EQ(0, y[i]);
@@ -254,7 +254,7 @@ TEST(swap, member_swap_std_array_recursive) {
                  {{ {0}, {0} }} }};
   array_t y = {{ {{ {1}, {1} }},
                  {{ {1}, {1} }} }};
-  cppu::iswap(x, y);
+  hhxx::iswap(x, y);
   for (int i = 0; i < 2; ++i) {
     for (int j = 0; j < 2; ++j) {
       EXPECT_EQ(2, x[i][j].v);
@@ -270,7 +270,7 @@ TEST(swap, free_adl_swap_std_array_recursive) {
                  {{ {0}, {0} }} }};
   array_t y = {{ {{ {1}, {1} }},
                  {{ {1}, {1} }} }};
-  cppu::iswap(x, y);
+  hhxx::iswap(x, y);
   for (int i = 0; i < 2; ++i) {
     for (int j = 0; j < 2; ++j) {
       EXPECT_EQ(2, x[i][j].v);
@@ -286,7 +286,7 @@ TEST(swap, free_std_swap_std_array_recursive) {
                  {{ 0, 0 }} }};
   array_t y = {{ {{ 1, 1 }},
                  {{ 1, 1 }} }};
-  cppu::iswap(x, y);
+  hhxx::iswap(x, y);
   for (int i = 0; i < 2; ++i) {
     for (int j = 0; j < 2; ++j) {
       EXPECT_EQ(1, x[i][j]);
@@ -298,9 +298,9 @@ TEST(swap, free_std_swap_std_array_recursive) {
 ////////////////////////////////////////
 
 TEST(min, basic) {
-  EXPECT_EQ(0, cppu::min(0));
-  EXPECT_EQ(-1, cppu::min(-1, 0, 1));
-  EXPECT_EQ(0, cppu::min(0, 1));
+  EXPECT_EQ(0, hhxx::min(0));
+  EXPECT_EQ(-1, hhxx::min(-1, 0, 1));
+  EXPECT_EQ(0, hhxx::min(0, 1));
 }
 
 TEST(min, extended) {
@@ -308,14 +308,14 @@ TEST(min, extended) {
   vec_t a{0};
   vec_t b{1};
   vec_t c{2};
-  EXPECT_EQ(&a, &cppu::min(a, b, c));
-  EXPECT_EQ(&a, &cppu::min(a, b));
+  EXPECT_EQ(&a, &hhxx::min(a, b, c));
+  EXPECT_EQ(&a, &hhxx::min(a, b));
 }
 
 TEST(max, basic) {
-  EXPECT_EQ(0, cppu::max(0));
-  EXPECT_EQ(1, cppu::max(-1, 0, 1));
-  EXPECT_EQ(1, cppu::max(0, 1));
+  EXPECT_EQ(0, hhxx::max(0));
+  EXPECT_EQ(1, hhxx::max(-1, 0, 1));
+  EXPECT_EQ(1, hhxx::max(0, 1));
 }
 
 TEST(max, extended) {
@@ -323,14 +323,14 @@ TEST(max, extended) {
   vec_t a{0};
   vec_t b{1};
   vec_t c{2};
-  EXPECT_EQ(&c, &cppu::max(a, b, c));
-  EXPECT_EQ(&b, &cppu::max(a, b));
+  EXPECT_EQ(&c, &hhxx::max(a, b, c));
+  EXPECT_EQ(&b, &hhxx::max(a, b));
 }
 
 ////////////////////////////////////////
 
 TEST(for_each, trivial) {
-  using cppu::for_each;
+  using hhxx::for_each;
   auto f = [](int& x) { x = 2; };
   int v = 0;
   for_each(v, f);
@@ -353,7 +353,7 @@ TEST(for_each, trivial) {
 }
 
 TEST(for_each, multi) {
-  using cppu::for_each;
+  using hhxx::for_each;
   int a[3][3] = {};
   auto f = [](int& x) { x = 2; };
   for_each(a, f);
