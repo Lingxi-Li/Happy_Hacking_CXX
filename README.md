@@ -8,7 +8,7 @@ The following two examples should give you a general idea of what HHXX is all ab
 
 Guess you already know about [`std::for_each()`](http://en.cppreference.com/w/cpp/algorithm/for_each).
 It doesn't help when things get high(-dimensional). Following is the best you
-can do about a 3-dimensional object using `std::for_each()`
+can do about a three-dimensional object using `std::for_each()`
 
 ~~~C++
 for (auto& slice : obj_3d) {
@@ -41,7 +41,7 @@ Feel interested and want to see what else HHXX has to offer? There is a referenc
 [manual](https://github.com/Lingxi-Li/Happy_Hacking_CXX/blob/master/manual.md)
 prepared just for you. So check it out.
 
-Got some nice hackish trinkets yourself? Please do share them with us. We invite
+Got some nice trinkets yourself? Please do share them with us. We invite
 you to join the party and play together~ :tada:
 
 - [Dependencies](#depend)
