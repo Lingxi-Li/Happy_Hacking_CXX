@@ -1,4 +1,4 @@
-# Happy Hacking CXX Library (HHXX) CXX
+# Happy Hacking CXX Library (HHXX)
 
 *Hackish trinkets and extensions to modern C++*
 
