@@ -21,39 +21,56 @@ Trinkets and extensions to modern C++
 
 <a name="aggregate_wrapper"></a>
 ~~~C++
+/// Primary template for wrapping non-array aggregate type `T`.
 template <typename T>
-class aggregate_wrapper {
+class aggregate_wrapper : public T {
 public:
   using aggregate_type = T;
 
-  // only enabled when `T` is constructible from `xs...`
+  /// Forwarding constructor that enables the `()` initialization syntax and
+  /// in-place construction. The wrapped aggregate is list-initialized using
+  /// the forwarded arguments. Enabled only when the aggregate is initializable
+  /// from the arguments. When no argument is provided, value-initialization is
+  /// performed.
   template <typename... Ts>
   aggregate_wrapper(Ts&&... xs);
 };
 
+/// Specialized template for wrapping array type `T[n]`.
 template <typename T, std::size_t n>
 class aggregate_wrapper<T[n]> {
 public:
   using aggregate_type = T[n];
 
-  // only enabled when `T[n]` is constructible from `xs...`
   template <typename... Ts>
   aggregate_wrapper(Ts&&... xs);
+  
+  /// You can't initialize an array directly from another. The constructor
+  /// default initializes the wrapped array, and then copies/moves each element
+  /// from `arr` to it.
+  
   aggregate_wrapper(const aggregate_type& arr);
   aggregate_wrapper(aggregate_type&& arr);
 
+  /// Provides transparent access to the wrapped array.
+  
   operator T* ();
   operator const T* () const;
-  
+
+  /// Returns the size of the wrapped array.
   std::size_t size() const;
 };
 
+/// Makes an `aggregate_wrapper` that wraps `x`.
 template <typename T>
 auto wrap_aggregate(T&& x);
 ~~~
 
-Wraps aggregates and provides a variadic forwarding constructor. Enables
-in-place construction. Value initializes the aggregate when default constructed.
+Since aggregates do not support initialization using the `()` syntax, they
+cannot be in-place constructed with the `emplace*()` methods. Wrap them to
+support the `()` initialization syntax and enable in-place construction.
+While a default initialized aggregate may have an indeterminate value, this
+wrapper class ensures that the wrapped aggregate always has a determinate value.
 
 ----------------------------------------
 
@@ -74,7 +91,35 @@ void for_each(T& obj, F f);
 ~~~
 
 Applies `f` to each element of `obj`. `obj` may be a scalar, a linear
-one-dimensional object, or a multi-dimensional object.
+one-dimensional object, or a multi-dimensional object. `T` may be an array
+or standard container type. As an example, the code
+
+~~~C++
+int arr[5][5][5] = ...
+for (auto& slice : arr) {
+  for (auto& row : slice) {
+    for (auto& col : row) {
+      f(col);
+    }
+  }
+}
+~~~
+
+could be rewritten as
+
+~~~C++
+cppu::for_each(arr, f);
+~~~
+
+Advanced uses: `f` may accept a multi-dimensional object. In that case, instead
+of going all the way down to scalar level, `for_each()` stops at the right
+dimension and applies `f` there. For example, you could write something like
+
+~~~C++
+int arr[5][5][5] = ...
+auto f = [](int (&row)[5]) { ... };
+cppu::for_each(arr, f);
+~~~
 
 ----------------------------------------
 
@@ -84,11 +129,11 @@ template <typename T>
 void iswap(T& x, T& y);
 ~~~
 
-**I**ntrospective **swap**. Performs `x.swap(y)` if possible. Otherwise,
-performs `swap(x, y)`, looking up in both namespace `std` and that of `T`
-(by ADL). If `T` is an array or `std::array` type, applies the above operation
-to each pair of elements `x[i]` and `y[i]`. Introspective swap is invoked
-recursively when necessary.
+**I**ntrospective **swap**. Basically swaps `x` and `y`. It performs `x.swap(y)`
+if possible. Otherwise, performs `swap(x, y)`, looking up `swap()` in both
+namespace `std` and that of `T` (by ADL). If `T` is an array or `std::array` type,
+applies the above operation to each pair of elements `x[i]` and `y[i]`.
+Introspective swap is invoked recursively when necessary.
 
 ----------------------------------------
 
@@ -99,7 +144,7 @@ template <template <typename> class Pred = std::less,
 const T& max(const T& x, const Ts&... ys);
 ~~~
 
-Returns the maximum of `x`, `ys...` using `Pred<T>{}`.
+Returns the maximum of `x`, `ys...` using `Pred<T>{}` as the less-than predicate.
 
 ----------------------------------------
 
@@ -110,7 +155,7 @@ template <template <typename> class Pred = std::less,
 const T& min(const T& x, const Ts&... ys);
 ~~~
 
-Returns the minimum of `x`, `ys...` using `Pred<T>{}`.
+Returns the minimum of `x`, `ys...` using `Pred<T>{}` as the less-than predicate.
 
 ----------------------------------------
 
@@ -127,9 +172,20 @@ template <typename R, typename... Args>
 class function<R(Args...)>;
 ~~~
 
-Extended `std::function` capable of disambiguating overloaded function.
-Constructing and assigning from overloaded functions no longer require
-help from the user.
+Extended `std::function` that is capable of disambiguating overloaded function.
+Constructing and assigning from overloaded functions no longer require help from
+the user. For example, the following code does not compile
+
+~~~C++
+void func(char);
+void func(int);
+void gunc(char);
+void gunc(int);
+std::function<void(char)> f = func;
+f = gunc;
+~~~
+
+It does compile after replacing `std::function` with `cppu::function`.
 
 ----------------------------------------
 
@@ -150,8 +206,10 @@ template <typename, typename T = void>
 using enable_if_well_formed_t = T;
 ~~~
 
-Given `enable_if_well_formed_t<decltype(expr), T>`, gets `T` if `expr` is
-well-formed.
+Counterpart to `std::enable_if_t`. Instead of checking a value be true,
+this one checks an expression be well-formed. Specifically,
+`enable_if_well_formed_t<decltype(expr), T>` gets you `T` if `expr` is well-formed.
+In the case `T` is `void`, you could equivalently write `decltype((void)(expr))`.
 
 ----------------------------------------
 
@@ -161,7 +219,9 @@ template <template <typename...> class T, typename Base, std::size_t n>
 using multi_t = ...;
 ~~~
 
-Provides easy syntax for specifying multi-dimensional types. For example,
+Provides easy syntax for specifying multi-dimensional types. `T` specifies the
+container class template. `Base` specifies the element type. `n` specifies the
+number of dimensions. So, it's like `T<Base>` raised to `n`-dimensions. For example,
 `multi_t<std::vector, int, 2>` is equivalent to `std::vector<std::vector<int>>`.
 
 ----------------------------------------
@@ -172,9 +232,10 @@ template <typename T, std::size_t... ns>
 using multi_array_t = ...;
 ~~~
 
-Eases the syntax for specifying multi-dimensional `std::array`.
-`multi_array_t<int, 1, 1>` is equivalent to `std::array<std::array<int, 1>, 1>`
-and so on.
+Provides easy syntax for specifying multi-dimensional `std::array` type. `T`
+specifies the element type, `ns...` specifies the extend of each dimension. So
+`sizeof...(ns)` is the number of dimensions. For example,
+`multi_array_t<int, 2, 3>` is equivalent to `std::array<std::array<int, 3>, 2>`.
 
 ----------------------------------------
 
@@ -184,9 +245,13 @@ template <template <typename...> class T, typename Base, typename... Ts>
 auto make_multi(const Base& init_val, Ts... ns);
 ~~~
 
-Provides easy syntax for creating multi-dimensional objects. For example,
-`make_multi<std::vector>(7, 2, 3)` creates a 2x3 object of type
-`std::vector<std::vector<int>>` with each element being initialized to 7.
+Provides easy syntax for creating dynamic multi-dimensional objects. `T`
+specifies the container class template. `Base` specifies the element type and
+can be automatically deduced from `init_val`. Each element of the constructed
+multi-dimensional object will be initialized to `init_val`. `ns...` specifies
+the extend of each dimension. So, `sizeof...(ns)` is the number of dimensions.
+For example, `make_multi<std::vector>(7, 2, 3)` creates a 2x3 multi-dimensional
+object of type `std::vector<std::vector<int>>` with each element initialized to 7.
 
 ----------------------------------------
 
@@ -203,8 +268,8 @@ template <typename CharT, typename T>
 auto to_xstring(const T& x);
 ~~~
 
-Calls either `to_string(x)` or `to_wstring(x)` based on `CharT`. Lookups in both
-namespace `std` and that of `T` (by ADL). By providing a uniform name, this
-function template facilitates writing generic code.
+Calls either `to_string(x)` or `to_wstring(x)` based on `CharT`. Looking up
+`to_string()`/`to_xstring()` in both namespace `std` and that of `T` (by ADL).
+By providing a uniform name, this function template facilitates writing generic code.
 
 ----------------------------------------

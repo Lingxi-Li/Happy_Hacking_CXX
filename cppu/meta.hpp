@@ -11,8 +11,11 @@
 
 namespace cppu {
 
-/// Given `enable_if_well_formed_t<decltype(expr), T>`,
-/// gets `T` if `expr` is well-formed.
+/// Counterpart to `std::enable_if_t`. Instead of checking a value be true,
+/// this one checks an expression be well-formed. Specifically,
+/// `enable_if_well_formed_t<decltype(expr), T>` gets you `T` if `expr` is
+/// well-formed. In the case `T` is `void`, you could equivalently write
+/// `decltype((void)(expr))`.
 template <typename, typename T = void>
 using enable_if_well_formed_t = T;
 
@@ -26,9 +29,10 @@ struct multi_array<T, n> {
   using type = std::array<T, n>;
 };
 
-/// Provides easy syntax for specifying multi-dimensional `std::array`.
-/// `multi_array_t<int, 1, 1>` is equivalent to `std::array<std::array<int, 1>, 1>`
-/// and so on.
+/// Provides easy syntax for specifying multi-dimensional `std::array` type. `T`
+/// specifies the element type, `ns...` specifies the extend of each dimension.
+/// So `sizeof...(ns)` is the number of dimensions. For example,
+/// `multi_array_t<int, 2, 3>` is equivalent to `std::array<std::array<int, 3>, 2>`.
 template <typename T, std::size_t... ns>
 using multi_array_t = typename multi_array<T, ns...>::type;
 
@@ -44,8 +48,10 @@ struct multi<T, Base, 1> {
 };
 
 /// Provides easy syntax for specifying multi-dimensional types.
-/// For example, `multi_t<std::vector, int, 2>` is equivalent to
-/// `std::vector<std::vector<int>>`.
+/// `T` specifies the container class template. `Base` specifies the
+/// element type. `n` specifies the number of dimensions. So, it's
+/// like `T<Base>` raised to `n`-dimensions. For example,
+/// `multi_t<std::vector, int, 2>` is equivalent to `std::vector<std::vector<int>>`.
 template <template <typename...> class T, typename Base, std::size_t n>
 using multi_t = typename multi<T, Base, n>::type;
 
@@ -54,9 +60,14 @@ auto make_multi(const Base& init_val, N n) {
   return T<Base>(n, init_val);
 }
 
-/// Provides easy syntax for creating multi-dimensional objects. For example,
-/// `make_multi<std::vector>(7, 2, 3)` creates a 2x3 object of type
-/// `std::vector<std::vector<int>>` with each element being initialized to 7.
+// Provides easy syntax for creating dynamic multi-dimensional objects. `T`
+// specifies the container class template. `Base` specifies the element type and
+// can be automatically deduced from `init_val`. Each element of the constructed
+// multi-dimensional object will be initialized to `init_val`. `ns...` specifies
+// the extend of each dimension. So, `sizeof...(ns)` is the number of dimensions.
+// For example, `make_multi<std::vector>(7, 2, 3)` creates a 2x3
+// multi-dimensional object of type `std::vector<std::vector<int>>` with each
+// element initialized to 7.
 template <template <typename...> class T, typename Base,
           typename N, typename... Ts>
 auto make_multi(const Base& init_val, N n, Ts... ns) {

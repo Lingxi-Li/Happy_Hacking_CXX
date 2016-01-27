@@ -16,9 +16,9 @@ namespace cppu {
 template <typename>
 class function;
 
-/// Extended `std::function` capable of disambiguating overloaded function.
-/// Constructing and assigning from overloaded functions no longer require
-/// help from the user.
+/// Extended `std::function` that is capable of disambiguating overloaded
+/// function. Constructing and assigning from overloaded functions no longer
+/// require help from the user.
 template <typename R, typename... Args>
 class function<R(Args...)> : public std::function<R(Args...)> {
 private:

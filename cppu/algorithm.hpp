@@ -46,8 +46,9 @@ void for_each(T& obj, F& f, int) {
 
 } // namespace detail
 
-/// Introspective swap. Performs `x.swap(y)` if possible. Otherwise, performs
-/// `swap(x, y)`, looking up in both namespace `std` and that of `T` (by ADL).
+/// Introspective swap. Basically swaps `x` and `y`. It performs `x.swap(y)` if
+/// possible. Otherwise, performs `swap(x, y)`, looking up `swap()` in both
+/// namespace `std` and that of `T` (by ADL).
 template <typename T>
 void iswap(T& x, T& y) {
   // the last argument makes `detail::iswap(int&, int&, char)`, if enabled,
@@ -93,7 +94,10 @@ const T& max(const T& x, const Ts&... ys) {
 }
 
 /// Applies `f` to each element of `obj`. `obj` may be a scalar, a linear
-/// one-dimensional object, or a multi-dimensional object.
+/// one-dimensional object, or a multi-dimensional object. `T` may be an array
+/// or standard container type. Advanced uses: `f` may accept a multi-dimensional
+/// object. In that case, instead of going all the way down to scalar level,
+/// `for_each()` stops at the right dimension and applies `f` there.
 template <typename T, typename F>
 void for_each(T& obj, F f) {
   detail::for_each(obj, f, ' ');
