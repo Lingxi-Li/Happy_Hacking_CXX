@@ -7,6 +7,7 @@
 [`aggregate_wrapper.hpp`](#aggregate_wrapper_hpp)
 [`algorithm.hpp`](#algorithm_hpp)
 [`functional.hpp`](#functional_hpp)
+[`multi_view.hpp`](#multi_view)
 [`meta.hpp`](#meta_hpp)
 [`string.hpp`](#string_hpp)
 
@@ -197,6 +198,53 @@ f = gunc;
 ~~~
 
 It does compile, however, after replacing `std::function` with `hhxx::function`.
+
+----------------------------------------
+
+<a name="multi_view_hpp"></a>
+### `multi_view.hpp`
+
+[`multi_view`](#multi_view)
+
+----------------------------------------
+
+<a name="multi_view"></a>
+~~~C++
+template <typename Iterator>
+class multi_view {
+public:
+  /// Maximum number of dimensions supported.
+  static constexpr std::size_t max_dim = 10;
+
+  /// `base` is an iterator addressing the first element of a one-dimensional
+  /// object. `extents...` specifies the extent of each dimension of the
+  /// multi-dimensional view. So, `sizeof...(extents)` is the number of dimensions.
+  template <typename... Ts>
+  multi_view(Iterator base, Ts... extents);
+
+  /// Accesses an element. If `sizeof...(indices)` is smaller than the number
+  /// of dimensions, remaining indices are zero filled. If `sizeof...(indices)`
+  /// is larger than the number of dimensions, extra indices are ignored. At
+  /// least one index must be provided.
+  template <typename... Ts>
+  auto operator ()(Ts... indices) const;
+};
+~~~
+
+Provides a multi-dimensional view of a one-dimensional linear object. The
+linear object can then be accessed like a multi-dimensional one. `Iterator`
+specifies the iterator type of the linear object. For example,
+
+~~~C++
+std::vector<int> vec{ 1, 2, 3, 4 };
+hhxx::multi_view<decltype(vec.begin())> view2x2(vec.begin(), 2, 2);
+assert(view2x2(0, 0), 1);
+assert(view2x2(0, 1), 2);
+assert(view2x2(1, 0), 3);
+assert(view2x2(1, 1), 4);
+assert(view2x2(1), 3);
+assert(view2x2(1, 0, 100), 3);
+~~~
 
 ----------------------------------------
 
