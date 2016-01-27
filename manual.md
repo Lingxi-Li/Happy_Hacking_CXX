@@ -4,19 +4,12 @@
 
 ## Headers
 
-[`aggregate_wrapper.hpp`](#aggregate_wrapper_hpp)
+[`aggregate_wrapper.hpp`](#aggregate_wrapper)
 [`algorithm.hpp`](#algorithm_hpp)
 [`functional.hpp`](#functional_hpp)
 [`multi_view.hpp`](#multi_view)
 [`meta.hpp`](#meta_hpp)
 [`string.hpp`](#string_hpp)
-
-----------------------------------------
-
-<a name="aggregate_wrapper_hpp"></a>
-### `aggregate_wrapper.hpp`
-
-[`aggregate_wrapper`](#aggregate_wrapper)
 
 ----------------------------------------
 
@@ -198,13 +191,6 @@ f = gunc;
 ~~~
 
 It does compile, however, after replacing `std::function` with `hhxx::function`.
-
-----------------------------------------
-
-<a name="multi_view_hpp"></a>
-### `multi_view.hpp`
-
-[`multi_view`](#multi_view)
 
 ----------------------------------------
 
