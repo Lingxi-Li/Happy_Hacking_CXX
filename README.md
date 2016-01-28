@@ -26,7 +26,6 @@ hhxx::for_each(obj_3d, f);
 ~~~
 
 Truth is it works for objects of any dimensions, even scalars!
-Credit goes to @Arcoth (you rock!).
 
 **B. Why should I use `hhxx::iswap(x, y)` to swap `x` and `y`?**
 
