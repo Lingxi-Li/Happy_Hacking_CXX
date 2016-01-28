@@ -75,7 +75,7 @@ public:
 
   template <typename... Ts>
   auto end(Ts... indices) const {
-    return end_impl(std::make_index_sequence<sizeof...(Ts) - 1>{}, indices...);
+    return end_impl(std::index_sequence_for<Ts...>{}, indices...);
   }
 
   /// Accesses an element at `indices...`. If `sizeof...(indices)` is smaller
@@ -88,8 +88,7 @@ public:
 private:
   template <std::size_t... seq, typename... Ts>
   auto end_impl(std::index_sequence<seq...>, Ts... indices) const {
-    auto tup = std::tie(indices...);
-    return begin(std::get<seq>(tup)..., std::get<sizeof...(Ts) - 1>(tup) + 1);
+    return begin(indices + (seq == sizeof...(Ts) - 1 ? 1 : 0) ...);
   }
 
   Iterator base_;
