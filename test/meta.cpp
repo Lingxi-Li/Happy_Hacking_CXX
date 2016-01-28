@@ -56,3 +56,13 @@ TEST(make_multi, basic) {
   EXPECT_EQ(3u, c[0][0].size());
   EXPECT_EQ(2, c[0][0][0]);
 }
+
+TEST(size, basic) {
+  using hhxx::size;
+  int arr[10] = {};
+  std::array<int, 10> std_arr = {};
+  std::vector<int> vec(10);
+  EXPECT_EQ(10u, size(arr));
+  EXPECT_EQ(10u, size(std_arr));
+  EXPECT_EQ(10u, size(vec));
+}

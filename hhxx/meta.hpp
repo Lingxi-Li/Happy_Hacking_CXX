@@ -78,6 +78,19 @@ auto make_multi(const Base& init_val, N n, Ts... ns) {
            n, make_multi<T>(init_val, ns...));
 }
 
+/// Returns `x.size()` is the expression is well-formed.
+/// For array types `X[n]`, returns `n`.
+
+template <typename T>
+auto size(const T& x) -> decltype(x.size()) {
+  return x.size();
+}
+
+template <typename T, std::size_t n>
+auto size(T (&)[n]) {
+  return n;
+}
+
 } // namespace hhxx
 
 #endif // HHXX_META_HPP_

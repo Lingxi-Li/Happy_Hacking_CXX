@@ -257,6 +257,7 @@ assert(std::distance(view2x2.begin(1, 1), view2x2.end(1, 1), 1);
 [`multi_array_t`](#multi_array_t)
 
 [`make_multi()`](#make_multi)
+[`size()`](#size)
 
 ----------------------------------------
 
@@ -312,6 +313,24 @@ Each element of the constructed multi-dimensional object is initialized to
 is the number of dimensions. For example, `make_multi<std::vector>(7, 2, 3)`
 creates a 2x3 multi-dimensional object of type `std::vector<std::vector<int>>`
 with each element initialized to 7.
+
+----------------------------------------
+
+<a name="size"></a>
+~~~C++
+template <typename T>
+auto size(const T& x);
+~~~
+
+Returns `x.size()` is the expression is well-formed. For array types `X[n]`, returns `n`.
+For example,
+
+~~~C++
+int arr[2] = {};
+std::vector<int> vec(3);
+assert(hhxx::size(arr) == 2);
+assert(hhxx::size(vec) == 3);
+~~~
 
 ----------------------------------------
 
