@@ -208,10 +208,18 @@ public:
   template <typename... Ts>
   multi_view(Iterator base, Ts... extents);
 
-  /// Accesses an element. If `sizeof...(indices)` is smaller than the number
-  /// of dimensions, remaining indices are zero filled. If `sizeof...(indices)`
-  /// is larger than the number of dimensions, extra indices are ignored. At
-  /// least one index must be provided.
+  /// Returns a begin iterator of the sub-object at `indices...`. An empty
+  /// `indices` returns a begin iterator of the multi-dimensional object itself.
+  template <typename... Ts>
+  auto begin(Ts... indices) const;
+
+  /// Returns an end iterator of the sub-object at `indices...`. An empty
+  /// `indices` returns an end iterator of the multi-dimensional object itself.
+  template <typename... Ts>
+  auto end(Ts... indices) const;
+
+  /// Accesses an element at `indices...`. If `sizeof...(indices)` is smaller
+  /// than the number of dimensions, remaining indices are zero filled.
   template <typename... Ts>
   auto operator ()(Ts... indices) const;
 };
@@ -228,8 +236,11 @@ assert(view2x2(0, 0), 1);
 assert(view2x2(0, 1), 2);
 assert(view2x2(1, 0), 3);
 assert(view2x2(1, 1), 4);
+assert(view2x2(), 1);
 assert(view2x2(1), 3);
-assert(view2x2(1, 0, 100), 3);
+assert(std::distance(view2x2.begin(), view2x2.end()), 4);
+assert(std::distance(view2x2.begin(1), view2x2.end(1), 2);
+assert(std::distance(view2x2.begin(1, 1), view2x2.end(1, 1), 1);
 ~~~
 
 ----------------------------------------
