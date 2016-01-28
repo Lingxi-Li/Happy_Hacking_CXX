@@ -7,6 +7,7 @@
 [`aggregate_wrapper.hpp`](#aggregate_wrapper)
 [`algorithm.hpp`](#algorithm_hpp)
 [`functional.hpp`](#functional_hpp)
+[`macro.hpp`](#macro_hpp)
 [`multi_view.hpp`](#multi_view)
 [`meta.hpp`](#meta_hpp)
 [`string.hpp`](#string_hpp)
@@ -191,6 +192,43 @@ f = gunc;
 ~~~
 
 It does compile, however, after replacing `std::function` with `hhxx::function`.
+
+----------------------------------------
+
+<a name="macro_hpp"></a>
+### `macro.hpp`
+
+[`HHXX_STR()`](#hhxx_str)
+[`HHXX_JOIN2()`/`HHXX_JOIN3()`](#hhxx_join)
+[`HHXX_UNIQUE_NAME()`](#hhxx_unique_name)
+
+----------------------------------------
+
+<a name="hhxx_str"></a>
+~~~C++
+#define HHXX_STR(...) ...
+~~~
+
+Expands and stringify.
+
+----------------------------------------
+
+<a name="hhxx_join"></a>
+~~~C++
+#define HHXX_JOIN2(a, ...) ...
+#define HHXX_JOIN3(a, b, ...) ...
+~~~
+
+Expands and concatenates.
+
+----------------------------------------
+
+<a name="hhxx_unique_name"></a>
+~~~C++
+#define HHXX_UNIQUE_NAME(prefix) ...
+~~~
+
+Expands to `prefix_at_line_<__LINE__>`.
 
 ----------------------------------------
 
