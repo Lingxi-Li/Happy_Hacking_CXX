@@ -199,7 +199,7 @@ It does compile, however, after replacing `std::function` with `hhxx::function`.
 ### `macro.hpp`
 
 [`HHXX_STR()`](#hhxx_str)
-[`HHXX_JOIN2()`/`HHXX_JOIN3()`](#hhxx_join)
+[`HHXX_JOIN2()/HHXX_JOIN3()`](#hhxx_join)
 [`HHXX_UNIQUE_NAME()`](#hhxx_unique_name)
 
 ----------------------------------------
