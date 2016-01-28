@@ -209,7 +209,7 @@ It does compile, however, after replacing `std::function` with `hhxx::function`.
 #define HHXX_STR(...) ...
 ~~~
 
-Expands and stringify.
+Expands and stringifies.
 
 ----------------------------------------
 
