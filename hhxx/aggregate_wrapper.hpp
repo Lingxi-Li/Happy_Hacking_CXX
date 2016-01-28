@@ -79,7 +79,7 @@ public:
   }
 
   /// Returns the size of the wrapped array.
-  std::size_t size() const {
+  constexpr std::size_t size() const {
     return n;
   }
 

@@ -52,7 +52,7 @@ public:
   operator const T* () const;
 
   /// Returns the size of the wrapped array.
-  std::size_t size() const;
+  constexpr std::size_t size() const;
 };
 
 /// Makes an `aggregate_wrapper` that wraps `x`.
