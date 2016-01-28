@@ -278,7 +278,7 @@ using multi_array_t = ...;
 ~~~
 
 Provides easy syntax for specifying multi-dimensional `std::array` type. `T`
-specifies the element type, `ns...` specifies the extend of each dimension. So
+specifies the element type, `ns...` specifies the extent of each dimension. So
 `sizeof...(ns)` is the number of dimensions. For example,
 `multi_array_t<int, 2, 3>` is equivalent to `std::array<std::array<int, 3>, 2>`.
 
@@ -293,7 +293,7 @@ auto make_multi(const Base& init_val, Ts... ns);
 Creates a dynamic multi-dimensional object. `T` specifies the container template.
 `Base` specifies the element type and can be automatically deduced from `init_val`.
 Each element of the constructed multi-dimensional object is initialized to
-`init_val`. `ns...` specifies the extend of each dimension. So, `sizeof...(ns)`
+`init_val`. `ns...` specifies the extent of each dimension. So, `sizeof...(ns)`
 is the number of dimensions. For example, `make_multi<std::vector>(7, 2, 3)`
 creates a 2x3 multi-dimensional object of type `std::vector<std::vector<int>>`
 with each element initialized to 7.
