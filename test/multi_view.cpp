@@ -43,7 +43,7 @@ TEST(multi_view, basic) {
     [idx = idx](int x) mutable {
       EXPECT_EQ(++idx + 4, x);
     });
-  view view2x2x2(vec.begin(), 2, 2, 2);
+  auto view2x2x2 = hhxx::make_multi_view(vec.begin(), 2, 2, 2);
   EXPECT_EQ(1, view2x2x2(0, 0, 0));
   EXPECT_EQ(2, view2x2x2(0, 0, 1));
   EXPECT_EQ(3, view2x2x2(0, 1, 0));

@@ -97,6 +97,12 @@ private:
   std::size_t num_elements_ = 0;
 };
 
+/// Makes a `multi_view` of `base` with dimension extents `extents...`.
+template <typename Iterator, typename... Ts>
+auto make_multi_view(Iterator base, Ts... extents) {
+  return multi_view<Iterator>(base, extents...);
+}
+
 } // namespace hhxx
 
 #endif // HHXX_MULTI_VIEW_HPP_

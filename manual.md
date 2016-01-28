@@ -223,6 +223,10 @@ public:
   template <typename... Ts>
   auto operator ()(Ts... indices) const;
 };
+
+/// Makes a `multi_view` of `base` with dimension extents `extents...`.
+template <typename Iterator, typename... Ts>
+auto make_multi_view(Iterator base, Ts... extents);
 ~~~
 
 Provides a multi-dimensional view of a one-dimensional linear object. The
@@ -231,7 +235,7 @@ specifies the iterator type of the linear object. For example,
 
 ~~~C++
 std::vector<int> vec{ 1, 2, 3, 4 };
-hhxx::multi_view<decltype(vec.begin())> view2x2(vec.begin(), 2, 2);
+auto view2x2 = hhxx::make_multi_view(vec.begin(), 2, 2);
 assert(view2x2(0, 0), 1);
 assert(view2x2(0, 1), 2);
 assert(view2x2(1, 0), 3);
