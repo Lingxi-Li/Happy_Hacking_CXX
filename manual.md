@@ -375,12 +375,13 @@ assert(hhxx::size(vec) == 3);
 
 <a name="scope_guard"></a>
 ~~~C++
-#define HHXX_ON_SCOPE_EXIT(...) ...
+#define HHXX_ON_SCOPE_EXIT_F(...) ...
+#define HHXX_ON_SCOPE_EXIT(...) HHXX_ON_SCOPE_EXIT_F([&]() { __VA_ARGS__ })
 ~~~
 
-Executes the function object as defined by `__VA_ARGS__` upon exiting the
-enclosing scope. Given multiple such statements, the executions are performed in
-reverse order of their statement appearance in code.
+`HHXX_ON_SCOPE_EXIT_F(...)` executes the function object as defined by
+`__VA_ARGS__` upon exiting the enclosing scope. Given multiple such statements,
+the executions are performed in reverse order of their statement appearance in code.
 
 ----------------------------------------
 

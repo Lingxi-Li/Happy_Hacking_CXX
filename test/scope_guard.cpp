@@ -9,15 +9,19 @@
 
 TEST(scope_guard, basic) {
   int i = 0;
-  int j = 0;
   {
-    HHXX_ON_SCOPE_EXIT([&]() {
-      ++i;
-      EXPECT_EQ(1, j);
+    HHXX_ON_SCOPE_EXIT_F([&]() {
+      EXPECT_EQ(4, ++i);
     });
-    HHXX_ON_SCOPE_EXIT([&]() {
-      ++j;
+    HHXX_ON_SCOPE_EXIT_F([&]() {
+      EXPECT_EQ(3, ++i);
     });
+    HHXX_ON_SCOPE_EXIT(
+      EXPECT_EQ(2, ++i);
+    );
+    HHXX_ON_SCOPE_EXIT(
+      EXPECT_EQ(1, ++i);
+    );
   }
-  EXPECT_EQ(1, i);
+  EXPECT_EQ(4, i);
 }
