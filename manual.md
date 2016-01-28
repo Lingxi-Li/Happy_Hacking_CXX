@@ -10,6 +10,7 @@
 [`macro.hpp`](#macro_hpp)
 [`multi_view.hpp`](#multi_view)
 [`meta.hpp`](#meta_hpp)
+[`scope_guard.hpp`](#scope_guard)
 [`string.hpp`](#string_hpp)
 
 ----------------------------------------
@@ -369,6 +370,17 @@ std::vector<int> vec(3);
 assert(hhxx::size(arr) == 2);
 assert(hhxx::size(vec) == 3);
 ~~~
+
+----------------------------------------
+
+<a name="scope_guard"></a>
+~~~C++
+#define HHXX_ON_SCOPE_EXIT(...) ...
+~~~
+
+Executes the function object as defined by `__VA_ARGS__` upon exiting the
+enclosing scope. Given multiple such statements, the executions are performed in
+reverse order of their statement appearance in code.
 
 ----------------------------------------
 
