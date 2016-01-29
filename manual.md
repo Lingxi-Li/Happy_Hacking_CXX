@@ -45,8 +45,8 @@ public:
   /// default initializes the wrapped array, and then copies/moves each element
   /// from `arr` to it.
   
-  aggregate_wrapper(const aggregate_type& arr);
-  aggregate_wrapper(aggregate_type&& arr);
+  constexpr aggregate_wrapper(const aggregate_type& arr);
+  constexpr aggregate_wrapper(aggregate_type&& arr);
 
   /// Provides transparent access to the wrapped array.
   
@@ -59,7 +59,7 @@ public:
 
 /// Makes an `aggregate_wrapper` that wraps `x`.
 template <typename T>
-auto wrap_aggregate(T&& x);
+constexpr auto wrap_aggregate(T&& x);
 ~~~
 
 Since aggregates do not support initialization using the `()` syntax, they

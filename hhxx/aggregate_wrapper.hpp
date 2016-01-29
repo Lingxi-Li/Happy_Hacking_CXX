@@ -62,10 +62,10 @@ public:
   /// default initializes the wrapped array, and then copies/moves each element
   /// from `arr` to it.
 
-  aggregate_wrapper(const array& arr) {
+  constexpr aggregate_wrapper(const array& arr) {
     std::copy(arr, arr + n, arr_);
   }
-  aggregate_wrapper(array&& arr) {
+  constexpr aggregate_wrapper(array&& arr) {
     std::move(arr, arr + n, arr_);
   }
 
@@ -91,7 +91,7 @@ private:
 // you won't want to use `std::decay_t`;
 // consider the case when `T` is an array type
 template <typename T>
-aggregate_wrapper<std::remove_const_t<std::remove_reference_t<T>>>
+constexpr aggregate_wrapper<std::remove_const_t<std::remove_reference_t<T>>>
 wrap_aggregate(T&& x) {
   return std::forward<T>(x);
 }
