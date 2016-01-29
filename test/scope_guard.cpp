@@ -5,15 +5,17 @@
 #include <hhxx/scope_guard.hpp>
 #include <hhxx/scope_guard.hpp>
 
+#include <utility>
+
 #include <gtest/gtest.h>
 
-TEST(scope_guard, basic) {
+TEST(macro, basic) {
   int i = 0;
   {
-    HHXX_ON_SCOPE_EXIT_F([&]() {
+    HHXX_ON_SCOPE_EXIT_F([&] {
       EXPECT_EQ(4, ++i);
     });
-    HHXX_ON_SCOPE_EXIT_F([&]() {
+    HHXX_ON_SCOPE_EXIT_F([&] {
       EXPECT_EQ(3, ++i);
     });
     HHXX_ON_SCOPE_EXIT(
@@ -24,4 +26,21 @@ TEST(scope_guard, basic) {
     );
   }
   EXPECT_EQ(4, i);
+}
+
+TEST(clazz, basic) {
+  using hhxx::make_scope_guard;
+  int i = 0;
+  {
+    auto guard4 = make_scope_guard([&] { EXPECT_EQ(3, ++i); });
+    auto guard3 = make_scope_guard([&] { EXPECT_EQ(2, ++i); });
+    auto guard2 = make_scope_guard([&] { EXPECT_EQ(2, ++i); });
+    auto guard1 = make_scope_guard([&] { EXPECT_EQ(1, ++i); });
+    guard2.disarm();
+    guard3.disarm();
+    guard3.arm();
+    auto tmp = std::move(guard4);
+    tmp.disarm();
+  }
+  EXPECT_EQ(2, i);
 }

@@ -375,32 +375,56 @@ assert(hhxx::size(vec) == 3);
 
 <a name="scope_guard"></a>
 ~~~C++
+/// Executes the function object as defined by `__VA_ARGS__` upon exiting the
+/// enclosing scope. Given multiple such statements, the executions are
+/// performed in reverse order of their statements in code.
 #define HHXX_ON_SCOPE_EXIT_F(...) ...
-#define HHXX_ON_SCOPE_EXIT(...) HHXX_ON_SCOPE_EXIT_F([&]() { __VA_ARGS__ })
+#define HHXX_ON_SCOPE_EXIT(...) HHXX_ON_SCOPE_EXIT_F([&] { __VA_ARGS__ })
+
+/// Invokes function object `f` upon destruction. The behavior can be disarmed
+/// and rearmed again.
+template <typename F>
+class scope_guard {
+public:
+  explicit scope_guard(F f, bool armed = true);
+  /// `other` is disarmed after move.
+  scope_guard(scope_guard&& other);
+  
+  scope_guard(const scope_guard&) = delete;
+  scope_guard& operator =(const scope_guard&) = delete;
+  scope_guard& operator =(scope_guard&&) = delete;
+  
+  void disarm();
+  void arm();
+};
+
+/// Creates a `scope_guard` from `f`.
+template <typename F>
+auto make_scope_guard(F f);
 ~~~
 
-`HHXX_ON_SCOPE_EXIT_F(...)` executes the function object as defined by
-`__VA_ARGS__` upon exiting the enclosing scope. Given multiple such statements,
-the executions are performed in reverse order of their statement appearance in code.
-For example,
+Example:
 
 ~~~C++
 int i = 0;
 {
-  HHXX_ON_SCOPE_EXIT_F([&]() {
-    assert(++i == 4);
-  });
-  HHXX_ON_SCOPE_EXIT_F([&]() {
+  HHXX_ON_SCOPE_EXIT_F([&] {
     assert(++i == 3);
   });
-  HHXX_ON_SCOPE_EXIT(
+  auto guard3 = hhxx::make_scope_guard([&] {
+    assert(++i == 3);
+  });  
+  auto guard2 = hhxx::make_scope_guard([&] {
     assert(++i == 2);
-  );
+  });
   HHXX_ON_SCOPE_EXIT(
     assert(++i == 1);
   );
+  guard2.disarm();
+  guard2.arm();
+  guard3.disarm();
 }
-assert(i == 4);
+assert(i == 3);
 ~~~
 
 ----------------------------------------
