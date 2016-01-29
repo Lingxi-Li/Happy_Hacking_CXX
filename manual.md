@@ -53,8 +53,8 @@ public:
   operator T* ();
   operator const T* () const;
 
-  /// Size of the wrapped array.
-  static constexpr auto size = n;
+  /// Returns size of the wrapped array.
+  static constexpr auto size();
 };
 
 /// Makes an `aggregate_wrapper` that wraps `x`.

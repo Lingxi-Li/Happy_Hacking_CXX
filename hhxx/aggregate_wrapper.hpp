@@ -78,8 +78,10 @@ public:
     return arr_;
   }
 
-  /// Size of the wrapped array.
-  static constexpr auto size = n;
+  /// Returns size of the wrapped array.
+  static constexpr auto size() {
+    return n;
+  }
 
 private:
   array arr_;
