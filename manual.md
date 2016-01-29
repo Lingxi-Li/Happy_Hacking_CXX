@@ -29,7 +29,7 @@ public:
   /// from the arguments. When no argument is provided, value-initialization is
   /// performed.
   template <typename... Ts>
-  aggregate_wrapper(Ts&&... xs);
+  constexpr aggregate_wrapper(Ts&&... xs);
 };
 
 /// Specialized template for wrapping array type `T[n]`.
@@ -39,7 +39,7 @@ public:
   using aggregate_type = T[n];
 
   template <typename... Ts>
-  aggregate_wrapper(Ts&&... xs);
+  constexpr aggregate_wrapper(Ts&&... xs);
   
   /// You can't initialize an array directly from another. The constructor
   /// default initializes the wrapped array, and then copies/moves each element

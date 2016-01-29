@@ -60,7 +60,7 @@ TEST(aggregate_wrapper, construction) {
   {
     hhxx::aggregate_wrapper<int[3]> x;
     EXPECT_EQ(3u, x.size());
-    //static_assert(x.size == 3, "");
+    static_assert(x.size() == 3, "");
     EXPECT_EQ(0, x[0]);
     EXPECT_EQ(0, x[1]);
     EXPECT_EQ(0, x[2]);
@@ -102,7 +102,7 @@ TEST(aggregate_wrapper, construction) {
     static_assert(! std::is_constructible<wrapper, ptr_t&&, ptr_t&&, ptr_t&&, ptr_t&&>{}, "");
     wrapper a;
     EXPECT_EQ(3u, a.size());
-    //static_assert(a.size() == 3, "");
+    static_assert(a.size() == 3, "");
     EXPECT_FALSE(a[0]);
     EXPECT_FALSE(a[1]);
     EXPECT_FALSE(a[2]);
