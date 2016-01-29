@@ -381,12 +381,11 @@ assert(hhxx::size(vec) == 3);
 #define HHXX_ON_SCOPE_EXIT_F(...) ...
 #define HHXX_ON_SCOPE_EXIT(...) HHXX_ON_SCOPE_EXIT_F([&] { __VA_ARGS__ })
 
-/// Invokes function object `f` upon destruction. The behavior can be disarmed
-/// and rearmed again.
+/// Invokes function object `f` upon destruction. The behavior can be disarmed.
 template <typename F>
 class scope_guard {
 public:
-  explicit scope_guard(F f, bool armed = true);
+  explicit scope_guard(F f);
   /// `other` is disarmed after move.
   scope_guard(scope_guard&& other);
   
@@ -395,7 +394,6 @@ public:
   scope_guard& operator =(scope_guard&&) = delete;
   
   void disarm();
-  void arm();
 };
 
 /// Creates a `scope_guard` from `f`.
@@ -420,8 +418,6 @@ int i = 0;
   HHXX_ON_SCOPE_EXIT(
     assert(++i == 1);
   );
-  guard2.disarm();
-  guard2.arm();
   guard3.disarm();
 }
 assert(i == 3);

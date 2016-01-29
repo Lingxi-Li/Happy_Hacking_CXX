@@ -37,8 +37,6 @@ TEST(clazz, basic) {
     auto guard2 = make_scope_guard([&] { EXPECT_EQ(2, ++i); });
     auto guard1 = make_scope_guard([&] { EXPECT_EQ(1, ++i); });
     guard2.disarm();
-    guard3.disarm();
-    guard3.arm();
     auto tmp = std::move(guard4);
     tmp.disarm();
   }

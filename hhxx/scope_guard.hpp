@@ -19,13 +19,12 @@
 
 namespace hhxx {
 
-/// Invokes function object `f` upon destruction. The behavior can be disarmed
-/// and rearmed again.
+/// Invokes function object `f` upon destruction. The behavior can be disarmed.
 template <typename F>
 class scope_guard {
 public:
-  explicit scope_guard(F f, bool armed = true)
-      : f_(std::move(f)), armed_(armed) {
+  explicit scope_guard(F f)
+      : f_(std::move(f)) {
     // nop
   }
 
@@ -45,9 +44,6 @@ public:
 
   void disarm() {
     armed_ = false;
-  }
-  void arm() {
-    armed_ = true;
   }
 
 private:
