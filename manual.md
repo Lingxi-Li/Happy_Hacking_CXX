@@ -382,6 +382,26 @@ assert(hhxx::size(vec) == 3);
 `HHXX_ON_SCOPE_EXIT_F(...)` executes the function object as defined by
 `__VA_ARGS__` upon exiting the enclosing scope. Given multiple such statements,
 the executions are performed in reverse order of their statement appearance in code.
+For example,
+
+~~~C++
+int i = 0;
+{
+  HHXX_ON_SCOPE_EXIT_F([&]() {
+    assert(++i == 4);
+  });
+  HHXX_ON_SCOPE_EXIT_F([&]() {
+    assert(++i == 3);
+  });
+  HHXX_ON_SCOPE_EXIT(
+    assert(++i == 2);
+  );
+  HHXX_ON_SCOPE_EXIT(
+    assert(++i == 1);
+  );
+}
+assert(i == 4);
+~~~
 
 ----------------------------------------
 
