@@ -59,7 +59,7 @@ TEST(aggregate_wrapper, construction) {
   // array
   {
     hhxx::aggregate_wrapper<int[3]> x;
-    static_assert(x.size() == 3, "");
+    static_assert(x.size == 3, "");
     EXPECT_EQ(0, x[0]);
     EXPECT_EQ(0, x[1]);
     EXPECT_EQ(0, x[2]);

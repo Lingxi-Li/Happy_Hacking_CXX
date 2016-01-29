@@ -78,10 +78,8 @@ public:
     return arr_;
   }
 
-  /// Returns the size of the wrapped array.
-  static constexpr std::size_t size() {
-    return n;
-  }
+  /// Size of the wrapped array.
+  static constexpr auto size = n;
 
 private:
   array arr_;
