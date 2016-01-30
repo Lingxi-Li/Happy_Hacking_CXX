@@ -16,9 +16,9 @@
 
 namespace hhxx {
 
-/// Provides a multi-dimensional view of a one-dimensional linear object. The
-/// linear object can then be accessed in a multi-dimensional fashion. `Iterator`
-/// specifies the iterator type of the linear object.
+/// Provides a multi-dimensional view of a one-dimensional linear range. The
+/// linear range can then be accessed in a multi-dimensional fashion. `Iterator`
+/// specifies the iterator type used to denote the linear range.
 
 template <typename Iterator>
 class multi_view {
@@ -26,9 +26,9 @@ public:
   /// Maximum number of dimensions supported.
   static constexpr std::size_t max_dim = 10;
 
-  /// `base` is an iterator addressing the first element of a one-dimensional
-  /// object. `extents...` specifies the extent of each dimension of the
-  /// multi-dimensional view. So, `sizeof...(extents)` is the number of dimensions.
+  /// `base` is an iterator denoting a one-dimensional linear range. `extents...`
+  /// specifies the extent of each dimension of the multi-dimensional view.
+  /// So, `sizeof...(extents)` is the number of dimensions.
   template <typename... Ts>
   multi_view(Iterator base, Ts... extents)
       : base_(base) {
@@ -46,7 +46,7 @@ public:
     num_elements_ = acc;
   }
 
-  /// Returns a begin iterator of the sub-object at `indices...`. An empty
+  /// Returns a begin iterator of the sub-object at `indices...`. An empty set of
   /// `indices` returns a begin iterator of the multi-dimensional object itself.
 
   template <typename... Ts>
@@ -65,7 +65,7 @@ public:
     return (base_ + offset);
   }
 
-  /// Returns an end iterator of the sub-object at `indices...`. An empty
+  /// Returns an end iterator of the sub-object at `indices...`. An empty set of
   /// `indices` returns an end iterator of the multi-dimensional object itself.
 
   template <typename... Ts>
@@ -78,8 +78,8 @@ public:
     return end_impl(std::index_sequence_for<Ts...>{}, indices...);
   }
 
-  /// Accesses an element at `indices...`. If `sizeof...(indices)` is smaller
-  /// than the number of dimensions, remaining indices are zero filled.
+  /// Accesses the element at `indices...`. If `sizeof...(indices)` is smaller
+  /// than the number of dimensions, missing indices are zero filled.
   template <typename... Ts>
   auto operator ()(Ts... indices) const {
     return *begin(indices...);
@@ -96,7 +96,8 @@ private:
   std::size_t num_elements_ = 0;
 };
 
-/// Makes a `multi_view` of `base` with dimension extents `extents...`.
+/// Makes a `multi_view` of the range beginning at `base` with dimension extents
+/// `extents...`.
 template <typename Iterator, typename... Ts>
 auto make_multi_view(Iterator base, Ts... extents) {
   return multi_view<Iterator>(base, extents...);
