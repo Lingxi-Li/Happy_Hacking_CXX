@@ -417,6 +417,9 @@ template <typename F>
 auto make_scope_guard(F f);
 ~~~
 
+Mainly used to implement [RAII](http://en.cppreference.com/w/cpp/language/raii)
+with C-style API.
+
 Example:
 
 ~~~C++

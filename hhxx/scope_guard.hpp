@@ -9,6 +9,8 @@
 
 #include "hhxx/macro.hpp"
 
+/// Mainly used to implement RAII with C-style API.
+
 /// Executes the function object as defined by `__VA_ARGS__` upon exiting the
 /// enclosing scope. Given multiple such statements, the executions are
 /// performed in reverse order of their statements in code.
