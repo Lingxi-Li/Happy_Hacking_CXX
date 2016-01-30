@@ -17,7 +17,7 @@
 namespace hhxx {
 
 /// Provides a multi-dimensional view of a one-dimensional linear object. The
-/// linear object can then be accessed like a multi-dimensional one. `Iterator`
+/// linear object can then be accessed in a multi-dimensional fashion. `Iterator`
 /// specifies the iterator type of the linear object.
 
 template <typename Iterator>

@@ -109,7 +109,9 @@ hhxx::for_each(arr, f);
 
 **Advanced Use:** `f` may accept a multi-dimensional object. In that case,
 instead of going all the way down to scalar (element) level, `for_each()` stops
-at the right dimension and applies `f` there. For example,
+at the right dimension and applies `f` there.
+
+Example:
 
 ~~~C++
 int arr[5][5][5] = ...
@@ -269,20 +271,26 @@ auto make_multi_view(Iterator base, Ts... extents);
 ~~~
 
 Provides a multi-dimensional view of a one-dimensional linear object. The
-linear object can then be accessed like a multi-dimensional one. `Iterator`
-specifies the iterator type of the linear object. For example,
+linear object can then be accessed in a multi-dimensional fashion. `Iterator`
+specifies the iterator type of the linear object.
+
+Example:
 
 ~~~C++
 std::vector<int> vec{ 1, 2, 3, 4 };
+// viewd as { {1, 2}, {3, 4} }
 auto view2x2 = hhxx::make_multi_view(vec.begin(), 2, 2);
 assert(view2x2(0, 0), 1);
 assert(view2x2(0, 1), 2);
 assert(view2x2(1, 0), 3);
 assert(view2x2(1, 1), 4);
-assert(view2x2(), 1);
-assert(view2x2(1), 3);
+assert(view2x2(), 1);  // equivalent to view2x2(0, 0)
+assert(view2x2(1), 3); // equivalent to view2x2(1, 0)
+// addresses { {1, 2}, {3, 4} }
 assert(std::distance(view2x2.begin(), view2x2.end()), 4);
+// addresses {3, 4}
 assert(std::distance(view2x2.begin(1), view2x2.end(1), 2);
+// addresses 4
 assert(std::distance(view2x2.begin(1, 1), view2x2.end(1, 1), 1);
 ~~~
 
@@ -362,7 +370,8 @@ auto size(const T& x);
 ~~~
 
 Returns `x.size()` is the expression is well-formed. For array types `X[n]`, returns `n`.
-For example,
+
+Example:
 
 ~~~C++
 int arr[2] = {};
