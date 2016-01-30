@@ -121,9 +121,7 @@ template <typename OutIt, typename RAND = std::minstd_rand,
           typename Uint = typename RAND::result_type>
 void random_subset(std::size_t m, std::size_t n, OutIt it, RAND&& rand =
                    RAND(static_cast<Uint>(tick_count()))) {
-  assert(n - 1 <= rand.max());
   assert(m <= n);
-  if (m == 0) return;
   auto swapped = false;
   auto tmp = n - m;
   if (tmp < m) {
@@ -133,8 +131,9 @@ void random_subset(std::size_t m, std::size_t n, OutIt it, RAND&& rand =
   std::vector<std::size_t> indices(n);
   std::iota(indices.begin(), indices.end(), static_cast<std::size_t>(0));
   auto back_it = indices.end();
+  std::uniform_int_distribution<std::size_t> gen;
   for (std::size_t i = 0; i < m; ++i) {
-    auto idx = rand() % (n - i);
+    auto idx = gen(rand, decltype(gen)::param_type(0, n - i - 1));
     std::swap(indices[idx], *--back_it);
   }
   swapped ? std::copy(indices.begin(), back_it, it) :
