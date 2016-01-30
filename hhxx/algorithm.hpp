@@ -115,7 +115,7 @@ auto tick_count() {
 /// pseudo-random number generator `rand`, and copies the result to the range
 /// specified by `it`. Since each element in a set of size `n` can be identified
 /// using a unique index from `{0, 1, 2, ..., (n - 1)}`, this function template
-/// can be used to select a random sub-set of a given size. `rand` would be
+/// can be used to select a random subset of a given size. `rand` would be
 /// invoked `min{m, (n - m)}` times. The space complexity is `O(n)`.
 template <typename OutIt, typename RAND = std::minstd_rand,
           typename Uint = typename RAND::result_type>
