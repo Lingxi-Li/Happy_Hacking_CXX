@@ -62,7 +62,7 @@ assert(std::distance(view2x4.begin(0, 2), view2x4.end(0, 2)) == 1);
 //             { {5, 6}, {7, 8} } }
 auto view2x2x2 = hhxx::make_multi_view(storage, 2, 2, 2);
 // addresses {5, 6}
-assert(std::distance(view2x2x2.begin(2), view2x2x2.end(2)) == 2);
+assert(std::distance(view2x2x2.begin(1, 0), view2x2x2.end(1, 0)) == 2);
 ...
 ~~~
 
