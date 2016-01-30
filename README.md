@@ -25,7 +25,8 @@ you can simply
 hhxx::for_each(obj_3d, f);
 ~~~
 
-Truth is it works for objects of any dimensions, even scalars!
+Truth is it works for objects of any dimensions (even scalars!) and of any type
+supporting [range-based for loop](http://en.cppreference.com/w/cpp/language/range-for)!
 
 **B. Why should I use `hhxx::iswap(x, y)` to swap `x` and `y`?**
 
