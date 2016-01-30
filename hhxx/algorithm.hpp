@@ -119,8 +119,8 @@ auto tick_count() {
 /// invoked `min{m, (n - m)}` times. The space complexity is `O(n)`.
 template <typename OutIt, typename RAND = std::minstd_rand,
           typename Uint = typename RAND::result_type>
-void random_subset(std::size_t m, std::size_t n, OutIt it, RAND&& rand =
-                   RAND(static_cast<Uint>(tick_count()))) {
+void sample(std::size_t n, std::size_t m, OutIt it, RAND&& rand =
+            RAND(static_cast<Uint>(tick_count()))) {
   assert(m <= n);
   auto swapped = false;
   auto tmp = n - m;

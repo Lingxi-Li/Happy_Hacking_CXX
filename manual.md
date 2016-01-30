@@ -78,7 +78,7 @@ wrapper class ensures that the wrapped aggregate always has a determinate value.
 [`iswap()`](#iswap)
 [`max()`](#max)
 [`min()`](#min)
-[`random_subset()`](#random_subset)
+[`sample()`](#sample)
 [`tick_count()`](#tick_count)
 
 ----------------------------------------
@@ -169,12 +169,12 @@ Returns the minimum of `x`, `ys...`, using `Pred<T>{}` as the less-than predicat
 
 ----------------------------------------
 
-<a name="random_subset"></a>
+<a name="sample"></a>
 ~~~C++
 template <typename OutIt, typename RAND = std::minstd_rand,
           typename Uint = typename RAND::result_type>
-void random_subset(std::size_t m, std::size_t n, OutIt it, RAND&& rand =
-                   RAND(static_cast<Uint>(tick_count())))
+void sample(std::size_t n, std::size_t m, OutIt it, RAND&& rand =
+            RAND(static_cast<Uint>(tick_count())));
 ~~~
 
 Randomly selects `m` elements from `{0, 1, 2, ..., (n - 1)}` using the

@@ -388,22 +388,22 @@ TEST(tick_count, basic) {
   static_cast<void>(tick_count<std::chrono::high_resolution_clock>());
 }
 
-TEST(random_subset, basic) {
-  using hhxx::random_subset;
+TEST(sample, basic) {
+  using hhxx::sample;
   std::vector<unsigned> vec;
-  random_subset(0, 3, std::back_inserter(vec));
+  sample(3, 0, std::back_inserter(vec));
   EXPECT_EQ(0u, vec.size());
-  random_subset(1, 3, std::back_inserter(vec));
+  sample(3, 1, std::back_inserter(vec));
   EXPECT_EQ(1u, vec.size());
   EXPECT_TRUE(0 <= vec[0] && vec[0] < 3);
   vec.clear();
-  random_subset(2, 3, std::back_inserter(vec));
+  sample(3, 2, std::back_inserter(vec));
   EXPECT_EQ(2u, vec.size());
   EXPECT_TRUE(0 <= vec[0] && vec[0] < 3);
   EXPECT_TRUE(0 <= vec[1] && vec[1] < 3);
   EXPECT_NE(vec[0], vec[1]);
   vec.clear();
-  random_subset(3, 3, std::back_inserter(vec));
+  sample(3, 3, std::back_inserter(vec));
   std::sort(vec.begin(), vec.end());
   std::vector<unsigned> target = {0, 1, 2};
   EXPECT_EQ(target, vec);
