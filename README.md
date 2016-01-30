@@ -81,7 +81,7 @@ you to join the party and play together~ :tada:
 <a name="depend"></a>
 ## Dependencies
 
-- C++14
+- C++14 (tested on Apple clang-700.1.81)
 - [Google Test](https://github.com/google/googletest) (gtest) for unit tests
 
 <a name="struct"></a>
