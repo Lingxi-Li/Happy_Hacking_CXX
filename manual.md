@@ -78,6 +78,8 @@ wrapper class ensures that the wrapped aggregate always has a determinate value.
 [`iswap()`](#iswap)
 [`max()`](#max)
 [`min()`](#min)
+[`random_subset()`](#random_subset)
+[`tick_count()`](#tick_count)
 
 ----------------------------------------
 
@@ -164,6 +166,37 @@ const T& min(const T& x, const Ts&... ys);
 ~~~
 
 Returns the minimum of `x`, `ys...`, using `Pred<T>{}` as the less-than predicate.
+
+----------------------------------------
+
+<a name="random_subset"></a>
+~~~C++
+template <typename OutIt, typename RAND = std::minstd_rand,
+          typename Uint = typename RAND::result_type>
+void random_subset(std::size_t m, std::size_t n, OutIt it, RAND&& rand =
+                   RAND(static_cast<Uint>(tick_count())))
+~~~
+
+Randomly selects `m` elements from `{0, 1, 2, ..., (n - 1)}` using the
+pseudo-random number generator `rand`, and copies the result to the range
+specified by `it`. Since each element in a set of size `n` can be identified
+using a unique index from `{0, 1, 2, ..., (n - 1)}`, this function template
+can be used to select a random sub-set of a given size. `rand` would be
+invoked `min{m, (n - m)}` times. The space complexity is `O(n)`.
+
+----------------------------------------
+
+<a name="tick_count"></a>
+~~~C++
+template <typename Clock = std::chrono::high_resolution_clock>
+auto tick_count();
+~~~
+
+Shorthand for `Clock::now().time_since_epoch().count()`. Return value can be
+used to seed pseudo-random number generators. If you intend to use
+`std::random_device` for this purpose, mind that the performance of many
+implementations of `std::random_device` degrades sharply once the entropy pool
+is exhausted.
 
 ----------------------------------------
 

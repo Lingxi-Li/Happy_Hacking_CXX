@@ -5,10 +5,19 @@
 #ifndef HHXX_ALGORITHM_HPP_
 #define HHXX_ALGORITHM_HPP_
 
+#include <cassert>
+#include <cstddef>
+#include <cinttypes>
+#include <ctime>
+
 #include <algorithm>
 #include <array>
+#include <chrono>
 #include <functional>
+#include <numeric>
+#include <random>
 #include <utility>
+#include <vector>
 
 #include "meta.hpp"
 
@@ -91,6 +100,45 @@ const T& max(const T& x, const Ts&... ys) {
 template <typename T, typename F>
 void for_each(T& obj, F f) {
   detail::for_each(obj, f, ' ');
+}
+
+/// Return value can be used to seed pseudo-random number generators. If you
+/// intend to use `std::random_device` for this purpose, mind that the
+/// performance of many implementations of `std::random_device` degrades sharply
+/// once the entropy pool is exhausted.
+template <typename Clock = std::chrono::high_resolution_clock>
+auto tick_count() {
+  return Clock::now().time_since_epoch().count();
+}
+
+/// Randomly selects `m` elements from `{0, 1, 2, ..., (n - 1)}` using the
+/// pseudo-random number generator `rand`, and copies the result to the range
+/// specified by `it`. Since each element in a set of size `n` can be identified
+/// using a unique index from `{0, 1, 2, ..., (n - 1)}`, this function template
+/// can be used to select a random sub-set of a given size. `rand` would be
+/// invoked `min{m, (n - m)}` times. The space complexity is `O(n)`.
+template <typename OutIt, typename RAND = std::minstd_rand,
+          typename Uint = typename RAND::result_type>
+void random_subset(std::size_t m, std::size_t n, OutIt it, RAND&& rand =
+                   RAND(static_cast<Uint>(tick_count()))) {
+  assert(n - 1 <= rand.max());
+  assert(m <= n);
+  if (m == 0) return;
+  auto swapped = false;
+  auto tmp = n - m;
+  if (tmp < m) {
+    m = tmp;
+    swapped = true;
+  }
+  std::vector<std::size_t> indices(n);
+  std::iota(indices.begin(), indices.end(), static_cast<std::size_t>(0));
+  auto back_it = indices.end();
+  for (std::size_t i = 0; i < m; ++i) {
+    auto idx = rand() % (n - i);
+    std::swap(indices[idx], *--back_it);
+  }
+  swapped ? std::copy(indices.begin(), back_it, it) :
+            std::copy(back_it, indices.end(), it);
 }
 
 } // namespace hhxx
