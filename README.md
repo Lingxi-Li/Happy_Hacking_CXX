@@ -2,7 +2,7 @@
 
 *Hackish trinkets and extensions to modern C++*
 
-The following two examples should give you a general idea of what HHXX is all about.
+The following three examples should give you a general idea of what HHXX is all about.
 
 **A. Universal `for_each()`**
 
@@ -36,6 +36,29 @@ out to be ill-formed, then tries to perform `swap(x, y)` with
 enabled. If ADL failed, then as a last resort, performs `std::swap(x, y)`. So,
 stay with [`hhxx::iswap()`](https://github.com/Lingxi-Li/Happy_Hacking_CXX/blob/master/manual.md#iswap)
 and be happy ever since :smile_cat:
+
+**C. View a one-dimensional linear object as a multi-dimensional one**
+
+Sometimes, you want to dynamically allocate the storage using a one-dimensional
+linear array, but access it as if it was a multi-dimensional one.
+[`hhxx::make_multi_view()`](https://github.com/Lingxi-Li/Happy_Hacking_CXX/blob/master/manual.md#multi_view)
+would come to your help. It provides support for element access and iterators.
+It's dynamic, light-weight with simple syntax. The following example will show
+you want I mean :wink:
+
+int storage[8] = { 1, 2, 3, 4, 5, 6, 7, 8 };
+// viewed as { {1, 2, 3, 4}, {5, 6, 7, 8} }
+auto view2x4 = hhxx::make_multi_view(std::begin(storage), 2, 4);
+assert(view2x4(1, 0) == 5);
+// addresses { {1, 2, 3, 4}, {5, 6, 7, 8} }
+assert(std::distance(view2x4.begin(), view2x4.end()) == 8);
+// addresses {5, 6, 7, 8}
+assert(std::distance(view2x4.begin(1), view2x4.end()) == 4);
+// addresses 3
+assert(std::distance(view2x4.begin(0, 2), view2x4.end(0, 2)) == 1);
+// viewed as { {1, 2}, {3, 4}, {5, 6}, {7, 8} }
+auto view2x2x2 = hhxx::make_multi_view(std::begin(storage), 2, 2, 2);
+...
 
 Feel interested and want to see what else HHXX has to offer? There is a reference
 [manual](https://github.com/Lingxi-Li/Happy_Hacking_CXX/blob/master/manual.md)
