@@ -47,6 +47,7 @@ would come to your help. Our mutli view class template provides support for both
 element access and iterators. It's dynamic, light-weight, with simple syntax.
 [Talk is cheap. Show you the code](https://lkml.org/lkml/2000/8/25/132) :wink:
 
+~~~C++
 int storage[] = { 1, 2, 3, 4, 5, 6, 7, 8 };
 // viewed as { {1, 2, 3, 4}, {5, 6, 7, 8} }
 auto view2x4 = hhxx::make_multi_view(storage, 2, 4);
@@ -62,6 +63,7 @@ auto view2x2x2 = hhxx::make_multi_view(storage, 2, 2, 2);
 // addresses {5, 6}
 assert(std::distance(view2x2x2.begin(2), view2x2x2.end(2)) == 2);
 ...
+~~~
 
 Feel interested and want to see what else HHXX has to offer? There is a reference
 [manual](https://github.com/Lingxi-Li/Happy_Hacking_CXX/blob/master/manual.md)
