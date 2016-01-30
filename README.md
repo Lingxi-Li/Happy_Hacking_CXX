@@ -81,7 +81,10 @@ you to join the party and play together~ :tada:
 <a name="depend"></a>
 ## Dependencies
 
-- C++14 (tested on Apple clang-700.1.81)
+- C++14
+  - Tested on Apple clang-700.1.81
+  - Does not compile on GCC 5.3 due to [this](http://stackoverflow.com/a/35088273/1348273) compiler bug
+    and possibly others
 - [Google Test](https://github.com/google/googletest) (gtest) for unit tests
 
 <a name="struct"></a>
