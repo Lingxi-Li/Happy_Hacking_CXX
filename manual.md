@@ -82,8 +82,6 @@ wrapper class ensures that the wrapped aggregate always has a determinate value.
 [`sample()`](#sample)
 [`tick_count()`](#tick_count)
 
-----------------------------------------
-
 <a name="for_each"></a>
 ~~~C++
 template <typename T, typename F>
@@ -132,8 +130,6 @@ for (auto& slice : arr) {
 }
 ~~~
 
-----------------------------------------
-
 <a name="iswap"></a>
 ~~~C++
 template <typename T>
@@ -146,8 +142,6 @@ up `swap()` in both namespace `std` and that of `T` (by ADL). If `T` is an array
 or `std::array` type, applies the above operation to each pair of elements `x[i]`
 and `y[i]`, and invokes introspective swap recursively when necessary.
 
-----------------------------------------
-
 <a name="max"></a>
 ~~~C++
 template <template <typename> class Pred = std::less,
@@ -157,8 +151,6 @@ const T& max(const T& x, const Ts&... ys);
 
 Returns the maximum of `x`, `ys...`, using `Pred<T>{}` as the less-than predicate.
 
-----------------------------------------
-
 <a name="min"></a>
 ~~~C++
 template <template <typename> class Pred = std::less,
@@ -167,8 +159,6 @@ const T& min(const T& x, const Ts&... ys);
 ~~~
 
 Returns the minimum of `x`, `ys...`, using `Pred<T>{}` as the less-than predicate.
-
-----------------------------------------
 
 <a name="sample"></a>
 ~~~C++
@@ -184,8 +174,6 @@ specified by `it`. Since each element in a set of size `n` can be identified
 using a unique index from `{0, 1, 2, ..., (n - 1)}`, this function template
 can be used to select a random subset of a given size. `rand` would be
 invoked `min{m, (n - m)}` times. The space complexity is `O(n)`.
-
-----------------------------------------
 
 <a name="tick_count"></a>
 ~~~C++
@@ -220,8 +208,6 @@ The most significant bit or sign bit is the head bit.
 [`flip_bit()`](#flip_bit)
 [`flip_head_bit()`](#flip_head_bit)
 [`num_bits_set()`](#num_bits_set)
-
-----------------------------------------
 
 <a name="num_bits"></a>
 ~~~C++
@@ -334,8 +320,6 @@ Returns the number of bits set in `x`.
 
 [`function`](#function)
 
-----------------------------------------
-
 <a name="function"></a>
 ~~~C++
 template <typename R, typename... Args>
@@ -367,16 +351,12 @@ It does compile, however, after replacing `std::function` with `hhxx::function`.
 [`HHXX_JOIN2()/HHXX_JOIN3()`](#hhxx_join)
 [`HHXX_UNIQUE_NAME()`](#hhxx_unique_name)
 
-----------------------------------------
-
 <a name="hhxx_str"></a>
 ~~~C++
 #define HHXX_STR(...) ...
 ~~~
 
 Expands and stringifies.
-
-----------------------------------------
 
 <a name="hhxx_join"></a>
 ~~~C++
@@ -385,8 +365,6 @@ Expands and stringifies.
 ~~~
 
 Expands and concatenates.
-
-----------------------------------------
 
 <a name="hhxx_unique_name"></a>
 ~~~C++
@@ -475,8 +453,6 @@ assert(std::distance(view2x2x2.begin(1, 0), view2x2x2.end(1, 0)) == 2);
 [`make_multi()`](#make_multi)
 [`size()`](#size)
 
-----------------------------------------
-
 <a name="enable_if_well_formed_t"></a>
 ~~~C++
 template <typename, typename T = void>
@@ -487,8 +463,6 @@ Counterpart to `std::enable_if_t`. Instead of checking a value be true,
 this one checks an expression be well-formed. Specifically,
 `enable_if_well_formed_t<decltype(expr), T>` gets you `T` if `expr` is well-formed.
 In the case `T` is `void`, you could equivalently write `decltype((void)(expr))`.
-
-----------------------------------------
 
 <a name="multi_t"></a>
 ~~~C++
@@ -501,8 +475,6 @@ container template. `Base` specifies the element type. `n` specifies the
 number of dimensions. So, it's like `T<Base>` raised to `n`-dimensions. For example,
 `multi_t<std::vector, int, 2>` is equivalent to `std::vector<std::vector<int>>`.
 
-----------------------------------------
-
 <a name="multi_array_t"></a>
 ~~~C++
 template <typename T, std::size_t... ns>
@@ -513,8 +485,6 @@ Provides easy syntax for specifying multi-dimensional `std::array` type. `T`
 specifies the element type, `ns...` specifies the extent of each dimension. So
 `sizeof...(ns)` is the number of dimensions. For example,
 `multi_array_t<int, 2, 3>` is equivalent to `std::array<std::array<int, 3>, 2>`.
-
-----------------------------------------
 
 <a name="make_multi"></a>
 ~~~C++
@@ -529,8 +499,6 @@ Each element of the constructed multi-dimensional object is initialized to
 is the number of dimensions. For example, `make_multi<std::vector>(7, 2, 3)`
 creates a 2x3 multi-dimensional object of type `std::vector<std::vector<int>>`
 with each element initialized to 7.
-
-----------------------------------------
 
 <a name="size"></a>
 ~~~C++
@@ -611,8 +579,6 @@ assert(i == 3);
 
 [`to_xstring()`](#to_xstring)
 
-----------------------------------------
-
 <a name="to_xstring"></a>
 ~~~C++
 template <typename CharT, typename T>
@@ -622,5 +588,3 @@ auto to_xstring(const T& x);
 Calls either `to_string(x)` or `to_wstring(x)` based on `CharT`. Looking up
 `to_string()`/`to_wstring()` in both namespace `std` and that of `T` (by ADL).
 By providing a uniform name, this function template facilitates writing generic code.
-
-----------------------------------------
