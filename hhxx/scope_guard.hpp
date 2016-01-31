@@ -32,8 +32,9 @@ public:
 
   /// `other` is disarmed after move.
   scope_guard(scope_guard&& other)
-      : f_(std::move(other.f_)) {
-    armed_ = std::exchange(other.armed_, false);
+      : f_(std::move(other.f_)),
+        armed_(std::exchange(other.armed_, false)) {
+    // nop
   }
 
   ~scope_guard() {
