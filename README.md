@@ -89,6 +89,8 @@ you to join the party and play together~ :tada:
   - Tested on Apple clang-700.1.81
   - Does not compile on GCC 5.3 due to [this](http://stackoverflow.com/a/35088273/1348273) compiler bug
     and possibly others
+  - Not yet tested on MSVC. But I'm afraid HHXX won't compile on it. MSVC is a 
+    slow child in the compiler family, as people always say.
 - [Google Test](https://github.com/google/googletest) (gtest) for unit tests
 
 <a name="struct"></a>
