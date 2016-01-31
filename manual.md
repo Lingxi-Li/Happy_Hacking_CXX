@@ -6,6 +6,7 @@
 
 [`aggregate_wrapper.hpp`](#aggregate_wrapper)
 [`algorithm.hpp`](#algorithm_hpp)
+[`bit.hpp`](#bit_hpp)
 [`functional.hpp`](#functional_hpp)
 [`macro.hpp`](#macro_hpp)
 [`multi_view.hpp`](#multi_view)
@@ -197,6 +198,134 @@ used to seed pseudo-random number generators. If you intend to use
 `std::random_device` for this purpose, mind that the performance of many
 implementations of `std::random_device` degrades sharply once the entropy pool
 is exhausted.
+
+----------------------------------------
+
+<a name="bit_hpp"></a>
+### `bit.hpp`
+
+The index is zero-based, starting from the least significant bit.
+The most significant bit or sign bit is the head bit.
+
+[`num_bits()`](#num_bits)
+[`head_bit_idx()`](#head_bit_idx)
+[`bit_flag()`](#bit_flag)
+[`head_bit_flag()`](#head_bit_flag)
+[`test_bit()`](#test_bit)
+[`test_head_bit()`](#test_head_bit)
+[`set_bit()`](#set_bit)
+[`set_head_bit()`](#set_head_bit)
+[`clear_bit()`](#clear_bit)
+[`clear_head_bit()`](#clear_head_bit)
+[`flip_bit()`](#flip_bit)
+[`flip_head_bit()`](#flip_head_bit)
+[`num_bits_set()`](#num_bits_set)
+
+----------------------------------------
+
+<a name="num_bits"></a>
+~~~C++
+template <typename T>
+constexpr unsigned num_bits(T = 0);
+~~~
+
+Returns the number of bits used to represent type `T`.
+
+<a name="head_bit_idx"></a>
+~~~C++
+template <typename T>
+constexpr unsigned head_bit_idx(T = 0);
+~~~
+
+Returns index of of the head bit of type `T`.
+
+<a name="bit_flag"></a>
+~~~C++
+template <typename T>
+T bit_flag(unsigned idx);
+~~~
+
+Returns a value of type `T` with a single bit set at index `idx`.
+
+<a name="head_bit_flag"></a>
+~~~C++
+template <typename T>
+constexpr T head_bit_flag();
+~~~
+
+Returns a value of type `T` with head bit set only.
+
+<a name="test_bit"></a>
+~~~C++
+template <typename T>
+bool test_bit(T x, unsigned idx);
+~~~
+
+Tests if the bit at index `idx` of `x` is set.
+
+<a name="test_head_bit"></a>
+~~~C++
+template <typename T>
+bool test_head_bit(T x);
+~~~
+
+Tests if the head bit of `x` is set.
+
+<a name="set_bit"></a>
+~~~C++
+template <typename T>
+T set_bit(T x, unsigned idx);
+~~~
+
+Sets the bit at index `idx` of `x` and returns the result.
+
+<a name="set_head_bit"></a>
+~~~C++
+template <typename T>
+T set_head_bit(T x);
+~~~
+
+Sets the head bit of `x` and returns the result.
+
+<a name="clear_bit"></a>
+~~~C++
+template <typename T>
+T clear_bit(T x, unsigned idx);
+~~~
+
+Clears the bit at index `idx` of `x` and returns the result.
+
+<a name="clear_head_bit"></a>
+~~~C++
+template <typename T>
+T clear_head_bit(T x);
+~~~
+
+Clears the head bit of `x` and returns the result.
+
+<a name="flip_bit"></a>
+~~~C++
+template <typename T>
+T flip_bit(T x, unsigned idx);
+~~~
+
+Flips the bit at index `idx` of `x` and returns the result.
+
+<a name="flip_head_bit"></a>
+~~~C++
+template <typename T>
+T flip_head_bit(T x);
+~~~
+
+Flips the head bit of `x` and returns the result.
+
+<a name="num_bits_set"></a>
+~~~C++
+template <typename T>
+unsigned num_bits_set(T x);
+~~~
+
+Returns the number of bits set in `x`.
 
 ----------------------------------------
 
