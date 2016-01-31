@@ -3,7 +3,6 @@
 // Happy Hacking CXX Library (https://github.com/Lingxi-Li/Happy_Hacking_CXX)
 
 #include <hhxx/scope_guard.hpp>
-#include <hhxx/scope_guard.hpp>
 
 #include <utility>
 

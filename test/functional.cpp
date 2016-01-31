@@ -3,7 +3,6 @@
 // Happy Hacking CXX Library (https://github.com/Lingxi-Li/Happy_Hacking_CXX)
 
 #include <hhxx/functional.hpp>
-#include <hhxx/functional.hpp>
 
 #include <string>
 #include <type_traits>
