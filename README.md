@@ -81,9 +81,11 @@ you to join the party and play together~ :tada:
 <a name="depend"></a>
 ## Dependencies
 
-- **C++14:** HHXX dances on the cutting edge of modern C++. So, don't expect it
-to compile nicely on every compiler. If you think it's a problem of the code rather
-than a compiler bug, please report an [issue](https://github.com/Lingxi-Li/Happy_Hacking_CXX/issues).
+- C++14
+  - HHXX dances on the cutting edge of modern C++. So, don't expect it to compile
+    nicely on every compiler. If you think it's a problem of the code rather than
+    a compiler or standard library implementation bug, please report an
+    [issue](https://github.com/Lingxi-Li/Happy_Hacking_CXX/issues).
   - Tested on Apple clang-700.1.81
   - Does not compile on GCC 5.3 due to [this](http://stackoverflow.com/a/35088273/1348273) compiler bug
     and possibly others
