@@ -193,20 +193,21 @@ is exhausted.
 ### `bit.hpp`
 
 The index is zero-based, starting from the least significant bit.
-The most significant bit or sign bit is the head bit.
+MSB is short for most significant bit, and corresponds to the sign bit
+for singed types.
 
 [`num_bits()`](#num_bits)
-[`head_bit_idx()`](#head_bit_idx)
+[`msb_idx()`](#msb_idx)
 [`bit_flag()`](#bit_flag)
-[`head_bit_flag()`](#head_bit_flag)
+[`msb_flag()`](#msb_flag)
 [`test_bit()`](#test_bit)
-[`test_head_bit()`](#test_head_bit)
+[`test_msb()`](#test_msb)
 [`set_bit()`](#set_bit)
-[`set_head_bit()`](#set_head_bit)
+[`set_msb()`](#set_msb)
 [`clear_bit()`](#clear_bit)
-[`clear_head_bit()`](#clear_head_bit)
+[`clear_msb()`](#clear_msb)
 [`flip_bit()`](#flip_bit)
-[`flip_head_bit()`](#flip_head_bit)
+[`flip_msb()`](#flip_msb)
 [`num_bits_set()`](#num_bits_set)
 
 <a name="num_bits"></a>
@@ -217,98 +218,98 @@ constexpr unsigned num_bits(T = 0);
 
 Returns the number of bits used to represent type `T`.
 
-<a name="head_bit_idx"></a>
+<a name="msb_idx"></a>
 ~~~C++
 template <typename T>
-constexpr unsigned head_bit_idx(T = 0);
+constexpr unsigned msb_idx(T = 0);
 ~~~
 
-Returns index of of the head bit of type `T`.
+Returns index of the MSB of type `T`.
 
 <a name="bit_flag"></a>
 ~~~C++
 template <typename T>
-T bit_flag(unsigned idx);
+constexpr T bit_flag(unsigned idx);
 ~~~
 
 Returns a value of type `T` with a single bit set at index `idx`.
 
-<a name="head_bit_flag"></a>
+<a name="msb_flag"></a>
 ~~~C++
 template <typename T>
-constexpr T head_bit_flag();
+constexpr T msb_flag();
 ~~~
 
-Returns a value of type `T` with head bit set only.
+Returns a value of type `T` with the MSB set only.
 
 <a name="test_bit"></a>
 ~~~C++
 template <typename T>
-bool test_bit(T x, unsigned idx);
+constexpr bool test_bit(T x, unsigned idx);
 ~~~
 
 Tests if the bit at index `idx` of `x` is set.
 
-<a name="test_head_bit"></a>
+<a name="test_msb"></a>
 ~~~C++
 template <typename T>
-bool test_head_bit(T x);
+constexpr bool test_msb(T x);
 ~~~
 
-Tests if the head bit of `x` is set.
+Tests if the MSB of `x` is set.
 
 <a name="set_bit"></a>
 ~~~C++
 template <typename T>
-T set_bit(T x, unsigned idx);
+constexpr T set_bit(T x, unsigned idx);
 ~~~
 
 Sets the bit at index `idx` of `x` and returns the result.
 
-<a name="set_head_bit"></a>
+<a name="set_msb"></a>
 ~~~C++
 template <typename T>
-T set_head_bit(T x);
+constexpr T set_msb(T x);
 ~~~
 
-Sets the head bit of `x` and returns the result.
+Sets the MSB of `x` and returns the result.
 
 <a name="clear_bit"></a>
 ~~~C++
 template <typename T>
-T clear_bit(T x, unsigned idx);
+constexpr T clear_bit(T x, unsigned idx);
 ~~~
 
 Clears the bit at index `idx` of `x` and returns the result.
 
-<a name="clear_head_bit"></a>
+<a name="clear_msb"></a>
 ~~~C++
 template <typename T>
-T clear_head_bit(T x);
+constexpr T clear_msb(T x);
 ~~~
 
-Clears the head bit of `x` and returns the result.
+Clears the MSB of `x` and returns the result.
 
 <a name="flip_bit"></a>
 ~~~C++
 template <typename T>
-T flip_bit(T x, unsigned idx);
+constexpr T flip_bit(T x, unsigned idx);
 ~~~
 
 Flips the bit at index `idx` of `x` and returns the result.
 
-<a name="flip_head_bit"></a>
+<a name="flip_msb"></a>
 ~~~C++
 template <typename T>
-T flip_head_bit(T x);
+constexpr T flip_msb(T x);
 ~~~
 
-Flips the head bit of `x` and returns the result.
+Flips the MSB of `x` and returns the result.
 
 <a name="num_bits_set"></a>
 ~~~C++
 template <typename T>
-unsigned num_bits_set(T x);
+constexpr unsigned num_bits_set(T x);
 ~~~
 
 Returns the number of bits set in `x`.
