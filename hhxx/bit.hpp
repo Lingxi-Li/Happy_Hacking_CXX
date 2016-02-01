@@ -5,6 +5,8 @@
 #ifndef HHXX_BIT_HPP_
 #define HHXX_BIT_HPP_
 
+#include <climits>
+
 #include <type_traits>
 
 namespace hhxx {
@@ -16,7 +18,7 @@ namespace hhxx {
 /// Returns the number of bits used to represent type `T`.
 template <typename T>
 constexpr unsigned num_bits(T = 0) {
-  return sizeof(T) << 3;
+  return sizeof(T) * CHAR_BIT;
 }
 
 /// Returns index of the MSB of type `T`.
