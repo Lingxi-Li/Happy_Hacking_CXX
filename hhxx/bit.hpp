@@ -5,8 +5,7 @@
 #ifndef HHXX_BIT_HPP_
 #define HHXX_BIT_HPP_
 
-#include <climits>
-
+#include <bitset>
 #include <type_traits>
 
 namespace hhxx {
@@ -90,15 +89,10 @@ constexpr T flip_msb(T x) {
 
 /// Returns the number of bits set in `x`.
 template <typename T>
-constexpr unsigned num_bits_set(T x) {
-  unsigned cnt = 0;
-  // behavior of signed type underflow is unspecified
-  std::make_unsigned_t<T> v = x;
-  while (v) {
-    ++cnt;
-    v &= v - 1;
-  }
-  return cnt;
+unsigned num_bits_set(T x) {
+  // `std::bitset::count()` may be highly optimized;
+  // see http://codereview.stackexchange.com/a/118484/70823
+  return static_cast<unsigned>(std::bitset<num_bits<T>()>(x).count());
 }
 
 } // namespace hhxx

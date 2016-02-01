@@ -309,7 +309,7 @@ Flips the MSB of `x` and returns the result.
 <a name="num_bits_set"></a>
 ~~~C++
 template <typename T>
-constexpr unsigned num_bits_set(T x);
+unsigned num_bits_set(T x);
 ~~~
 
 Returns the number of bits set in `x`.

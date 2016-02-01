@@ -126,12 +126,12 @@ TEST(flip_msb, basic) {
 TEST(num_bits_set, basic) {
   using hhxx::num_bits_set;
   using hhxx::num_bits;
-  static_assert(num_bits_set(0) == 0, "");
-  static_assert(num_bits_set(1) == 1, "");
-  static_assert(num_bits_set(8) == 1, "");
-  static_assert(num_bits_set(20) == 2, "");
-  static_assert(num_bits_set(-1) == num_bits(-1), "");
-  static_assert(num_bits_set(INT_MIN) == 1, "");
+//  static_assert(num_bits_set(0) == 0, "");
+//  static_assert(num_bits_set(1) == 1, "");
+//  static_assert(num_bits_set(8) == 1, "");
+//  static_assert(num_bits_set(20) == 2, "");
+//  static_assert(num_bits_set(-1) == num_bits(-1), "");
+//  static_assert(num_bits_set(INT_MIN) == 1, "");
   EXPECT_EQ(0u, num_bits_set(0));
   EXPECT_EQ(1u, num_bits_set(1));
   EXPECT_EQ(1u, num_bits_set(8));
