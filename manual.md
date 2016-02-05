@@ -460,6 +460,11 @@ public:
   /// `[first, last)` using `less` as the less-than comparator.
   template <class ForwardIt>
   mutable_heap(ForwardIt first, ForwardIt last, Less less = Less{});
+  
+  /// Constructs a mutable heap over the objects referenced by keys
+  /// in `list` using `less` as the less-than comparator.
+  explicit mutable_heap(std::initializer_list<std::intptr_t> list,
+                        Less less = Less{});
 
   /// Returns root of the heap.
   key_type top() const;

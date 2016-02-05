@@ -9,6 +9,7 @@
 #include <cstddef>
 #include <algorithm>
 #include <functional>
+#include <initializer_list>
 #include <unordered_map>
 #include <utility>
 #include <vector>
@@ -42,6 +43,14 @@ public:
     for (pos_type i = 0; i < heap_.size(); ++i) {
       key_pos_map_.emplace(heap_[i], i);
     }
+  }
+
+  /// Constructs a mutable heap over the objects referenced by keys
+  /// in `list` using `less` as the less-than comparator.
+  explicit mutable_heap(std::initializer_list<std::intptr_t> list,
+                        Less less = Less{})
+      : mutable_heap(list.begin(), list.end(), std::move(less)) {
+    // nop
   }
 
   /// Returns root of the heap.
