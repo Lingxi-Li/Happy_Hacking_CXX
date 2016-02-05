@@ -10,6 +10,7 @@
 [`functional.hpp`](#functional_hpp)
 [`macro.hpp`](#macro_hpp)
 [`multi_view.hpp`](#multi_view)
+[`mutable_heap.hpp`](#mutable_heap)
 [`meta.hpp`](#meta_hpp)
 [`scope_guard.hpp`](#scope_guard)
 [`string.hpp`](#string_hpp)
@@ -441,6 +442,54 @@ auto view2x2x2 = hhxx::make_multi_view(storage, 2, 2, 2);
 // addresses {5, 6}
 assert(std::distance(view2x2x2.begin(1, 0), view2x2x2.end(1, 0)) == 2);
 ~~~
+
+----------------------------------------
+
+<a name="mutable_heap"></a>
+~~~C++
+template <class Less = std::less<std::intptr_t>>
+class mutable_heap {
+public:
+  using key_type = std::intptr_t;
+  using pos_type = std::size_t;
+
+  /// Constructs a mutable heap using `less` as the less-than comparator.
+  explicit mutable_heap(Less less = Less{});
+
+  /// Constructs a mutable heap over the objects referenced by keys
+  /// `[first, last)` using `less` as the less-than comparator.
+  template <class ForwardIt>
+  mutable_heap(ForwardIt first, ForwardIt last, Less less = Less{});
+
+  /// Returns root of the heap.
+  key_type top() const;
+
+  /// Takes and returns root of the heap.
+  key_type pop();
+
+  /// Add the object referenced by `key` to the heap. If it's already in the
+  /// heap, its position in the heap is updated if necessary.
+  void push(key_type key);
+
+  /// Same as `push()`.
+  void emplace(key_type key);
+
+  /// Empties the heap.
+  void clear();
+
+  /// Returns the number of elements in the heap.
+  auto size() const;
+
+  /// Returns whether the heap is empty.
+  bool empty() const;
+
+  /// Reserves storage for `cap` elements.
+  void reserve(pos_type cap);
+};
+~~~
+
+Binary max-heap with mutable priorities. `Less` is the less-than comparator
+type that compares the priorities of objects referenced by key type `std::intptr_t`.
 
 ----------------------------------------
 
