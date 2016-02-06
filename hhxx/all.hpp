@@ -12,3 +12,4 @@
 #include "hhxx/mutable_heap.hpp"
 #include "hhxx/scope_guard.hpp"
 #include "hhxx/string.hpp"
+#include "hhxx/union_find_set.hpp"

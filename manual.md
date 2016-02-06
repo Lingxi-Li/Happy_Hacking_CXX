@@ -14,6 +14,7 @@
 [`meta.hpp`](#meta_hpp)
 [`scope_guard.hpp`](#scope_guard)
 [`string.hpp`](#string_hpp)
+[`union_find_set.hpp`](#union_find_set)
 
 ----------------------------------------
 
@@ -645,3 +646,29 @@ auto to_xstring(const T& x);
 Calls either `to_string(x)` or `to_wstring(x)` based on `CharT`. Looking up
 `to_string()`/`to_wstring()` in both namespace `std` and that of `T` (by ADL).
 By providing a uniform name, this function template facilitates writing generic code.
+
+----------------------------------------
+
+<a name="union_find_set"></a>
+~~~C++
+class union_find_set {
+public:
+  /// Type of keys used to reference elements and sets.
+  using key_type = std::uintptr_t;
+
+  /// Returns the largest set containing `key`.
+  key_type find(key_type key);
+
+  /// Merges the largest sets containing `a` and `b` respectively, and returns
+  /// the resulting union set.
+  key_type unite(key_type a, key_type b);
+
+  /// Resets to initial state where each element is in a set of its own
+  /// referenced by the same key.
+  void reset();
+};
+~~~
+
+Disjoint sets data structure. Elements and sets are referenced by keys of type
+`std::uintptr_t`. In the initial state, each element `x` within `[0, UINTPTR_MAX]`
+is in a set of its own referenced by the same key `x`.
