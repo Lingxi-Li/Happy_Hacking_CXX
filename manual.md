@@ -457,12 +457,14 @@ public:
   explicit mutable_heap(Less less = Less{});
 
   /// Constructs a mutable heap over the objects referenced by keys
-  /// `[first, last)` using `less` as the less-than comparator.
+  /// `[first, last)` using `less` as the less-than comparator. All elements in
+  /// `[first, last)` should be distinct.
   template <class ForwardIt>
   mutable_heap(ForwardIt first, ForwardIt last, Less less = Less{});
   
   /// Constructs a mutable heap over the objects referenced by keys
-  /// in `list` using `less` as the less-than comparator.
+  /// in `list` using `less` as the less-than comparator. All elements in `list`
+  /// should be distinct.
   explicit mutable_heap(std::initializer_list<std::uintptr_t> list,
                         Less less = Less{});
 
