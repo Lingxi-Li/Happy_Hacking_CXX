@@ -18,9 +18,9 @@ TEST(default_ctor, basic) {
 
 TEST(range_ctor_top_pop, basic) {
   using hhxx::mutable_heap;
-  std::vector<std::intptr_t> range = {0, 1, 4, 2, 3};
+  std::vector<std::uintptr_t> range = {0, 1, 4, 2, 3};
   mutable_heap<> heap(range.begin(), range.end());
-  std::intptr_t key = 5;
+  std::uintptr_t key = 5;
   while (heap.size()) {
     EXPECT_EQ(--key, heap.top());
     EXPECT_EQ(key, heap.pop());
@@ -29,12 +29,12 @@ TEST(range_ctor_top_pop, basic) {
 
 TEST(push, basic) {
   using hhxx::mutable_heap;
-  std::vector<std::intptr_t> range = {0, 1, 4, 2, 3};
+  std::vector<std::uintptr_t> range = {0, 1, 4, 2, 3};
   mutable_heap<> heap;
   for (auto key : range) {
     heap.push(key);
   }
-  std::intptr_t key = 5;
+  std::uintptr_t key = 5;
   while (heap.size()) {
     EXPECT_EQ(--key, heap.top());
     EXPECT_EQ(key, heap.pop());
@@ -48,7 +48,7 @@ struct less {
       : pri(ipri) {
     // nop
   }
-  bool operator()(std::intptr_t a, std::intptr_t b) const {
+  bool operator()(std::uintptr_t a, std::uintptr_t b) const {
     return pri[a] < pri[b];
   }
   std::vector<int>& pri;
@@ -65,21 +65,22 @@ TEST(list_ctor_push, update) {
   for (auto key : {0, 1, 2, 3, 4}) {
     heap.push(key);
   }
-  std::intptr_t key = -1;
+  std::uintptr_t key = 0;
   while (heap.size()) {
-    EXPECT_EQ(++key, heap.top());
+    EXPECT_EQ(key, heap.top());
     EXPECT_EQ(key, heap.pop());
+    ++key;
   }
 }
 
 TEST(emplace, basic) {
   using hhxx::mutable_heap;
-  std::vector<std::intptr_t> range = {0, 1, 4, 2, 3};
+  std::vector<std::uintptr_t> range = {0, 1, 4, 2, 3};
   mutable_heap<> heap;
   for (auto key : range) {
     heap.emplace(key);
   }
-  std::intptr_t key = 5;
+  std::uintptr_t key = 5;
   while (heap.size()) {
     EXPECT_EQ(--key, heap.top());
     EXPECT_EQ(key, heap.pop());
@@ -88,7 +89,7 @@ TEST(emplace, basic) {
 
 TEST(clear, basic) {
   using hhxx::mutable_heap;
-  std::vector<std::intptr_t> range = {0, 1, 4, 2, 3};
+  std::vector<std::uintptr_t> range = {0, 1, 4, 2, 3};
   mutable_heap<> heap(range.begin(), range.end());
   EXPECT_EQ(5u, heap.size());
   heap.clear();
@@ -98,13 +99,13 @@ TEST(clear, basic) {
 
 TEST(reserve, basic) {
   using hhxx::mutable_heap;
-  std::vector<std::intptr_t> range = {0, 1, 4, 2, 3};
+  std::vector<std::uintptr_t> range = {0, 1, 4, 2, 3};
   mutable_heap<> heap;
   for (auto key : range) {
     heap.emplace(key);
   }
   heap.reserve(100);
-  std::intptr_t key = 5;
+  std::uintptr_t key = 5;
   while (heap.size()) {
     EXPECT_EQ(--key, heap.top());
     EXPECT_EQ(key, heap.pop());

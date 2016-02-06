@@ -18,11 +18,11 @@ namespace hhxx {
 
 /// Binary max-heap with mutable priorities. `Less` is the less-than comparator
 /// type that compares the priorities of objects referenced by key type
-/// `std::intptr_t`.
-template <class Less = std::less<std::intptr_t>>
+/// `std::uintptr_t`.
+template <class Less = std::less<std::uintptr_t>>
 class mutable_heap {
 public:
-  using key_type = std::intptr_t;
+  using key_type = std::uintptr_t;
   using pos_type = std::size_t;
   using map_type = std::unordered_map<key_type, pos_type>;
   using vec_type = std::vector<key_type>;
@@ -47,7 +47,7 @@ public:
 
   /// Constructs a mutable heap over the objects referenced by keys
   /// in `list` using `less` as the less-than comparator.
-  explicit mutable_heap(std::initializer_list<std::intptr_t> list,
+  explicit mutable_heap(std::initializer_list<std::uintptr_t> list,
                         Less less = Less{})
       : mutable_heap(list.begin(), list.end(), std::move(less)) {
     // nop

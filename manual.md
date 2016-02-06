@@ -447,10 +447,10 @@ assert(std::distance(view2x2x2.begin(1, 0), view2x2x2.end(1, 0)) == 2);
 
 <a name="mutable_heap"></a>
 ~~~C++
-template <class Less = std::less<std::intptr_t>>
+template <class Less = std::less<std::uintptr_t>>
 class mutable_heap {
 public:
-  using key_type = std::intptr_t;
+  using key_type = std::uintptr_t;
   using pos_type = std::size_t;
 
   /// Constructs a mutable heap using `less` as the less-than comparator.
@@ -463,7 +463,7 @@ public:
   
   /// Constructs a mutable heap over the objects referenced by keys
   /// in `list` using `less` as the less-than comparator.
-  explicit mutable_heap(std::initializer_list<std::intptr_t> list,
+  explicit mutable_heap(std::initializer_list<std::uintptr_t> list,
                         Less less = Less{});
 
   /// Returns root of the heap.
@@ -494,7 +494,7 @@ public:
 ~~~
 
 Binary max-heap with mutable priorities. `Less` is the less-than comparator
-type that compares the priorities of objects referenced by key type `std::intptr_t`.
+type that compares the priorities of objects referenced by key type `std::uintptr_t`.
 
 ----------------------------------------
 
