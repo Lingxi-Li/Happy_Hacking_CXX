@@ -93,7 +93,7 @@ cref_init_list(const T& x, const Ts&... xs);
 ~~~
 
 Returns `{ std::cref(x), std::cref(xs)... }`.  
-Sample usage: `std::min(cref_init_list(1, 2, 3, a, b, c))`.
+Sample usage: `std::min(cref_init_list(const_a, b, c))`.
 
 <a name="for_each"></a>
 ~~~C++
