@@ -14,6 +14,7 @@
 #include <array>
 #include <chrono>
 #include <functional>
+#include <initializer_list>
 #include <numeric>
 #include <random>
 #include <utility>
@@ -76,6 +77,14 @@ void iswap(std::array<T, n>& x, std::array<T, n>& y) {
   for (std::size_t i = 0; i < n; ++i) {
     iswap(x[i], y[i]);
   }
+}
+
+/// Returns `{ std::cref(x), std::cref(xs)... }`. Sample usage:
+/// `std::min(cref_init_list(1, 2, 3, a, b, c))`.
+template <class T, class... Ts>
+std::initializer_list<std::reference_wrapper<const T>>
+cref_init_list(const T& x, const Ts&... xs) {
+  return { std::ref(x), std::ref(xs)... };
 }
 
 /// Returns the minimum of `x`, `ys...`, using `Pred<T>{}` as the less-than predicate.

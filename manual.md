@@ -77,12 +77,23 @@ wrapper class ensures that the wrapped aggregate always has a determinate value.
 <a name="algorithm_hpp"></a>
 ### `algorithm.hpp`
 
+[`cref_init_list()`](#cref_init_list)
 [`for_each()`](#for_each)
 [`iswap()`](#iswap)
 [`max()`](#max)
 [`min()`](#min)
 [`sample()`](#sample)
 [`tick_count()`](#tick_count)
+
+<a name="cref_init_list"></a>
+~~~C++
+template <class T, class... Ts>
+std::initializer_list<std::reference_wrapper<const T>>
+cref_init_list(const T& x, const Ts&... xs);
+~~~
+
+Returns `{ std::cref(x), std::cref(xs)... }`.  
+Sample usage: `std::min(cref_init_list(1, 2, 3, a, b, c))`.
 
 <a name="for_each"></a>
 ~~~C++
