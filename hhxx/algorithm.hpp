@@ -33,8 +33,8 @@ void iswap(T& x, T& y, int) {
 }
 
 template <typename T>
-auto iswap(T& x, T& y, char) -> decltype(x.swap(y)) {
-  return x.swap(y);
+auto iswap(T& x, T& y, char) -> decltype((void)x.swap(y)) {
+  x.swap(y);
 }
 
 template <typename T, typename F>
@@ -60,9 +60,7 @@ void for_each(T& obj, F& f, int) {
 
 template <typename T>
 void iswap(T& x, T& y) {
-  // uses `static_cast<void>()` to ignore possible (though very unlikely) return
-  // value from `detail::iswap(int&, int&, char)`
-  static_cast<void>(detail::iswap(x, y, ' '));
+  detail::iswap(x, y, ' ');
 }
 
 template <typename T, std::size_t n>
