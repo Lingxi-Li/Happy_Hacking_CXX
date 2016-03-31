@@ -111,9 +111,9 @@ public:
   }
 
 private:
-  template <class Target, std::size_t... Idx>
-  Target make(std::index_sequence<Idx...>) const {
-    return Target(std::get<Idx>(std::move(params_))...);
+  template <class Target, std::size_t... idx>
+  Target make(std::index_sequence<idx...>) const {
+    return Target(std::get<idx>(std::move(params_))...);
   }
 
   std::tuple<Ts&&...> params_;
