@@ -519,6 +519,7 @@ type that compares the priorities of objects referenced by key type `std::uintpt
 [`multi_t`](#multi_t)
 [`multi_array_t`](#multi_array_t)
 
+[`make()`](#make)
 [`make_multi()`](#make_multi)
 [`size()`](#size)
 
@@ -554,6 +555,22 @@ Provides easy syntax for specifying multi-dimensional `std::array` type. `T`
 specifies the element type, `ns...` specifies the extent of each dimension. So
 `sizeof...(ns)` is the number of dimensions. For example,
 `multi_array_t<int, 2, 3>` is equivalent to `std::array<std::array<int, 3>, 2>`.
+
+<a name="make"></a>
+~~~C++
+template <class... Ts>
+deduced-destination-type make(Ts&&... params);
+~~~
+
+Constructs an object of the destination type (deduced from context) from
+`params`. Explicit constructors are considered for this purpose. `params`
+are perfectly forwarded to the constructor. Sample usage:
+~~~C++
+std::uniform_int_distribution<> dis;
+auto r = dis(engine, hhxx::make(0, 1));
+~~~
+Note that you cannot do `auto r = dis(engine, {0, 1});` for the constructor
+of `param_type` is explicit.
 
 <a name="make_multi"></a>
 ~~~C++

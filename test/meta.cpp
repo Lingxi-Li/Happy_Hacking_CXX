@@ -4,6 +4,8 @@
 
 #include <hhxx/meta.hpp>
 
+#include <memory>
+#include <random>
 #include <vector>
 
 #include <gtest/gtest.h>
@@ -64,4 +66,17 @@ TEST(size, basic) {
   EXPECT_EQ(10u, size(arr));
   EXPECT_EQ(10u, size(std_arr));
   EXPECT_EQ(10u, size(vec));
+}
+
+TEST(make, basic) {
+  using hhxx::make;
+  std::minstd_rand engine;
+  std::uniform_int_distribution<> dis;
+  int a = 0, b = 1;
+  auto r = dis(engine, make(0, 1));
+  EXPECT_TRUE(r == 0 || r == 1);
+  r = dis(engine, make(a, b));
+  EXPECT_TRUE(r == 0 || r == 1);
+  std::shared_ptr<int> p = make(new int(7));
+  EXPECT_EQ(7, *p);
 }

@@ -5,7 +5,9 @@
 #ifndef HHXX_META_HPP_
 #define HHXX_META_HPP_
 
+#include <cstddef>
 #include <array>
+#include <tuple>
 #include <type_traits>
 #include <utility>
 
@@ -89,6 +91,48 @@ auto size(const T& x) -> decltype(x.size()) {
 template <typename T, std::size_t n>
 auto size(T (&)[n]) {
   return n;
+}
+
+namespace detail {
+
+// related: http://stackoverflow.com/a/36313237/1348273
+//          http://stackoverflow.com/q/36327317/1348273
+template <class... Ts>
+class make_helper_t {
+public:
+  make_helper_t(Ts&&... params)
+      : params_(std::forward<Ts>(params)...) {
+    // nop
+  }
+
+  template <class Target>
+  operator Target() const {
+    return make<Target>(std::index_sequence_for<Ts...>{});
+  }
+
+private:
+  template <class Target, std::size_t... Idx>
+  Target make(std::index_sequence<Idx...>) const {
+    return Target(std::get<Idx>(std::move(params_))...);
+  }
+
+  std::tuple<Ts&&...> params_;
+};
+
+} // namespace detail
+
+/// Constructs an object of the destination type (deduced from context) from
+/// `params`. Explicit constructors are considered for this purpose. `params`
+/// are perfectly forwarded to the constructor. Sample usage:
+/// ~~~C++
+/// std::uniform_int_distribution<> dis;
+/// auto r = dis(engine, hhxx::make(0, 1));
+/// ~~~
+/// Note that you cannot do `auto r = dis(engine, {0, 1});` for the constructor
+/// of `param_type` is explicit.
+template <class... Ts>
+detail::make_helper_t<Ts...> make(Ts&&... params) {
+  return {std::forward<Ts>(params)...};
 }
 
 } // namespace hhxx
