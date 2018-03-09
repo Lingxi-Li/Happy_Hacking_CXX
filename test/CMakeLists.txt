@@ -1,0 +1,7 @@
+aux_source_directory(. HHXX_TEST_SOURCES)
+foreach(SRC ${HHXX_TEST_SOURCES})
+  string(REGEX REPLACE ".*/(.*)\\.cpp$" "\\1" TARG ${SRC})
+  add_executable(${TARG} ${SRC})
+  target_link_libraries(${TARG} ${GTEST_BOTH_LIBRARIES})
+  add_test(NAME ${TARG} COMMAND ${TARG})
+endforeach()
