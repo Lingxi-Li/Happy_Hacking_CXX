@@ -19,7 +19,7 @@ for (auto& slice : obj_3d) {
 ~~~
 
 With [`hhxx::for_each()`](https://github.com/Lingxi-Li/Happy_Hacking_CXX/blob/master/manual.md#for_each),
-you can simply 
+you can simply
 
 ~~~C++
 hhxx::for_each(obj_3d, f);
@@ -58,7 +58,7 @@ assert(std::distance(view2x4.begin(), view2x4.end()) == 8);
 assert(std::distance(view2x4.begin(1), view2x4.end(1)) == 4);
 // addresses 3
 assert(std::distance(view2x4.begin(0, 2), view2x4.end(0, 2)) == 1);
-// viewed as { { {1, 2}, {3, 4} }, 
+// viewed as { { {1, 2}, {3, 4} },
 //             { {5, 6}, {7, 8} } }
 auto view2x2x2 = hhxx::make_multi_view(storage, 2, 2, 2);
 // addresses {5, 6}
@@ -89,7 +89,7 @@ you to join the party and play together~ :tada:
   - Tested on Apple clang-700.1.81
   - Does not compile on GCC 5.3 due to [this](http://stackoverflow.com/a/35088273/1348273) compiler bug
     and possibly others
-  - Not yet tested on MSVC. But I'm afraid HHXX won't compile on it. MSVC is a 
+  - Not yet tested on MSVC. But I'm afraid HHXX won't compile on it. MSVC is a
     slow child in the compiler family, as people always say.
 - [Google Test](https://github.com/google/googletest) (gtest) for unit tests
 
@@ -102,6 +102,7 @@ test/.........unit tests directory
 manual.md.....reference manual
 README.md
 LICENSE
+.gitignore
 ~~~
 
 <a name="build"></a>
