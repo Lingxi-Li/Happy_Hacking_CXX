@@ -19,4 +19,19 @@
 /// Expands to `prefix_at_line_<__LINE__>`.
 #define HHXX_UNIQUE_NAME(prefix) HHXX_JOIN3(prefix, _at_line_, __LINE__)
 
+#define HHXX_DECLARE_HAS_MEMBER_FUNC(NAME) \
+  template<class T, class... ARGS> struct has_member_func_##NAME { \
+    template <class U> constexpr static auto check(int) -> decltype(std::declval<U>().NAME(std::declval<ARGS>()...), std::true_type()); \
+    template <class U> constexpr static std::false_type check(...); \
+    static constexpr bool value = decltype(check<T>(0))::value; \
+  }; \
+  template <class T> struct has_member_func_##NAME<T, void> { \
+    template <class U> constexpr static auto check(int) -> decltype(std::declval<U>().NAME(), std::true_type()); \
+    template <class U> constexpr static std::false_type check(...); \
+    static constexpr bool value = decltype(check<T>(0))::value; \
+  }
+
+#define HHXX_HAS_MEMBER_FUNC(CLASS, MEMBER, ...) \
+  has_member_func_##MEMBER<CLASS, __VA_ARGS__>::value
+
 #endif // HHXX_MACRO_HPP_
