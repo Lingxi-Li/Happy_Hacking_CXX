@@ -40,27 +40,6 @@ public:
   function(std::nullptr_t) : base(nullptr) {}
   template <typename F, typename = enable_if_fn_t<F>>
   function(F f) : base(std::move(f)) {}
-  template <typename Alloc>
-  function(std::allocator_arg_t tag, const Alloc& alloc)
-      : base(tag, alloc) {}
-  template <typename Alloc>
-  function(std::allocator_arg_t tag, const Alloc& alloc, std::nullptr_t)
-      : base(tag, alloc, nullptr) {}
-  template <typename F, typename Alloc, typename = enable_if_fn_t<F>>
-  function(std::allocator_arg_t tag, const Alloc& alloc, F f)
-      : base(tag, alloc, std::move(f)) {}
-
-  // why do we need the following two, provided that we already have the one
-  // above? see http://stackoverflow.com/a/34977207/1348273;
-  // explicit cast to base is necessary, or overload resolution will select
-  // a wrong constructor
-
-  template <typename Alloc>
-  function(std::allocator_arg_t tag, const Alloc& alloc, const function& other)
-      : base(tag, alloc, static_cast<const base&>(other)) {}
-  template <typename Alloc>
-  function(std::allocator_arg_t tag, const Alloc& alloc, function&& other)
-      : base(tag, alloc, std::move(static_cast<base&>(other))) {}
 
   function& operator =(R(*ptr)(Args...)) {
     base::operator =(ptr);
@@ -86,13 +65,6 @@ public:
     return *this;
   }
 };
-
-} namespace std {
-
-template <typename R, typename... Args, typename Alloc>
-struct uses_allocator<hhxx::function<R(Args...)>, Alloc> : true_type {};
-
-} namespace hhxx {
 
 } // namespace hhxx
 
