@@ -22,9 +22,9 @@ class function;
 template <typename R, typename... Args>
 class function<R(Args...)> : public std::function<R(Args...)> {
 private:
-  template <typename F_, typename F = std::decay_t<F_>>
+  template <typename F>
   using enable_if_fn_t = std::enable_if_t<
-                           std::is_same<R, std::result_of_t<F(Args...)>>{}>;
+                           std::is_same<R, std::result_of_t<F&&(Args&&...)>>{}>;
 
 public:
   using base = std::function<R(Args...)>;
