@@ -8,10 +8,31 @@
 #include <cstddef>
 
 #include <functional>
+#include <tuple>
 #include <type_traits>
 #include <utility>
 
+#define HHXX_ARG_PACK(Ts, Is) ::hhxx::detail::arg_pack<::std::tuple<Ts...>, ::std::index_sequence<Is...>>
+#define HHXX_UNPACK(args, Is) ::std::get<Is>(::std::move(args.vs))...
+
 namespace hhxx {
+
+namespace detail {
+
+template <typename Tuple, typename Indices>
+struct arg_pack {
+  Tuple vs;
+  Indices is;
+};
+
+} // namespace detail
+
+template <typename... Ts>
+auto pack(Ts&&... args) noexcept {
+  std::tuple<Ts&&...> vs(std::forward<Ts>(args)...);
+  std::index_sequence_for<Ts...> is;
+  return detail::arg_pack<decltype(vs), decltype(is)>{ std::move(vs), is };
+}
 
 template <typename>
 class function;

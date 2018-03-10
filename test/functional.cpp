@@ -9,6 +9,39 @@
 
 #include <gtest/gtest.h>
 
+namespace arg_pack_test_ns {
+
+auto cnt = 0;
+
+struct stru {
+  stru() noexcept { ++cnt; }
+  stru(const stru&) noexcept { ++cnt; }
+  stru(stru&&) noexcept { }
+};
+
+void func(stru, stru) {}
+
+template <typename... Ts, std::size_t... Is,
+          typename... Us, std::size_t... Js>
+void func(HHXX_ARG_PACK(Ts, Is) ap1, HHXX_ARG_PACK(Us, Js) ap2) {
+  EXPECT_EQ(4, cnt);
+  func(HHXX_UNPACK(ap1, Is));
+  EXPECT_EQ(6, cnt);
+  func(HHXX_UNPACK(ap2, Js));
+  EXPECT_EQ(7, cnt);
+}
+
+} // namespace arg_pack_test_ns
+
+TEST(arg_pack, basic) {
+  using namespace arg_pack_test_ns;
+  stru a, b; // 2
+  const stru c, d; // 4
+  EXPECT_EQ(4, cnt);
+  func(hhxx::pack(a, c), hhxx::pack(std::move(b), std::move(d)));
+  EXPECT_EQ(7, cnt);
+}
+
 namespace function_test_ns {
 
 int func(int x) {

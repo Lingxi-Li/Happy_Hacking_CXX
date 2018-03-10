@@ -321,7 +321,39 @@ Returns the number of bits set in `x`.
 <a name="functional_hpp"></a>
 ### `functional.hpp`
 
+[`arg_pack`](#arg_pack)
 [`function`](#function)
+
+<a name="arg_pack"></a>
+~~~C++
+#define HHXX_ARG_PACK(Ts, Is) ...
+#define HHXX_UNPACK(args, Is) ...
+template <typename... Ts>
+auto pack(Ts&&... args) noexcept;
+~~~
+
+Argument pack allows you to group various number of arguments into a single pack,
+pass the pack around by value, and unpack it to the original arguments in a
+perfect-forwarding fashion.
+
+Example:
+
+~~~C++
+template <typename A, typename B,
+          typename... Ts, std::size_t... Is,
+          typename... Us, std::size_t... Js>
+std::pair<A, B> make_a_b_pair(
+  HHXX_ARG_PACK(Ts, Is) a_args,
+  HHXX_ARG_PACK(Us, Js) b_args) {
+  return std::pair<A, B>(
+    A(HHXX_UNPACK(a_args, Is)),
+    B(HHXX_UNPACK(b_args, Js)));
+}
+
+make_a_b_pair<A, B>(
+  hhxx::pack(a, std::move(b)),
+  hhxx::pack(c, std::move(d), e));
+~~~
 
 <a name="function"></a>
 ~~~C++
