@@ -13,7 +13,7 @@
 #include <utility>
 
 #define HHXX_ARG_PACK(Ts, Is) ::hhxx::detail::arg_pack<::std::tuple<Ts...>, ::std::index_sequence<Is...>>
-#define HHXX_UNPACK(args, Is) ::std::get<Is>(::std::move(args.vs))...
+#define HHXX_UNPACK_ARGS(args, Is) ::std::get<Is>(::std::move(args.vs))...
 
 namespace hhxx {
 
@@ -28,7 +28,7 @@ struct arg_pack {
 } // namespace detail
 
 template <typename... Ts>
-auto pack(Ts&&... args) noexcept {
+auto pack_args(Ts&&... args) noexcept {
   std::tuple<Ts&&...> vs(std::forward<Ts>(args)...);
   std::index_sequence_for<Ts...> is;
   return detail::arg_pack<decltype(vs), decltype(is)>{ std::move(vs), is };
