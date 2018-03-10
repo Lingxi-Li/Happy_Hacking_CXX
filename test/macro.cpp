@@ -37,3 +37,20 @@ TEST(UNIQUE_NAME, basic) {
   using macro_test_ns::str_literal;
   EXPECT_EQ("obj_at_line_" HHXX_STR(__LINE__), str_literal(HHXX_STR(HHXX_UNIQUE_NAME(obj))));
 }
+
+struct foobar {
+  void foo(int) {}
+  int foo(double, int) { return 0; }
+  double bar() { return 0.0; }
+};
+
+HHXX_DECLARE_HAS_MEMBER_FUNC(foo);
+HHXX_DECLARE_HAS_MEMBER_FUNC(bar);
+
+TEST(HAS_MEMBER_FUNC, basic) {
+  static_assert(HHXX_HAS_MEMBER_FUNC(foobar, foo, int), "");
+  static_assert(HHXX_HAS_MEMBER_FUNC(foobar, foo, double, int), "");
+  static_assert(HHXX_HAS_MEMBER_FUNC(foobar, bar, void), "");
+  static_assert(!HHXX_HAS_MEMBER_FUNC(foobar, foo, void), "");
+  static_assert(!HHXX_HAS_MEMBER_FUNC(foobar, bar, int), "");
+}
