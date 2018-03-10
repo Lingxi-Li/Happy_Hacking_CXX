@@ -5,6 +5,8 @@
 #ifndef HHXX_BIT_HPP_
 #define HHXX_BIT_HPP_
 
+#include <climits>
+
 #include <bitset>
 #include <type_traits>
 
