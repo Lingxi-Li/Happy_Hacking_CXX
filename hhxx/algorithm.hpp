@@ -77,14 +77,6 @@ void iswap(std::array<T, n>& x, std::array<T, n>& y) {
   }
 }
 
-/// Returns `{ std::cref(x), std::cref(xs)... }`. Sample usage:
-/// `std::min(cref_init_list(const_a, b, c))`.
-template <class T, class... Ts>
-std::initializer_list<std::reference_wrapper<const T>>
-cref_init_list(const T& x, const Ts&... xs) {
-  return { std::ref(x), std::ref(xs)... };
-}
-
 /// Returns the minimum of `x`, `ys...`, using `Pred<T>{}` as the less-than predicate.
 template <template <typename> class Pred = std::less,
           typename T, typename... Ts>

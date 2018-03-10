@@ -43,16 +43,16 @@ public:
 
   template <typename... Ts>
   constexpr aggregate_wrapper(Ts&&... xs);
-  
+
   /// You can't initialize an array directly from another. The constructor
   /// default initializes the wrapped array, and then copies/moves each element
   /// from `arr` to it.
-  
+
   constexpr aggregate_wrapper(const aggregate_type& arr);
   constexpr aggregate_wrapper(aggregate_type&& arr);
 
   /// Provides transparent access to the wrapped array.
-  
+
   operator T* ();
   operator const T* () const;
 
@@ -77,23 +77,12 @@ wrapper class ensures that the wrapped aggregate always has a determinate value.
 <a name="algorithm_hpp"></a>
 ### `algorithm.hpp`
 
-[`cref_init_list()`](#cref_init_list)
 [`for_each()`](#for_each)
 [`iswap()`](#iswap)
 [`max()`](#max)
 [`min()`](#min)
 [`sample()`](#sample)
 [`tick_count()`](#tick_count)
-
-<a name="cref_init_list"></a>
-~~~C++
-template <class T, class... Ts>
-std::initializer_list<std::reference_wrapper<const T>>
-cref_init_list(const T& x, const Ts&... xs);
-~~~
-
-Returns `{ std::cref(x), std::cref(xs)... }`.  
-Sample usage: `std::min(cref_init_list(const_a, b, c))`.
 
 <a name="for_each"></a>
 ~~~C++
@@ -448,7 +437,7 @@ assert(std::distance(view2x2.begin(1), view2x2.end(1), 2);
 // addresses 4
 assert(std::distance(view2x2.begin(1, 1), view2x2.end(1, 1), 1);
 int storage[] = { 1, 2, 3, 4, 5, 6, 7, 8 };
-// viewed as { { {1, 2}, {3, 4} }, 
+// viewed as { { {1, 2}, {3, 4} },
                { {5, 6}, {7, 8} } }
 auto view2x2x2 = hhxx::make_multi_view(storage, 2, 2, 2);
 // addresses {5, 6}
@@ -473,7 +462,7 @@ public:
   /// `[first, last)` should be distinct.
   template <class ForwardIt>
   mutable_heap(ForwardIt first, ForwardIt last, Less less = Less{});
-  
+
   /// Constructs a mutable heap over the objects referenced by keys
   /// in `list` using `less` as the less-than comparator. All elements in `list`
   /// should be distinct.
@@ -620,11 +609,11 @@ public:
   explicit scope_guard(F f);
   /// `other` is disarmed after move.
   scope_guard(scope_guard&& other);
-  
+
   scope_guard(const scope_guard&) = delete;
   scope_guard& operator =(const scope_guard&) = delete;
   scope_guard& operator =(scope_guard&&) = delete;
-  
+
   void disarm();
 };
 
@@ -646,7 +635,7 @@ int i = 0;
   });
   auto guard3 = hhxx::make_scope_guard([&] {
     assert(++i == 3);
-  });  
+  });
   auto guard2 = hhxx::make_scope_guard([&] {
     assert(++i == 2);
   });

@@ -407,11 +407,3 @@ TEST(sample, basic) {
   std::vector<unsigned> target = {0, 1, 2};
   EXPECT_EQ(target, vec);
 }
-
-TEST(make_cref_init_list, basic) {
-  using hhxx::cref_init_list;
-  EXPECT_EQ(0, std::min(cref_init_list(1, 2, 3, 0, 4, 5)));
-  EXPECT_EQ(5, std::min(cref_init_list(0, 1, 2, 5, 3, 4), std::greater<int>{}));
-  auto a = 0, b = 2, c = 3;
-  EXPECT_EQ(&a, &std::min(cref_init_list(a, b, c)).get());
-}
