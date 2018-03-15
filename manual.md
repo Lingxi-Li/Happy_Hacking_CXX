@@ -348,6 +348,7 @@ It does compile, however, after replacing `std::function` with `hhxx::function`.
 
 <a name="pack_args"></a>
 ~~~C++
+#define HHXX_ARG_PACK_T(Ts, Is) ...
 #define HHXX_ARG_PACK(Ts, Is) ...
 #define HHXX_UNPACK_ARGS(args, Is) ...
 template <typename... Ts>
@@ -362,8 +363,8 @@ Example:
 
 ~~~C++
 template <typename A, typename B,
-          typename... Ts, std::size_t... Is,
-          typename... Us, std::size_t... Js>
+          HHXX_ARG_PACK_T(Ts, Is),
+          HHXX_ARG_PACK_T(Us, Js)>
 std::pair<A, B> make_a_b_pair(
   HHXX_ARG_PACK(Ts, Is) a_args,
   HHXX_ARG_PACK(Us, Js) b_args) {

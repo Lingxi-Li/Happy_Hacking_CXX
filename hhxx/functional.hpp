@@ -12,6 +12,7 @@
 #include <type_traits>
 #include <utility>
 
+#define HHXX_ARG_PACK_T(Ts, Is) typename... Ts, ::std::size_t... Is
 #define HHXX_ARG_PACK(Ts, Is) ::hhxx::detail::arg_pack<::std::tuple<Ts...>, ::std::index_sequence<Is...>>
 #define HHXX_UNPACK_ARGS(args, Is) ::std::get<Is>(::std::move(args.vs))...
 
